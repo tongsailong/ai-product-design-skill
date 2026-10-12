@@ -2,108 +2,91 @@
 
 <div align="center">
 
-# ai-product-design-skill
+# AI Product Design Skill
 
-> **本仓库是 [花叔Design · huashu-design](https://github.com/alchaincyf/huashu-design)（作者 [@alchaincyf](https://github.com/alchaincyf)，MIT License）的二次开发 fork。**
-> 定位：把原项目优秀的视觉设计能力，发展为自己长期维护、独立于具体 AI Agent 平台的 AI 产品设计 Skill。
-> 原项目的视觉设计能力、60 种 HTML 原生风格库、资产协议与交付链**完整保留**；本分支在此之上逐步增强**产品价值判断、交互体验与设计交付质量**，原则是「有用 → 好懂 → 舒服 → 有意义」。
-> 下文中的效果演示图（GIF/MP4）由**上游 Releases** 分发；「花叔」相关表述为原作者经验出处。致谢与许可见 [LICENSE](LICENSE) 与文末。
-
-> *「打字。回车。一份能交付的设计。」*
-> *"Type. Hit enter. A finished design lands in your lap."*
+### 面向 AI Agent 的开源产品设计能力
 
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Agent-Agnostic](https://img.shields.io/badge/Agent-Agnostic-blueviolet)](https://skills.sh)
-[![Skills](https://img.shields.io/badge/skills.sh-Compatible-green)](https://skills.sh)
+[![Agent](https://img.shields.io/badge/Agent-Agnostic-blueviolet)](https://skills.sh)
+[![skills.sh](https://img.shields.io/badge/skills.sh-Compatible-green)](https://skills.sh)
 
-<br>
+在支持 Skills 的 AI Agent 里打一句话，拿回一份**经得起产品判断的设计交付**——可点击的 App / Web 交互原型、能编辑的 PPTX、产品发布动画、印刷级信息图，或一次专业设计评审。
 
-**在你的 agent 里打一句话，拿回一份能交付的设计。**
+3–30 分钟。不是「AI 做的还行」那种水平——内置 60 种 HTML 原生风格库、品牌资产协议与反 AI slop 底线；更关键的是，它在设计前后各加了一层普通设计 Skill 没有的东西：**先判产品价值，再做好看的界面**。
 
-<br>
-
-3 到 30 分钟，你能 ship 一段**产品发布动画**、一个能点击的 App 原型、一套能编辑的 PPT、一份印刷级的信息图。
-
-不是「AI 做的还行」那种水平——是看起来像大厂设计团队做的。给 skill 你的品牌资产（logo、色板、UI 截图），它会读懂你的品牌气质；什么都不给，**三套逻辑顾问 + 60 种 HTML 原生风格库**也能兜底到不出 AI slop。
-
-**你看到这篇 README 里的每一个动画，都是 huashu-design 自己做的。** 不是 Figma，不是 AE，就是一句话 prompt + skill 跑通。下次产品发布要做宣传片？现在你也能做。
-
-```
-npx skills add alchaincyf/huashu-design
+```bash
+npx skills add tongsailong/ai-product-design-skill
 ```
 
-跨 agent 通用——Claude Code、Cursor、Codex、OpenClaw、Hermes 都能装。
-
-> 📣 **已改为 MIT 协议。** 自 2026-05-14 起本 skill 完全开源（[MIT License](LICENSE)），个人和**商用都免费**，无需事先授权。原「个人使用免费、企业商用需授权」的条款已作废。([查看变更](#license))
-
-[看效果](#demo-画廊) · [安装](#装上就能用) · [能做什么](#能做什么) · [核心机制](#核心机制) · [和 Claude Design 的关系](#和-claude-design-的关系)
+[安装](#安装) · [能做什么](#能做什么) · [效果演示与案例](#效果演示与案例) · [差异化](#核心价值它和普通设计-skill-有什么不同) · [工作原理](#工作原理) · [支持平台与依赖](#支持平台与依赖) · [上游项目与致谢](#上游项目与致谢)
 
 </div>
 
----
+> **TL;DR**
+> **这是什么** — 一个面向 AI Agent 的**产品设计** Skill：既做视觉（交互原型 / 幻灯片 / 动画 / 信息图），也做产品判断（价值取舍 / UX 评审 / Spec 一致性）。
+> **解决什么** — 让「一句话需求」变成能交付、能评审、范围不漂移的设计产出，而不是看起来还行的一堆页面。
+> **怎么装** — `npx skills add tongsailong/ai-product-design-skill`，跨 agent，不绑定某个具体工具（见 [安装](#安装)）。
+> **真的有用吗** — 下面所有演示与样例，都是这个 Skill 自己产出的。
 
 <p align="center">
-  <img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/hero-animation-v10-en.gif" alt="huashu-design Hero · 打字 → 选方向 → 画廊展开 → 聚焦 → 品牌显形" width="100%">
+  <img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/hero-animation-v10-en.gif" alt="演示：终端输入一句话 → 三个设计方向并排 → 聚焦选定方向 → 品牌视觉显形" width="100%">
 </p>
 
-<p align="center"><sub>
-  ▲ 25 秒 · Terminal → 4 方向 → Gallery ripple → 4 次 Focus → Brand reveal<br>
-  👉 <a href="https://www.huasheng.ai/huashu-design-hero/">访问带音效的 HTML 互动版</a> ·
-  <a href="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/hero-animation-v10-en.mp4">下载 MP4（含 BGM+SFX · 10MB）</a>
-</sub></p>
+<p align="center"><sub>▲ 25 秒 hero 动画：Terminal → 三方向 → Gallery ripple → 四次 Focus → 品牌显形<br>
+本演示素材来自上游项目 huashu-design（<a href="https://github.com/alchaincyf">@alchaincyf</a>），本分支完整保留该能力。可本地打开 <a href="demos/hero-animation-v10-en.html">demos/hero-animation-v10-en.html</a> 查看交互版。</sub></p>
+
+> ℹ️ **本项目是 [huashu-design](https://github.com/alchaincyf/huashu-design)（作者 [@alchaincyf](https://github.com/alchaincyf)，MIT License）的二次开发分支。** 上游的视觉设计能力、60 种 HTML 原生风格库、资产协议与交付链**完整保留**；本分支在其上叠加**产品价值判断、UX 与易用性评审、Spec 一致性核验与跨 Agent 适配**。安装本分支请用本仓库命令，**不要**用上游命令（上游入口见 [上游项目与致谢](#上游项目与致谢)）。
 
 ---
 
-## 📺 新手教程（花叔亲录）
+## 核心价值：它和普通设计 Skill 有什么不同
 
-不知道怎么用？看花叔录的 huashu-design 上手教程：
+多数「设计 skill」只回答一个问题：**怎么把它做得好看**。本项目回答两个——**做得对不对**，然后才是**做得好不好看**。
 
-<p align="center">
-  <a href="https://www.youtube.com/watch?v=m-_BlUdcIvw"><img src="https://img.youtube.com/vi/m-_BlUdcIvw/maxresdefault.jpg" alt="huashu-design 使用教程" width="70%"></a>
-</p>
+| | 普通设计 Skill | 本项目 |
+|---|---|---|
+| 设计前 | 直接开工，按「页面该有什么」堆内容 | **先判产品价值**：谁在用 / 此刻要完成什么 / 设计哪一处替他承担了复杂性 |
+| 设计判断 | 以视觉为主（配色、排版、层级） | 视觉 + **三条可检验的价值判断**：理解成本 / 操作成本 / 容错 |
+| 范围控制 | 习惯性「顺手做完整一点」 | **Scope 冻结**：不做用户没要求的页面与功能，不把「通常会有」当成「被要求」 |
+| 评审 | 好不好看 | 5 维度评审 + **UX 与易用性一层**（产品界面类）+ 有 spec 时跑一层 **Spec 一致性核验** |
+| 平台 | 绑定某个 AI 编程工具 | **Agent 无关**：能力 → 载体映射表，弱 runtime 自动降级 |
+| 视觉能力 | 视实现而定 | 上游 60 种 HTML 原生风格库、三方向硬门、品牌资产协议、反 AI slop 底线（**完整保留**） |
 
-<p align="center"><sub>👉 <a href="https://www.youtube.com/watch?v=m-_BlUdcIvw">在 YouTube 观看完整教程</a></sub></p>
+### 一、产品价值判断（有用 → 好懂 → 舒服 → 有意义）
 
----
+产品界面 / 交互原型类任务默认加一层轻量判断，四个维度**按顺序成立，前一层不成立、后一层补不上**：
 
-## 装上就能用
+| 维度 | 要问的一句话 | 判错了会怎样 |
+|------|-------------|-------------|
+| **有用** | 它解决的是真实用户问题，还是我们自己觉得该有？ | 好看但没人需要 = 精致的 slop |
+| **好懂** | 用户理解它要花多少力气？复杂性由谁承担？ | 功能在，但用户找不到 / 看不懂 = 等于没有 |
+| **舒服** | 有没有无意义的操作、违背既有习惯的交互？ | 每次多一步、多想一下 = 长期摩擦 |
+| **有意义** | 功能成立后，值得为它加一点审美 / 情绪 / 身份表达吗？ | 过早加 = 装饰压过功能；永远不加 = 工具感 |
 
-```bash
-npx skills add alchaincyf/huashu-design
-```
+配套三条**可检验**的检查（自检与评审共用）：**理解成本**（几秒内能否说出这页是干嘛的）/ **操作成本**（核心行为几步，其中几步本该系统替用户做）/ **容错**（点错了会怎样，能否撤销、有没有解释）。任一条亮红灯就是该修的点。
 
-> **装完先自检**：这个 skill 不只是 SKILL.md 一个文件，`references/`、`assets/`、`scripts/`、`demos/` 四个子目录里有 99 处被引用的配方、脚本、素材，缺一不可。装完看一眼安装目录（如 `~/.claude/skills/huashu-design/`），如果只有 SKILL.md、没有那几个子目录，说明你的 `skills` CLI 版本太旧（≤1.5.15 有个只同步单文件的 bug，已在 1.5.19 修复）。升级后再装一次即可：
->
-> ```bash
-> npm i -g skills@latest        # 或 npx skills@latest add alchaincyf/huashu-design
-> ```
->
-> 升级后仍异常，就用 `git clone` 兜底安装，把仓库克隆到任意 skills 目录即可：
->
-> ```bash
-> git clone https://github.com/alchaincyf/huashu-design.git ~/.claude/skills/huashu-design
-> ```
+完整方法见 [`references/product-value.md`](references/product-value.md)。**动画 / 幻灯片 / 信息图 / 封面等「只是看 / 被展示」的任务不套用**，原有视觉流程照跑——不把设计变成写 PRD。
 
-然后在 Claude Code / Codex / Cursor 等任意支持 skills 的 agent 里直接说话：
+### 二、UX 与易用性评审
 
-```
-「做一份 AI 心理学的演讲 PPT，推荐 3 个风格方向让我选」
-「做个 AI 番茄钟 iOS 原型，4 个核心屏幕要真能点击」
-「把这段逻辑做成 60 秒动画，导出 MP4 和 GIF」
-「帮我对这个设计做一个 5 维度评审」
-```
+在做设计评审时（用户说「评审」「好不好看」「review」，或你主动质检），产品界面 / 交互原型类会在原有 **5 维度（哲学一致性 / 视觉层级 / 细节执行 / 功能性 / 创新性）**的「功能性」里**加查一层用户价值与易用性**：核心行为是否被首屏服务、三条价值检查哪条亮灯。问题必须**具体可操作**（说得出改哪一处、改成什么），不做「交互可以更顺」这类空泛评价。
 
-没有按钮、没有面板、没有 Figma 插件。
+### 三、Spec 一致性核验（Scope / Non-goals / AC）
 
----
+当项目有设计 spec / 明确需求时，评审额外跑一层**范围核验**：Scope 是否越界、Non-goals 是否被突破、每条 Acceptance Criteria 是否都能在设计里找到对应证据。命中即标 `BLOCKING_SPEC_DEVIATION`；无 spec 时记 N/A。这是**附加核验**，不替代 5 维度、不新增审批环节。配合设计阶段的 **Scope 冻结**（不做用户没要求的页面 / 功能 / 状态），把「范围漂移」从交付里挡掉。
 
-## Star 趋势
+### 四、跨 Agent 适配（不绑定某个具体工具）
 
-<p align="center">
-  <a href="https://star-history.com/#alchaincyf/huashu-design&Date">
-    <img src="https://api.star-history.com/svg?repos=alchaincyf/huashu-design&type=Date" alt="huashu-design Star History" width="80%">
-  </a>
-</p>
+Skill 是 **agent-agnostic** 的：Claude Code、Codex、Cursor、Trae、OpenClaw、Hermes Agent 或任何支持 markdown-based skill 的 agent 都能用。做法不是「为每个平台写一套」，而是把**能力**与**载体**解耦——文档只规定「这一步需要什么能力」（网络检索 / 子代理并行 / 浏览器截图 / 本地命令 / 文件读写），具体工具由 agent 按当前环境自行映射。弱 runtime（无 subagent、非 Claude、上下文小）有**逐级降级模式**，牺牲多样性与流程，**绝不牺牲反 slop 底线与真实资产协议**。见 [`references/runtime-adapters.md`](references/runtime-adapters.md)。
+
+### 五、完整保留的原有视觉设计能力
+
+上面四项是**新增判断层**，它们不替代原有能力——上游的视觉产出链路一条不少：
+
+- **三方向视觉探索**：任何新设计任务 100% 先出三个方向的**真实初稿**（指定风格 / 品牌也不豁免），让你**看着选**而不是在文字里盲选
+- **60 种 HTML 原生风格库**（网页 20 + PPT 20 + 信息图 20，纯 CSS 无需生图）
+- **交互原型**（真 iPhone 机身、可点击、Playwright 验证）/ **动画**（Stage + Sprite 时间轴，导出 MP4 / GIF）/ **可编辑 PPTX**（导出真文本框）/ **信息图**（印刷级排版，可导 PDF / PNG / SVG）
+- **品牌资产协议**（5 步硬流程，绝不从记忆猜品牌色）/ **反 AI slop 底线**
 
 ---
 
@@ -115,284 +98,262 @@ npx skills add alchaincyf/huashu-design
 | 演讲幻灯片 | HTML deck（浏览器演讲）+ 可编辑 PPTX（文本框保留） | 15–25 min |
 | 时间轴动画 | MP4（25fps / 60fps 插帧）+ GIF（palette 优化）+ BGM | 8–12 min |
 | 设计变体 | 3+ 并排对比 · Tweaks 实时调参 · 跨维度探索 | 10 min |
-| 信息图 / 可视化 | 印刷级排版 · 可导 PDF/PNG/SVG | 10 min |
+| 信息图 / 可视化 | 印刷级排版 · 可导 PDF / PNG / SVG | 10 min |
 | 设计方向顾问 | **三套逻辑并行**（秒数轮盘 + 现实参照获奖站 + 最佳设计师）· 直接出 3 版真实视觉 | 5 min |
-| 5 维度专家评审 | 雷达图 + Keep/Fix/Quick Wins · 可操作修复清单 | 3 min |
+| 专家评审 | 5 维度雷达图 + Keep / Fix / Quick Wins · 可操作修复清单 · 有 spec 时含一致性核验 | 3 min |
+
+> 耗时为上游实测区间，会随模型能力与任务复杂度浮动。
+
+**适用场景**：高保真交互原型与产品 mockup · 需要被点击 / 演示的界面 · 设计方向探索与变体对比 · 演示幻灯片 · 动画与视频素材 · 信息图与数据可视化 · 设计评审与交付前质检。
+
+**不适用场景**：生产级 Web App · SEO 网站 · 需要后端与数据库的动态系统。这些不走本 Skill。
 
 ---
 
-## Demo 画廊
+## 安装
 
-### 设计方向顾问
+```bash
+npx skills add tongsailong/ai-product-design-skill
+```
 
-模糊需求时的 fallback：**三套互补逻辑并行**——秒数轮盘（20 选 1 打破惯性）+ 现实参照（世界级获奖网站迁移）+ 最佳设计师（顶级工作室哲学），直接出 3 版**真实视觉**让你看着选，不让你在文字里盲选风格。背后是 **60 种 HTML 原生风格库**（网页 20 + PPT 20 + 信息图 20，纯 CSS 无需生图）。
+> ✅ **安装命令已实测可用**：在干净目录用 `npx skills add tongsailong/ai-product-design-skill` 安装成功，`references/`（35 个）、`assets/`、`scripts/`、`demos/` 与仓库逐一对应，无缺文件。若你的环境装出来不完整，见下方故障排查。
 
-<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/w3-fallback-advisor.gif" width="100%"></p>
+**装完先自检**：这个 Skill 不只是 `SKILL.md` 一个文件，`references/`、`assets/`、`scripts/`、`demos/` 四个子目录里有 65 个被文档引用的配方、脚本与素材，缺一条路径就走不通。仓库自带自检脚本，可以直接把「装得完不完整」变成一条命令：
 
-### iOS App 原型
+```bash
+python3 scripts/check-skill.py            # 结构 + 引用完整性
+python3 scripts/check-skill.py --strict   # 额外检查未被引用的孤儿文件
+```
 
-iPhone 15 Pro 精确机身（灵动岛 / 状态栏 / Home Indicator）· 状态驱动多屏切换 · 真图从 Wikimedia/Met/Unsplash 取 · Playwright 自动点击测试。
+装完看一眼安装目录（如 `~/.claude/skills/ai-product-design-skill/`）。**若只有 SKILL.md、没有那几个子目录**，说明 `skills` CLI 版本太旧（≤1.5.15 有一个只同步单文件的 bug，已在 1.5.19 修复）。升级后再装一次：
 
-<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c1-ios-prototype.gif" width="100%"></p>
+```bash
+npm i -g skills@latest        # 或 npx skills@latest add tongsailong/ai-product-design-skill
+```
 
-### Motion Design 引擎
+仍异常就用 `git clone` 兜底——把仓库克隆到任意 skills 目录即可：
 
-Stage + Sprite 时间片段模型 · `useTime` / `useSprite` / `interpolate` / `Easing` 四 API 覆盖所有动画需求 · 一条命令导出 MP4 / GIF / 60fps 插帧 / 带 BGM 的成片。
+```bash
+git clone https://github.com/tongsailong/ai-product-design-skill.git ~/.claude/skills/ai-product-design-skill
+```
 
-<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c3-motion-design.gif" width="100%"></p>
-
-### HTML Slides → 可编辑 PPTX
-
-HTML deck 浏览器演讲 · `html2pptx.js` 读 DOM 的 computedStyle 逐元素翻译成 PowerPoint 对象 · 导出的是**真文本框**，PPT 里双击即可编辑。
-
-<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c2-slides-pptx.gif" width="100%"></p>
-
-### Tweaks · 实时变体切换
-
-配色 / 字型 / 信息密度等参数化 · 侧边面板切换 · 纯前端 + `localStorage` 持久化 · 刷新不丢。
-
-<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c4-tweaks.gif" width="100%"></p>
-
-### 信息图 / 数据可视化
-
-杂志级排版 · CSS Grid 精准分栏 · `text-wrap: pretty` 排印细节 · 真数据驱动 · 可导 PDF 矢量 / PNG 300dpi / SVG。
-
-<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c5-infographic.gif" width="100%"></p>
-
-### 5 维度专家评审
-
-哲学一致性 · 视觉层级 · 细节执行 · 功能性 · 创新性 各 0–10 分 · 雷达图可视化 · 输出 Keep / Fix / Quick Wins 清单。
-
-<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c6-expert-review.gif" width="100%"></p>
-
-### Junior Designer 工作流
-
-不闷头做大招：先写 assumptions + placeholders + reasoning，尽早 show 给你，再迭代。理解错了早改比晚改便宜 100 倍。
-
-<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/w2-junior-designer.gif" width="100%"></p>
-
-### 品牌资产协议 5 步硬流程
-
-涉及具体品牌时强制执行：问 → 搜 → 下载（三条兜底）→ grep 色值 → 写 `brand-spec.md`。
-
-<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/w1-brand-protocol.gif" width="100%"></p>
+安装后在 Claude Code / Codex / Cursor 等任意支持 skills 的 agent 里直接说话（见下一节）。
 
 ---
 
-## Showcase · 真实案例
+## 使用示例
 
-### 鹦鹉进化史网站 · 设计方向顾问三套逻辑实战（2.0）
+没有按钮、没有面板、没有 Figma 插件——只需要一句话：
 
-> **Live demo · [https://www.huasheng.ai/parrots/](https://www.huasheng.ai/parrots/)**
-
-一句「做个介绍鹦鹉进化史的网站」、零额外要求，skill 自动跑完整 2.0 顾问流程：先判断图片是内容必需 → 抓公共领域博物插画（Edward Lear / John Gould 的鹦鹉图录）→ **三套逻辑并行**（秒数轮盘 + 现实参照获奖站 + 原研哉「白」哲学）各出一版真实视觉。**素材齐了再设计，不是边设计边用色块占位。**
-
-### 「聊聊 skill」 · PM after-party 演讲 deck
-
-> **Live demo · [https://skill-huasheng.vercel.app](https://skill-huasheng.vercel.app)**
-
-13 页 HTML deck，**全部用 huashu-design 完成**：
-
-- 黑底极简衬线视觉系统（cover / about / hook / what / why / closing）
-- 2 个带 BGM + SFX 的 22 秒 cinematic demo（Nuwa skill workflow + Darwin skill workflow），各采用**完全独立的视觉语言**：
-  - **Nuwa**：3D 知识 orbit + Pentagon 提炼 + SKILL.md typewriter + 「21 分钟」hero reveal
-  - **Darwin**：autoresearch loop spin + v1/v5 并列 diff + Hill-Climb 全屏曲线 + Ratchet gear lock
-- 每个 cinematic 默认显示**完整静态 workflow dashboard**（观众随时能看清 skill 怎么跑），点 ▶ 才触发动画，跑完自动 fade 回 dashboard
-- 嵌入 huasheng.ai 的 25 秒 hero 动画（iframe 本地化兜底）
-- 真实数据：14,495 stargazers 真实曲线（gh API 拉取）+ DeepSeek V4 真实 specs（WebSearch 验证）
-- 真实 AI 素材：用 `huashu-gpt-image` 跑 4×2 grid 大图，`extract_grid.py` 抠出 8 张独立透明 PNG，做 3D orbit 漂浮
-
-**适合参考的页面**：
-- `/slides/slide-04b-nuwa-flow.html` · 静态 dashboard + cinematic overlay 双层架构
-- `/slides/slide-06b-darwin-flow.html` · 完全独立视觉语言的对照案例
-- `/slides/slide-03b-deepseek-cover.html` · AI slop vs 真实设计师视角的对比页
-
-详细 cinematic patterns 见 `references/cinematic-patterns.md`。
+```
+「做个 AI 番茄钟 iOS 原型，4 个核心屏幕要真能点击」
+「做一份 AI 心理学的演讲 PPT，推荐 3 个风格方向让我选」
+「把这段逻辑做成 60 秒动画，导出 MP4 和 GIF」
+「帮我对这个设计做一次评审，重点看易用性」
+「这是我们 App 的 spec，检查一下实现有没有超出范围、AC 有没有漏」
+「界面有点乱，帮我看看理解成本和操作成本哪里有问题」
+「用我们品牌（logo + 色板 + UI 截图）做一套官网首页，出三个方向」
+「把这个季度的数据做成一张印刷级信息图，能导 PDF」
+```
 
 ---
 
-## 核心机制
+## 效果演示与案例
 
-### 品牌资产协议
+### 本地可直接打开
 
-skill 里最硬的一段规则。涉及具体品牌（Stripe、Linear、Anthropic、自家公司等）时强制执行 5 步：
+- **24 个预制设计样例**：8 种场景 × 3 种风格（Pentagram / Build / Takram），PNG 缩略图 + 可渲染 HTML，索引见 [`assets/showcases/INDEX.md`](assets/showcases/INDEX.md)
+- **18 个能力演示 HTML**（中英双版，`-en` 为英文）：`demos/c1-ios-prototype.html`、`c2-slides-pptx`、`c3-motion-design`、`c4-tweaks`、`c5-infographic`、`c6-expert-review`、`w1-brand-protocol`、`w2-junior-designer`、`w3-fallback-advisor`，以及 `demos/hero-animation-v10-en.html`
+- **长视频 / 配音演示**：`demos/md-html-narration/`、`demos/voiceover-demo/`
+
+### 动态演示（GIF 素材来自上游 Releases）
+
+> 以下 GIF 由上游项目 huashu-design（[@alchaincyf](https://github.com/alchaincyf)）制作并分发，本 Skill 完整保留对应能力；截图与文案描述引用其公开说明。
+
+**设计方向顾问** — 模糊需求时三套互补逻辑并行（秒数轮盘 + 现实参照获奖站 + 最佳设计师），直接出 3 版真实视觉让你看着选。
+
+<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/w3-fallback-advisor.gif" alt="设计方向顾问演示：三套逻辑并行生成的三个差异化设计方向并排展示" width="100%"></p>
+
+**iOS App 原型** — iPhone 15 Pro 精确机身（灵动岛 / 状态栏 / Home Indicator）· 状态驱动多屏切换 · Playwright 自动点击测试。
+
+<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c1-ios-prototype.gif" alt="iOS App 原型演示：真机机身内多个屏幕状态切换与点击交互" width="100%"></p>
+
+**Motion Design 引擎** — Stage + Sprite 时间片段模型 · `useTime` / `useSprite` / `interpolate` / `Easing` 四 API · 一条命令导出 MP4 / GIF / 60fps 插帧 / 带 BGM 成片。
+
+<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c3-motion-design.gif" alt="动画引擎演示：时间轴驱动的动态图形与过渡效果" width="100%"></p>
+
+**HTML Slides → 可编辑 PPTX** — `html2pptx.js` 读 DOM 的 computedStyle 逐元素翻译成 PowerPoint 对象，导出的是**真文本框**，PPT 里双击即可编辑。
+
+<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c2-slides-pptx.gif" alt="幻灯片演示：HTML deck 切换与导出的可编辑 PPTX 文本框" width="100%"></p>
+
+**Tweaks · 实时变体切换** — 配色 / 字型 / 信息密度参数化 · 侧边面板切换 · 纯前端 + `localStorage` 持久化。
+
+<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c4-tweaks.gif" alt="Tweaks 演示：侧边面板切换配色与字型，页面实时变化" width="100%"></p>
+
+**信息图 / 数据可视化** — 杂志级排版 · CSS Grid 精准分栏 · 真数据驱动 · 可导矢量 PDF / 300dpi PNG / SVG。
+
+<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c5-infographic.gif" alt="信息图演示：数据驱动的杂志级排版长图" width="100%"></p>
+
+**专家评审** — 5 维度各 0–10 分 · 雷达图可视化 · 输出 Keep / Fix / Quick Wins 清单。
+
+<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c6-expert-review.gif" alt="设计评审演示：五维雷达图与 Keep/Fix/Quick Wins 清单" width="100%"></p>
+
+**Junior Designer 工作流** — 不闷头做大招：先写 assumptions + placeholders + reasoning，尽早 show 给你，再迭代。
+
+<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/w2-junior-designer.gif" alt="Junior Designer 工作流演示：先展示占位与假设，再逐步迭代填充" width="100%"></p>
+
+**品牌资产协议 5 步硬流程** — 问 → 搜 → 下载（三条兜底）→ grep 色值 → 写 `brand-spec.md`。
+
+<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/w1-brand-protocol.gif" alt="品牌资产协议演示：从官方渠道抓取 logo 与色值并固化到 spec" width="100%"></p>
+
+### 上游作者的真实案例（引用，非本分支产出）
+
+- **鹦鹉进化史网站** — 一句「做个介绍鹦鹉进化史的网站」，自动跑完顾问流程：判断图片为内容必需 → 抓公共领域博物插画 → 三套逻辑并行各出一版。Live demo：<https://www.huasheng.ai/parrots/>
+- **「聊聊 skill」PM after-party 演讲 deck** — 13 页 HTML deck，全部用该 Skill 完成，含两个带 BGM + SFX 的 22 秒 cinematic demo。Live demo：<https://skill-huasheng.vercel.app>
+
+---
+
+## 工作原理
+
+### 三方向硬门（任何新设计 100% 必走）
+
+收到任何会产出新视觉设计的任务，先出**三个方向的真实初稿**给用户选——指定了风格或品牌也不豁免，只是收窄了解释空间。这样用户是**看着选**，不是读着文字盲选。
+
+### 产品价值判断与 Scope 冻结
+
+产品界面类任务在开工前写下三行（谁在用 / 要完成什么 / 哪一处替他承担复杂性），并在三方向 spec 里共用同一行需求定义。设计过程中**不做用户没要求的页面 / 功能 / 状态**——需要扩张就交回用户决定，不自行把「不做 X」改成「做了 X」。
+
+### 品牌资产协议（5 步，绝不猜）
 
 | 步骤 | 动作 | 目的 |
 |------|------|------|
-| 1 · 问 | 用户有 brand guidelines 吗？ | 尊重已有资源 |
+| 1 · 问 | 用户有 brand guidelines / logo / 产品图 / UI 截图吗？ | 尊重已有资源 |
 | 2 · 搜官方品牌页 | `<brand>.com/brand` · `brand.<brand>.com` · `<brand>.com/press` | 抓权威色值 |
 | 3 · 下载资产 | SVG 文件 → 官网 HTML 全文 → 产品截图取色 | 三条兜底，前一条失败立刻走下一条 |
 | 4 · grep 提取色值 | 从资产里抓所有 `#xxxxxx`，按频率排序，过滤黑白灰 | **绝不从记忆猜品牌色** |
 | 5 · 固化 spec | 写 `brand-spec.md` + CSS 变量，所有 HTML 引用 `var(--brand-*)` | 不固化就会忘 |
 
-A/B 测试（v1 vs v2，各跑 6 agent）：**v2 的稳定性方差比 v1 低 5 倍**。稳定性的稳定性，这是 skill 真正的护城河。
-
-### 设计方向顾问（Fallback）
-
-当用户需求模糊到无法着手时触发（2.0 重做）：
-
-- 先对话澄清 + 主动索要参考（名字 / logo / 品牌色 / 喜欢的参考站）
-- 取齐内容必需的真图（公共领域 / 免版权，脚本一键抓），再开工
-- **三套互补逻辑并行 subagent**，各出一版**真实视觉**：① 秒数轮盘（`date +%S` 取秒，20 选 1，打破模型偷选极简的惯性）② 现实参照（世界级获奖网站 / PPT / iOS 原型迁移）③ 最佳设计师（预算无上限时最适合的工作室哲学）
-- **绝不让你在没看到视觉时盲选风格**——三版摆出来，看着选
-- 选定后进入主干 Junior Designer 流程
-- 底层是 **60 种 HTML 原生风格库**（网页 20 + PPT 20 + 信息图 20，按大胆 / 中性 / 安静分级，纯 CSS 无需生图）作弹药，不是教条
-
 ### Junior Designer 工作流
 
-默认工作模式，贯穿所有任务：
+默认工作模式，贯穿所有任务：开工前一次性发问题清单、等批量答完；HTML 里先写 assumptions + placeholders + reasoning；尽早 show 给你（哪怕只是灰块）；填充内容 → variations → Tweaks 三步分别再 show；交付前用 Playwright 肉眼过一遍浏览器。
 
-- 开工前 show 问题清单一次性发给用户，等批量答完再动手
-- HTML 里先写 assumptions + placeholders + reasoning comments
-- 尽早 show 给用户（哪怕只是灰色方块）
-- 填充实际内容 → variations → Tweaks 这三步分别再 show 一次
-- 交付前用 Playwright 肉眼过一遍浏览器
+### 事实验证先于假设（核心原则 #0）
 
-### 产品价值判断
+任务提到具体产品 / 技术 / 事件时，第一步必须是检索核实（存在性、版本、规格），不从训练记忆里直接断言。一次检索约 10 秒，一次错误假设可能让返工花 1–2 小时。
 
-产品界面 / 交互原型类任务（App、Dashboard、落地页、后台工具、多步流程）上，默认加一层轻量判断——判断顺序 **有用 → 好懂 → 舒服 → 有意义**（前一层不成立，后一层补不上）：
+### 反 AI slop 底线
 
-- **开工前三问**：谁在用·什么场景 / 此刻要完成什么 / 设计哪一处替他承担了复杂性——写进 HTML 头部 assumptions，**不新增检查点、不单独等用户点头**
-- **三条可检验的价值判断**：理解成本 / 操作成本 / 容错——自检与评审共用，任一条亮灯就是该修的点
-- **融入三方向门**（硬门不动）：三方向 spec 共用「用户 + 核心行为」一行，差异化可落在产品价值维度（极简数字型 / 高密度仪表盘型 / 激励叙事型）
-- **评审加一层**：产品界面类评审在「功能性」维度里加查用户价值与易用性，问题必须具体可操作
-- **边界**：动画 / 幻灯片 / 信息图 / 封面等「只是看」的任务**不套用**，原有视觉流程照跑；不把设计变成写 PRD，不为方法论牺牲效率
-
-完整方法：`references/product-value.md`。
-
-### 反 AI slop 规则
-
-避免一眼 AI 的视觉最大公约数（紫渐变 / emoji 图标 / 圆角+左 border accent / SVG 画人脸 / Inter 做 display）。用 `text-wrap: pretty` + CSS Grid + 精心选择的 serif display 和 oklch 色彩。
+避免一眼 AI 的视觉最大公约数（紫渐变 / emoji 图标 / 圆角 + 左边框的「强调条」/ SVG 画人脸 / Inter 当 display 字体）。用 `text-wrap: pretty` + CSS Grid + 精心选择的 serif display 与 oklch 色彩。
 
 ---
 
-## 和 Claude Design 的关系
+## 支持平台与依赖
 
-我大方承认：品牌资产协议的哲学是从 Claude Design 流传出来的提示词里偷师的。那份提示词反复强调**好的高保真设计不是从白纸开始，而是从已有的设计上下文长出来**。这个原则是 65 分作品和 90 分作品的分水岭。
+**Agent 支持**：Claude Code · Codex · Cursor · Trae · OpenClaw · Hermes Agent，或任何支持 markdown-based skill 的 agent。弱 runtime（无 subagent / 非 Claude / 上下文受限）自动进入降级模式，仍然出三版（改为串行、差异化隔离）。
 
-定位差异：
+**本地工具链**（按需，只有用到对应导出/验证能力时才需要）：
 
-| | Claude Design | huashu-design |
-|---|---|---|
-| 形态 | 网页产品（浏览器里用） | skill（Claude Code 里用） |
-| 配额 | 订阅 quota | API 消耗 · 并行跑 agent 不受 quota 限 |
-| 交付物 | 画布内 + 可导 Figma | HTML / MP4 / GIF / 可编辑 PPTX / PDF |
-| 操作方式 | GUI（点、拖、改） | 对话（说话、等 agent 做完） |
-| 复杂动画 | 有限 | Stage + Sprite 时间轴 · 60fps 导出 |
-| 跨 agent | 专属 Claude.ai | 任意 skill 兼容 agent |
+| 依赖 | 用途 |
+|------|------|
+| Node.js | `scripts/render-video.js`（HTML→MP4）、`html2pptx.js`、`export_deck_*.mjs`、`gen_deck_thumbs.mjs`；`package.json` 依赖 `playwright` / `pptxgenjs` / `pdf-lib` / `sharp` |
+| ffmpeg | MP4 转 60fps / GIF、拼接 BGM、音视频混流（`convert-formats.sh`、`add-music.sh`、`mix-voiceover.sh`） |
+| Python 3 | `scripts/verify.py`（Playwright 验证）、`fetch_images.py`、`check-skill.py`（结构自检） |
+| Playwright | 交付前的浏览器点击测试与截图验证 |
 
-Claude Design 是**更好的图形工具**，huashu-design 是**让图形工具这层消失**。两条路，不同受众。
+**云能力（完全可选）**：豆包 TTS 配音与 AI 看片评审隔离在 `scripts/cloud/`，需要你自备 API key，首次调用要显式 `--yes` 确认。默认不使用。核心链路（设计 → 渲染 → MP4 / PDF / PPTX 导出）**100% 本地运行，零网络、零 key**，无 telemetry。全部出站域名、密钥处理与删除边界见 [SECURITY.md](SECURITY.md)。
 
 ---
 
-## 安全与数据流
+## 项目限制
 
-核心链路（设计→渲染→MP4/PDF/PPTX导出）**100%本地运行，零网络零key**。云能力（豆包TTS配音、AI看片评审）全部隔离在 `scripts/cloud/`，完全可选：用你自己的key、只发对应厂商官方API、首次调用需 `--yes` 显式确认。无telemetry，没有任何数据发往作者服务器。全部出站域名、密钥处理、删除边界的穷举声明见 [SECURITY.md](SECURITY.md)，欢迎用你的agent对着代码逐条核验。
+- **不支持图层级可编辑的 PPTX 回 Figma**。产出是 HTML：可截图、录屏、导图，但不能拖进 Keynote 改文字位置。
+- **Framer Motion 级别的复杂动画不行**。3D、物理模拟、粒子系统超出本 Skill 边界。
+- **完全空白的品牌从零设计，质量会掉到 60–65 分**。凭空画 hi-fi 本来就是 last resort。
+- 本 Skill 面向「用 HTML 做视觉产出」的场景，**不做生产级 Web App、SEO 网站、需要后端的动态系统**。
 
----
-
-## Limitations
-
-- **不支持图层级可编辑的 PPTX 到 Figma**。产出 HTML，可截图、录屏、导图，但不能拖进 Keynote 改文字位置。
-- **Framer Motion 级别的复杂动画不行**。3D、物理模拟、粒子系统超出 skill 边界。
-- **完全空白的品牌从零设计质量会掉到 60–65 分**。凭空画 hi-fi 本来就是 last resort。
-
-这是一个 80 分的 skill，不是 100 分的产品。对不愿意打开图形界面的人，80 分的 skill 比 100 分的产品好用。
+这是一个 80 分的 Skill，不是 100 分的产品。对不愿意打开图形界面的人，80 分的 Skill 比 100 分的产品好用。
 
 ---
 
 ## 仓库结构
 
 ```
-huashu-design/
-├── SKILL.md                 # 主文档（给 agent 读）
+ai-product-design-skill/
+├── SKILL.md                 # 主文档（给 agent 读，中文）
 ├── README.md                # 中文 README（默认，本文件）
 ├── README.en.md             # 英文 README
-├── assets/                  # Starter Components
+├── SECURITY.md              # 安全与数据流声明
+├── LICENSE                  # MIT
+├── assets/                  # Starter Components + 预制样例
 │   ├── animations.jsx       # Stage + Sprite + Easing + interpolate
 │   ├── ios_frame.jsx        # iPhone 15 Pro bezel
-│   ├── android_frame.jsx
-│   ├── macos_window.jsx
-│   ├── browser_window.jsx
+│   ├── android_frame.jsx · macos_window.jsx · browser_window.jsx
 │   ├── deck_stage.js        # HTML 幻灯片引擎
 │   ├── deck_index.html      # 多文件 deck 拼接器
 │   ├── design_canvas.jsx    # 并排变体展示
+│   ├── cursor.jsx           # 产品 UI 演示光标叙事
 │   ├── showcases/           # 24 个预制样例（8 场景 × 3 风格）
-│   └── bgm-*.mp3            # 6 首场景化背景音乐
-├── references/              # 按任务深入读的子文档
-│   ├── animation-pitfalls.md
+│   └── bgm-*.mp3 · sfx/     # 场景化背景音乐与音效库
+├── references/              # 按任务深入读的子文档（35 个）
 │   ├── product-value.md     # 产品价值判断（有用→好懂→舒服→有意义）
-│   ├── design-styles.md     # 60 种 HTML 原生风格库（网页 20 + PPT 20 + 信息图 20）
-│   ├── slide-decks.md
-│   ├── editable-pptx.md
-│   ├── critique-guide.md
-│   ├── video-export.md
+│   ├── critique-guide.md    # 5 维度评审 + 易用性 + Spec 一致性核验
+│   ├── runtime-adapters.md  # 能力 → 载体映射（跨 Agent）
+│   ├── design-styles.md     # 60 种 HTML 原生风格库
+│   ├── app-prototype.md · slide-decks.md · editable-pptx.md
+│   ├── animation-*.md · camera-language.md · storyboard-basics.md
 │   └── ...
-├── scripts/                 # 导出工具链
+├── scripts/                 # 导出与验证工具链
 │   ├── render-video.js      # HTML → MP4
 │   ├── convert-formats.sh   # MP4 → 60fps + GIF
 │   ├── add-music.sh         # MP4 + BGM
-│   ├── export_deck_pdf.mjs
-│   ├── export_deck_pptx.mjs
-│   ├── html2pptx.js
-│   └── verify.py
-└── demos/                   # 9 个能力演示 (c*/w*)，中英双版 GIF/MP4/HTML + hero v10
+│   ├── export_deck_pdf.mjs · export_deck_pptx.mjs · html2pptx.js
+│   ├── verify.py · check-skill.py
+│   └── cloud/               # 可选云能力（自备 key + --yes）
+└── demos/                   # 能力演示（中英双版 HTML）+ hero 动画
+```
+
+结构自检：
+
+```bash
+python3 scripts/check-skill.py
 ```
 
 ---
 
-## 起源
+## 上游项目与致谢
 
-Anthropic 发布 Claude Design 那天我玩到凌晨四点。几天之后发现自己再也没点开过它，不是它不好——它是这个赛道目前最成熟的产品——是我宁愿让 agent 在终端里帮我干活，也不愿意打开任何图形界面。
+本项目的视觉能力、方法论源头与下列素材来自上游：
 
-于是让 agent 拆解 Claude Design 本身（包括社区流传的系统提示词、品牌资产协议、组件机制），蒸馏成结构化 spec，再写成 skill 装进自己的 Claude Code。
+**[花叔Design · huashu-design](https://github.com/alchaincyf/huashu-design)** — 作者 [@alchaincyf](https://github.com/alchaincyf)（花生 / 花叔），MIT License。
 
-感谢 Anthropic 把 Claude Design 的提示词写得清晰。这种基于其他产品灵感的二次创作，是开源文化在 AI 时代的新形态。
+- 上游仓库与安装命令（**安装本项目请用本仓库命令**）：`npx skills add alchaincyf/huashu-design`
+- 上游作者录制的新手教程：<https://www.youtube.com/watch?v=m-_BlUdcIvw>
+- 上游 Star 趋势：<https://star-history.com/#alchaincyf/huashu-design&Date>
+- 上游作者的案例：鹦鹉进化史网站 · 「聊聊 skill」演讲 deck · [FanBox · Coding Agent 的驾驶舱](https://github.com/alchaincyf/fanbox)
+- 上游作者自述的起源故事：Anthropic 发布 Claude Design 后，作者让 agent 拆解其公开的系统提示词、品牌资产协议与组件机制，蒸馏成结构化 spec 并写成 Skill。
 
----
+<table>
+<tr><td>
 
-## 用 huashu-design 做的产品
+**<b>上游作者的自我介绍（原作者本人，非本项目贡献）</b>**：花生是 AI Native Coder、独立开发者、AI 自媒体博主。代表作：小猫补光灯（App Store 付费榜 Top 1）、《一本书玩转 DeepSeek》、女娲 .skill。X / 公众号 / B站 / YouTube / 小红书 / [huasheng.ai](https://www.huasheng.ai/) / [bookai.top](https://bookai.top) 均可找到他。
 
-**[FanBox · Coding Agent 的驾驶舱](https://github.com/alchaincyf/fanbox)** 的三套界面皮肤，就是用 huashu-design 设计的。指挥 Claude Code / Codex 干活，看清它碰过的每个文件、每一行改动。
+</td></tr>
+</table>
 
-[![FanBox · Coding Agent 的驾驶舱](https://raw.githubusercontent.com/alchaincyf/fanbox/master/assets/promo-banner.jpg)](https://github.com/alchaincyf/fanbox)
+> 上游项目还维护了社区翻译版本（English / 한국어 / Tiếng Việt），翻译质量与各版本 license 条款由对应维护者负责，详见上游仓库。
 
----
+**本分支的差异**（谁做了什么，不混淆）：本分支由本仓库维护者维护，在保留上游全部视觉能力的前提下，新增并迭代 **产品价值判断、UX 与易用性评审、Spec 一致性核验、跨 Agent 能力映射**。README 中标注「上游 / 原作者」的演示、教程、案例与自我介绍，其版权与贡献归上游作者。
 
-## 社区翻译版本
+关于上游的知识产权处理：上游曾基于 Anthropic 公开的 Claude Design 提示词思路与社区流传材料做二次创作；本分支进一步将其中依赖专有代码的部分（如幻灯片转 PPTX）净室重写为自有实现。详见提交历史与 [LICENSE](LICENSE)。
 
-社区维护的翻译版本。翻译质量与各版本 license 条款由对应维护者负责，使用前请先确认。
+### 想给本项目贡献
 
-| 语言 | 维护者 | 仓库 |
-|---|---|---|
-| English | [@namandhakad712](https://github.com/namandhakad712) | [namandhakad712/huashu-design-en](https://github.com/namandhakad712/huashu-design-en) |
-| 한국어（韩语） | [@ktkarchive](https://github.com/ktkarchive) | [ktkarchive/ktk-design](https://github.com/ktkarchive/ktk-design) |
-| Tiếng Việt（越南语） | [@letrquan](https://github.com/letrquan) | [letrquan/huashu-design](https://github.com/letrquan/huashu-design) |
-
-想加你的语言？fork 仓库、翻译 `SKILL.md` + `README.md`，然后回这边开个 issue，我会把链接加进来。
+发现安装问题、引用缺失或想补充语种？欢迎开 issue。翻译请同时给出 `SKILL.md` 与 `README.md` 的对应改动。
 
 ---
 
 ## License
 
-**2026-05-14 起改为 MIT 协议。** 此前版本采用「个人使用免费、企业商用需授权」的 Personal Use License，对商用做了限制——现在这层限制完全解除。
+[MIT License](LICENSE)。你可以**自由使用、修改、分发**，**包括商业用途**——公司内部用、客户商单交付、做成付费产品对外卖，都没问题。无需事先授权、无需付费。注明出处不强制，但欢迎。
 
-按 [MIT License](LICENSE)，你可以**自由使用、修改、分发**本 skill，**包括商业用途**——公司内部用、客户商单交付、做成付费产品对外卖，都没问题。无需事先授权、无需付费、无需打招呼。注明出处不强制，但欢迎。
-
----
-
-## Connect · 花生（花叔）
-
-花生是 AI Native Coder、独立开发者、AI 自媒体博主。代表作：小猫补光灯（AppStore 付费榜 Top 1）、《一本书玩转 DeepSeek》、女娲 .skill（GitHub 12000+ star）。自媒体全平台 30 万+ 粉丝。
-
-| 平台 | 账号 | 链接 |
-|---|---|---|
-| X / Twitter | @AlchainHust | https://x.com/AlchainHust |
-| 公众号 | 花叔 | 微信搜索「花叔」 |
-| B 站 | 花叔 | https://space.bilibili.com/14097567 |
-| YouTube | 花叔 | https://www.youtube.com/@Alchain |
-| 小红书 | 花叔 | https://www.xiaohongshu.com/user/profile/5abc6f17e8ac2b109179dfdf |
-| 官网 | huasheng.ai | https://www.huasheng.ai/ |
-| 开发者主页 | bookai.top | https://bookai.top |
-
-合作咨询、自媒体约稿 → 以上任一平台私信花生即可。
+上游 huashu-design 自 2026-05-14 起同样采用 MIT License（此前为限制商用的 Personal Use License，该限制已解除）。本分支继承同一许可证，并保留原作者署名。

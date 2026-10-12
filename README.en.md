@@ -2,357 +2,358 @@
 
 <div align="center">
 
-# ai-product-design-skill
+# AI Product Design Skill
 
-> **This repository is a fork of [Huashu Design · huashu-design](https://github.com/alchaincyf/huashu-design) (by [@alchaincyf](https://github.com/alchaincyf), MIT License).**
-> Goal: to grow the original project's strong visual-design capabilities into an independent, long-maintained AI product-design skill that is not tied to any single AI agent platform.
-> All of the original's visual capabilities, 60-style library, brand-asset protocol and delivery pipeline are **preserved in full**; this fork progressively strengthens **product value judgement, interaction experience and delivery quality** — useful → clear → comfortable → meaningful.
-> The demo GIFs/MP4s below are distributed by the **upstream Releases**; references to "花叔 (Huashu)" are the original author's experience notes. See [LICENSE](LICENSE) and the acknowledgement at the end.
-
-> *"Type. Hit enter. A finished design lands in your lap."*
-> *「打字。回车。一份能交付的设计。」*
+### An open-source product design capability for AI agents
 
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Agent-Agnostic](https://img.shields.io/badge/Agent-Agnostic-blueviolet)](https://skills.sh)
-[![Skills](https://img.shields.io/badge/skills.sh-Compatible-green)](https://skills.sh)
+[![Agent](https://img.shields.io/badge/Agent-Agnostic-blueviolet)](https://skills.sh)
+[![skills.sh](https://img.shields.io/badge/skills.sh-Compatible-green)](https://skills.sh)
 
-<br>
+Say one sentence to a skills-capable AI agent and get back a **design deliverable that survives product scrutiny** — a clickable App/Web prototype, an editable PPTX deck, a product launch animation, a print-grade infographic, or a professional design review.
 
-**Say one sentence to your agent — Claude Code, Cursor, Codex, OpenClaw, Hermes all work.**
+3–30 minutes. Not "decent for AI" work: it ships a 60-style HTML-native library, a brand-asset protocol and an anti-AI-slop floor. More importantly, it adds the layer ordinary design skills skip — **judge product value first, then make the screen look good.**
 
-<br>
-
-3 to 30 minutes — you ship a **product launch animation**, a clickable App prototype, an editable PPT deck, a print-grade infographic.
-
-Not "decent for AI" quality — it looks like a real design team made it. Give the skill your brand assets (logo, colors, UI screenshots) and it reads your brand's voice; give it nothing and the built-in 20 design vocabularies still keep you out of AI slop territory.
-
-**Every animation in this README was made by huashu-design itself.** No Figma, no After Effects — just a sentence + skill run. Next product launch needs a promo video? You can make it too.
-
-```
-npx skills add alchaincyf/huashu-design
+```bash
+npx skills add tongsailong/ai-product-design-skill
 ```
 
-> 📣 **Now MIT-licensed.** As of 2026-05-14 this skill is fully open-source under the [MIT License](LICENSE) — free for personal **and** commercial use, no authorization required. ([what changed](#license))
-
-[See it work](#demo-gallery) · [Install](#install) · [What it does](#what-it-does) · [How it works](#core-mechanics) · [vs. Claude Design](#vs-claude-design)
-
-> 📖 **Note for English readers**: this skill is built by a Chinese-speaking developer. The skill's agent prompts (`SKILL.md`, `references/*.md`) are in Chinese but the agent is bilingual — works fine with English tasks. The demos below are the English parallel versions; the Chinese ones are in the default [Chinese README](README.md).
->
-> 📖 **致中文读者**：这个 skill 由花叔（@AlchainHust）开发。一句话能让 agent 在 3–30 分钟内交付**产品发布动画 / 可点击 App 原型 / 可编辑 PPT / 印刷级信息图**。完整中文介绍见 [README.md](README.md)（默认中文）。
+[Install](#install) · [What it does](#what-it-does) · [Demos & case studies](#demos--case-studies) · [Why it's different](#why-its-different-from-a-plain-design-skill) · [How it works](#how-it-works) · [Platforms & requirements](#platforms--requirements) · [Upstream & credits](#upstream--credits)
 
 </div>
 
----
+> **TL;DR**
+> **What it is** — a **product design** skill for AI agents: it does visuals (prototypes, decks, motion, infographics) *and* product judgment (value trade-offs, UX review, spec conformance).
+> **What it solves** — turns a one-sentence brief into a deliverable that can be reviewed and that doesn't drift in scope, instead of a pile of screens that merely look fine.
+> **How to install** — `npx skills add tongsailong/ai-product-design-skill`, agent-agnostic, not tied to one tool ([Install](#install)).
+> **Does it actually work** — every demo and sample below was produced by this skill.
 
 <p align="center">
-  <video src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/hero-animation-v10-en.mp4" autoplay muted loop playsinline width="100%">
-    Your browser doesn't support inline video. <a href="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/hero-animation-v10-en.mp4">Download MP4</a>.
-  </video>
+  <img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/hero-animation-v10-en.gif" alt="Demo: a one-line terminal prompt expands into three side-by-side design directions, one is focused, and the brand visual resolves" width="100%">
 </p>
 
-<p align="center"><sub>▲ 10-second hero animation showing what huashu-design does (<a href="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/hero-animation-v10-en.mp4">download MP4</a> if autoplay doesn't work)</sub></p>
+<p align="center"><sub>▲ 25-second hero animation: terminal → three directions → gallery ripple → four focus passes → brand reveal<br>
+This footage comes from the upstream project huashu-design (<a href="https://github.com/alchaincyf">@alchaincyf</a>); this branch preserves the capability in full. Open <a href="demos/hero-animation-v10-en.html">demos/hero-animation-v10-en.html</a> locally for the interactive version.</sub></p>
+
+> ℹ️ **This repository is a fork of [huashu-design](https://github.com/alchaincyf/huashu-design) (by [@alchaincyf](https://github.com/alchaincyf), MIT License).** The upstream visual capabilities, 60-style HTML-native library, asset protocol and delivery pipeline are **preserved in full**; this branch layers **product value judgment, UX & usability review, spec conformance checking and cross-agent adaptation** on top. Install *this* fork with the command above, **not** the upstream one (upstream links are in [Upstream & credits](#upstream--credits)).
 
 ---
 
-## Install
+## Why it's different from a plain design skill
 
-```bash
-npx skills add alchaincyf/huashu-design
-```
+Most "design skills" answer one question: **how do I make this look good?** This project answers two — **is it the right thing**, and only then **does it look good**.
 
-> **Verify after install**: this skill is more than a single SKILL.md — the `references/`, `assets/`, `scripts/`, and `demos/` subdirectories hold 99 referenced recipes, scripts, and assets that the skill depends on. After installing, check the install path (e.g. `~/.claude/skills/huashu-design/`); if you only see SKILL.md and none of those subdirectories, your `skills` CLI is too old (≤1.5.15 had a bug that synced only the single file, fixed in 1.5.19). Upgrade and reinstall:
->
-> ```bash
-> npm i -g skills@latest        # or npx skills@latest add alchaincyf/huashu-design
-> ```
->
-> If it's still wrong after upgrading, fall back to a `git clone` install — clone the repo into any skills directory:
->
-> ```bash
-> git clone https://github.com/alchaincyf/huashu-design.git ~/.claude/skills/huashu-design
-> ```
+| | A plain design skill | This project |
+|---|---|---|
+| Before designing | Starts immediately, filling in "what a page usually has" | **Judges product value first**: who is using it / what they're here to do / which part of the design absorbs the complexity for them |
+| Design judgment | Mostly visual (color, type, hierarchy) | Visual **plus three testable checks**: comprehension cost / operation cost / error tolerance |
+| Scope control | Habitually "fills it out a bit more" | **Scope freeze**: no pages or features the user didn't ask for; "a real product would have this" is not a requirement |
+| Review | Looks good or not | 5-dimension critique **plus a UX/usability layer** (product UIs) **plus spec conformance when a spec exists** |
+| Platform | Bound to one AI coding tool | **Agent-agnostic**: a capability→carrier map, with automatic degradation on weak runtimes |
+| Visual power | Varies | Upstream's 60-style HTML-native library, three-direction gate, brand-asset protocol and anti-slop floor (**all preserved**) |
 
-Then just talk to Claude Code:
+### 1. Product value judgment (useful → understandable → comfortable → meaningful)
 
-```
-"Make a keynote for AI psychology. Give me 3 style directions to pick from."
-"Build an iOS prototype for a Pomodoro app — 4 screens, actually clickable."
-"Turn this logic into a 60-second animation. Export MP4 and GIF."
-"Run a 5-dimension expert review on this design."
-```
+Product UI / interactive-prototype tasks get a lightweight layer of judgment by default. The four dimensions are **ordered — a later one cannot fix a missing earlier one**:
 
-No buttons, no panels, no Figma plugin. Agent-agnostic — drops into Claude Code, Cursor, Trae, Hermes, OpenClaw, or any markdown-skill-capable agent.
+| Dimension | The question to ask | What goes wrong if you misjudge it |
+|------|-------------|-------------|
+| **Useful** | Does it solve a real user problem, or one we assumed? | Pretty but unneeded = polished slop |
+| **Understandable** | How much effort does a user spend understanding it? Who carries the complexity? | The feature exists but can't be found or read = it doesn't exist |
+| **Comfortable** | Pointless steps, or interactions that fight existing habits? | One extra step and one extra thought, every single time |
+| **Meaningful** | Once the function works, is a little aesthetics / emotion / identity warranted? | Too early = decoration over function; never = purely instrumental |
 
----
+Three **testable** checks back it up (shared by self-check and critique): **comprehension cost** (can someone say what this screen is for within seconds) / **operation cost** (how many steps, and how many of them the system should be doing) / **error tolerance** (what happens on a wrong tap — undo, explanation). Any red flag is a spot to fix.
 
-## Star History
+Full method in [`references/product-value.md`](references/product-value.md) (Chinese). **Tasks that are only *viewed*** — animation, slides, infographic, cover — **do not** trigger product analysis; the original visual flow runs unchanged. Design never becomes PRD-writing.
 
-<p align="center">
-  <a href="https://star-history.com/#alchaincyf/huashu-design&Date">
-    <img src="https://api.star-history.com/svg?repos=alchaincyf/huashu-design&type=Date" alt="huashu-design Star History" width="80%">
-  </a>
-</p>
+### 2. UX & usability review
+
+When a review is requested (or the agent self-checks), product-UI work gets **an extra layer of user-value and usability checking inside the "Functionality" dimension** of the existing 5-dimension critique (philosophical coherence / visual hierarchy / execution craft / functionality / innovation): is the core action served by the first screen, which of the three value checks lights up. Findings must be **concrete and actionable** — which element, changed to what — not "the interaction could be smoother."
+
+### 3. Spec conformance (Scope / Non-goals / AC)
+
+When a design spec or explicit requirements exist, the review additionally runs a **scope conformance pass**: has Scope been exceeded, have Non-goals been breached, does every acceptance criterion have visible evidence in the design. A hit is flagged `BLOCKING_SPEC_DEVIATION`; without a spec it's N/A. It is an **additive check** — it doesn't replace the 5 dimensions and adds no approval gate. Together with **Scope freeze** during design (no unrequested pages / features / states), it keeps scope drift out of the delivery.
+
+### 4. Cross-agent adaptation (no single-tool lock-in)
+
+The skill is **agent-agnostic**: Claude Code, Codex, Cursor, Trae, OpenClaw, Hermes Agent, or any agent that supports markdown-based skills. The approach isn't "one doc per platform" — it decouples **capability** from **carrier**. The docs state only what capability a step needs (web search / parallel subagents / browser screenshots / local commands / file I/O); the agent maps it to whatever its environment provides. Weak runtimes (no subagents, non-Claude, small context) get a **tiered degradation mode** that sacrifices variety and process — **never the anti-slop floor or the real-asset protocol**. See [`references/runtime-adapters.md`](references/runtime-adapters.md).
+
+### 5. The original visual capabilities, fully preserved
+
+The four items above are an **added judgment layer**, not a replacement. Upstream's visual output pipeline is intact:
+
+- **Three-direction visual exploration**: every new design task produces three real drafts first (style or brand named — still no exemption), so you choose by **looking**, not by reading style names
+- **60-style HTML-native library** (20 web + 20 deck + 20 infographic, pure CSS, no image generation)
+- **Interactive prototypes** (real iPhone bezel, clickable, Playwright-verified) / **motion** (Stage + Sprite timeline, MP4/GIF export) / **editable PPTX** (real text frames) / **infographics** (print-grade, PDF/PNG/SVG)
+- **Brand-asset protocol** (5 hard steps — never guess brand colors from memory) and an **anti-AI-slop floor**
 
 ---
 
 ## What it does
 
 | Capability | Deliverable | Typical time |
-|---|---|---|
+|------|--------|----------|
 | Interactive prototype (App / Web) | Single-file HTML · real iPhone bezel · clickable · Playwright-verified | 10–15 min |
 | Slide decks | HTML deck (browser presentation) + editable PPTX (text frames preserved) | 15–25 min |
 | Motion design | MP4 (25fps / 60fps interpolation) + GIF (palette-optimized) + BGM | 8–12 min |
 | Design variations | 3+ side-by-side · Tweaks live params · cross-dimension exploration | 10 min |
-| Infographic / data viz | Print-quality typography · exports to PDF/PNG/SVG | 10 min |
-| Design direction advisor | 5 schools × 20 philosophies · 3 directions recommended · Demos generated in parallel | 5 min |
-| 5-dimension expert critique | Radar chart + Keep/Fix/Quick Wins · actionable punch list | 3 min |
+| Infographic / data viz | Print-grade typography · exports PDF / PNG / SVG | 10 min |
+| Design direction advisor | **Three logics in parallel** (second-hand roulette + award-winning references + best-designer philosophy) · three real visuals | 5 min |
+| Expert critique | 5-dimension radar + Keep / Fix / Quick Wins · actionable punch list · spec conformance when a spec exists | 3 min |
+
+> Times are upstream's measured ranges; they vary with model capability and task complexity.
+
+**Good fits**: hi-fi interactive prototypes and product mockups · interfaces that need to be clicked or presented · design-direction exploration · presentation decks · motion and video assets · infographics and data visualization · design review and pre-delivery QA.
+
+**Poor fits**: production web apps · SEO sites · dynamic systems that need a backend and database. Those don't go through this skill.
 
 ---
 
-## Demo Gallery
+## Install
 
-> English parallel versions of the demos. Chinese versions live at the default filenames (see the Chinese README).
+```bash
+npx skills add tongsailong/ai-product-design-skill
+```
 
-### Design Direction Advisor
+> ✅ **Verified**: installing this repository with `npx skills add tongsailong/ai-product-design-skill` in a clean directory succeeded, and `references/` (35 files), `assets/`, `scripts/` and `demos/` all matched the repository — no missing files. If your install comes out incomplete, see the troubleshooting below.
 
-The fallback for vague briefs: pick 3 differentiated directions from 5 schools × 20 philosophies, generate all 3 demos in parallel, let the user choose.
+**Verify after install**: this skill is more than a single `SKILL.md` — `references/`, `assets/`, `scripts/` and `demos/` hold 65 referenced recipes, scripts and assets, and a missing one breaks a path. The repo ships a self-check that turns "is it complete?" into one command:
 
-<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/w3-fallback-advisor-en.gif" width="100%"></p>
+```bash
+python3 scripts/check-skill.py            # structure + reference integrity
+python3 scripts/check-skill.py --strict   # also flag files nothing references
+```
 
-### iOS App Prototype
+Check the install directory (e.g. `~/.claude/skills/ai-product-design-skill/`). **If you only see SKILL.md and none of those subdirectories**, your `skills` CLI is too old (≤1.5.15 had a bug that synced only the single file, fixed in 1.5.19). Upgrade and reinstall:
 
-Pixel-accurate iPhone 15 Pro body (Dynamic Island / status bar / Home Indicator) · state-driven multi-screen navigation · real images pulled from Wikimedia/Met/Unsplash · Playwright click tests before delivery.
+```bash
+npm i -g skills@latest        # or npx skills@latest add tongsailong/ai-product-design-skill
+```
 
-<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c1-ios-prototype-en.gif" width="100%"></p>
+If it's still wrong, fall back to a `git clone` install — clone the repo into any skills directory:
 
-### Motion Design Engine
+```bash
+git clone https://github.com/tongsailong/ai-product-design-skill.git ~/.claude/skills/ai-product-design-skill
+```
 
-Stage + Sprite time-slice model · `useTime` / `useSprite` / `interpolate` / `Easing` — four APIs cover every animation need · one command exports MP4 / GIF / 60fps-interpolated / BGM-scored finals.
-
-<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c3-motion-design-en.gif" width="100%"></p>
-
-### HTML Slides → Editable PPTX
-
-HTML decks for browser presentation · `html2pptx.js` reads DOM computed styles and translates each element into real PowerPoint objects · exports are **actual text frames**, not image-bed fakes.
-
-<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c2-slides-pptx-en.gif" width="100%"></p>
-
-### Tweaks · Live Variation Switching
-
-Colors / typography / information density parameterized · side panel toggle · pure-frontend + `localStorage` persistence · survives reload.
-
-<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c4-tweaks-en.gif" width="100%"></p>
-
-### Infographic / Data Viz
-
-Magazine-grade typography · precise CSS Grid columns · `text-wrap: pretty` typographic details · driven by real data · exports to vector PDF / 300dpi PNG / SVG.
-
-<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c5-infographic-en.gif" width="100%"></p>
-
-### 5-Dimension Expert Critique
-
-Philosophical coherence · visual hierarchy · execution craft · functionality · innovation — each scored 0–10 · radar-chart visualization · outputs Keep / Fix / Quick Wins punch list.
-
-<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c6-expert-review-en.gif" width="100%"></p>
-
-### Junior Designer Workflow
-
-No heroic one-shot attempts: start with assumptions + placeholders + reasoning, show it to the user early, then iterate. Fixing a misunderstanding early is 100× cheaper than fixing it late.
-
-<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/w2-junior-designer-en.gif" width="100%"></p>
-
-### Core Asset Protocol · 5-step hard process
-
-Mandatory whenever the task involves a specific brand: ask → search → download (three fallback paths) → verify + extract → write `brand-spec.md` covering **logo, product shots, UI screenshots, colors, fonts** — all required assets, not just colors.
-
-<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/w1-brand-protocol-en.gif" width="100%"></p>
+Then just talk to Claude Code / Codex / Cursor or any skills-capable agent (see below).
 
 ---
 
-## Core Mechanics
+## Usage examples
 
-### Core Asset Protocol
+No buttons, no panels, no Figma plugin — one sentence is enough:
 
-The hardest rule in the skill. When the task touches a specific brand (Stripe, Linear, Anthropic, DJI, your own company, etc.), five steps are enforced:
+```
+"Build an iOS prototype for a Pomodoro app — 4 screens, actually clickable."
+"Make a keynote on AI psychology. Give me 3 style directions to pick from."
+"Turn this logic into a 60-second animation. Export MP4 and GIF."
+"Review this design, and focus on usability."
+"Here's our app spec — check the build for scope creep and missed acceptance criteria."
+"The interface feels messy — show me where comprehension and operation costs are too high."
+"Design a brand landing page from our logo + palette + UI screenshots, three directions."
+"Turn this quarter's data into a print-grade infographic I can export as PDF."
+```
+
+---
+
+## Demos & case studies
+
+### Open locally
+
+- **24 prebuilt samples**: 8 scenes × 3 styles (Pentagram / Build / Takram) — PNG thumbnails plus renderable HTML; index at [`assets/showcases/INDEX.md`](assets/showcases/INDEX.md)
+- **18 capability demo HTML files** (Chinese and English, `-en` for English): `demos/c1-ios-prototype.html`, `c2-slides-pptx`, `c3-motion-design`, `c4-tweaks`, `c5-infographic`, `c6-expert-review`, `w1-brand-protocol`, `w2-junior-designer`, `w3-fallback-advisor`, plus `demos/hero-animation-v10-en.html`
+- **Long-form / narrated demos**: `demos/md-html-narration/`, `demos/voiceover-demo/`
+
+### Animated demos (GIFs served from the upstream Releases)
+
+> The GIFs below were produced and published by the upstream project huashu-design ([@alchaincyf](https://github.com/alchaincyf)); this skill preserves the corresponding capability, and the captions reference its public description.
+
+**Design direction advisor** — for vague briefs, three complementary logics run in parallel (roulette + award-winning references + best-designer philosophy) and produce three real visuals to choose from.
+
+<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/w3-fallback-advisor-en.gif" alt="Design direction advisor demo: three differentiated directions generated in parallel and shown side by side" width="100%"></p>
+
+**iOS app prototype** — pixel-accurate iPhone 15 Pro body (Dynamic Island / status bar / home indicator) · state-driven multi-screen navigation · Playwright click tests.
+
+<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c1-ios-prototype-en.gif" alt="iOS prototype demo: screen states switching inside a real device bezel with click interaction" width="100%"></p>
+
+**Motion design engine** — Stage + Sprite time-slice model · four APIs (`useTime` / `useSprite` / `interpolate` / `Easing`) · one command exports MP4 / GIF / 60fps-interpolated / BGM-scored finals.
+
+<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c3-motion-design-en.gif" alt="Motion engine demo: timeline-driven animated graphics and transitions" width="100%"></p>
+
+**HTML slides → editable PPTX** — `html2pptx.js` reads DOM computed styles and translates each element into real PowerPoint objects; exports are **actual text frames** you can double-click and edit.
+
+<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c2-slides-pptx-en.gif" alt="Slides demo: HTML deck navigation and the exported editable PPTX text frames" width="100%"></p>
+
+**Tweaks · live variation switching** — colors / typography / density parameterized · side-panel toggle · pure frontend + `localStorage` persistence.
+
+<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c4-tweaks-en.gif" alt="Tweaks demo: side panel switching palette and typography with the page updating live" width="100%"></p>
+
+**Infographic / data viz** — magazine-grade typography · precise CSS Grid columns · driven by real data · exports to vector PDF / 300dpi PNG / SVG.
+
+<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c5-infographic-en.gif" alt="Infographic demo: a long, data-driven magazine-grade layout" width="100%"></p>
+
+**Expert critique** — five dimensions scored 0–10 · radar visualization · Keep / Fix / Quick Wins punch list.
+
+<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c6-expert-review-en.gif" alt="Design critique demo: five-dimension radar chart with a Keep/Fix/Quick Wins list" width="100%"></p>
+
+**Junior designer workflow** — no heroic one-shot attempts: assumptions + placeholders + reasoning first, shown to you early, then iterated.
+
+<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/w2-junior-designer-en.gif" alt="Junior designer workflow demo: placeholders and assumptions shown first, then filled in iteratively" width="100%"></p>
+
+**Brand asset protocol · 5-step hard process** — ask → search → download (three fallbacks) → grep colors → write `brand-spec.md`.
+
+<p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/w1-brand-protocol-en.gif" alt="Brand asset protocol demo: pulling logo and color values from official sources into a spec" width="100%"></p>
+
+### Real case studies by the upstream author (quoted, not this fork's output)
+
+- **Parrot evolution site** — from the single prompt "make a site about parrot evolution": judged images to be content-critical, fetched public-domain natural-history illustrations, ran three logics in parallel. Live: <https://www.huasheng.ai/parrots/>
+- **"Talking about skills" PM after-party deck** — 13 HTML slides, all made with the skill, including two 22-second cinematic demos with BGM + SFX. Live: <https://skill-huasheng.vercel.app>
+
+---
+
+## How it works
+
+### Three-direction gate (mandatory for any new design)
+
+Any task that produces new visual design starts by rendering **three real draft directions** for the user to choose from — a named style or brand narrows the interpretation but doesn't waive the choice. Users choose by looking, not by reading style names.
+
+### Product value judgment & scope freeze
+
+Product-UI tasks write three lines before starting (who's using it / what they're here to do / which part absorbs their complexity) and share one requirement line across the three directions. During design, **no pages, features or states the user didn't ask for** — if you believe the requirements should expand, hand it back to the user instead of turning "don't do X" into "did X."
+
+### Brand-asset protocol (5 steps, never guess)
 
 | Step | Action | Purpose |
 |---|---|---|
-| 1 · Ask | Checklist of 6 asset types: logo / product shots / UI screenshots / color palette / fonts / brand guidelines | Respect existing resources |
-| 2 · Search official channels | `<brand>.com/brand` · `<brand>.com/press` · `brand.<brand>.com` · product pages · launch films | Find authoritative assets |
-| 3 · Download by asset type | Logo (SVG → inline-SVG in HTML → social avatar) · Product shots (hero → press kit → launch video frames → AI-generated from reference) · UI (App Store screenshots → official video frames) | Three fallback paths per asset type |
-| 4 · Verify + extract | Check logo fidelity · product image resolution · UI freshness · grep color hex from real assets | **Never guess from memory** |
-| 5 · Freeze to spec | Write `brand-spec.md` with logo paths, product image paths, UI screenshot paths, CSS variables for colors/fonts | Un-frozen knowledge evaporates |
+| 1 · Ask | Do they have brand guidelines / logo / product shots / UI screenshots? | Respect existing resources |
+| 2 · Search official pages | `<brand>.com/brand` · `brand.<brand>.com` · `<brand>.com/press` | Authoritative sources |
+| 3 · Download | SVG files → full site HTML → color picked from product shots | Three fallbacks, next one immediately on failure |
+| 4 · Extract colors | grep every `#xxxxxx`, rank by frequency, drop blacks/whites/greys | **Never guess brand colors from memory** |
+| 5 · Freeze to spec | `brand-spec.md` + CSS variables; all HTML uses `var(--brand-*)` | Un-frozen knowledge evaporates |
 
-**Ranking of asset importance** (from the skill's internal rubric):
+### Junior designer workflow
 
-1. Logo — mandatory for any brand
-2. Product renders — mandatory for physical products
-3. UI screenshots — mandatory for digital products
-4. Color values — auxiliary
-5. Fonts — auxiliary
+The default mode across every task: send the full question set in one batch and wait; write assumptions + placeholders + reasoning into the HTML first; show it to the user early (even gray blocks); show again at content → variations → Tweaks; eyeball the browser with Playwright before delivery.
 
-A/B-tested (v1 vs v2, 6 agents each): **v2 reduced stability variance by 5×**. Stability of stability — that's the real moat.
+### Fact verification first (core principle #0)
 
-### Design Direction Advisor (Fallback)
+When a task mentions a specific product, technology or event, the first action must be a lookup (existence, version, specs) rather than an assertion from training memory. A search costs ~10 seconds; a wrong assumption can cost 1–2 hours of rework.
 
-Triggered when the brief is too vague to execute:
+### Anti-AI-slop floor
 
-- Don't run on generic intuition — enter Fallback mode
-- Recommend 3 differentiated directions from 5 schools × 20 philosophies, each **from a different school**
-- Each comes with flagship works, gestalt keywords, representative designer
-- Generate 3 visual demos in parallel, let the user choose
-- Once chosen, continue into the Junior Designer main flow
-
-### Junior Designer Workflow
-
-The default working mode across every task:
-
-- Send the full question set in one batch, wait for all answers before moving
-- Write assumptions + placeholders + reasoning comments directly into the HTML
-- Show it to the user early (even if just gray blocks)
-- Fill in real content → variations → Tweaks — show at each of these three steps
-- Manually eyeball the browser with Playwright before delivery
-
-### Product Value Judgment
-
-On product UI / interactive-prototype tasks (App, dashboard, landing page, internal tool, multi-step flow), a lightweight layer of judgment is applied by default — ordered **useful → understandable → comfortable → meaningful** (a later layer can't fix a missing earlier one):
-
-- **Three questions before you start**: who's using it · what they're here to do · which part of the design absorbs the complexity for them — written into the HTML header assumptions, **no new checkpoint, no extra confirmation round**
-- **Three testable checks**: comprehension cost / operation cost / error tolerance — shared by self-check and critique; any red flag is a spot to fix
-- **Folded into the three-direction gate** (the hard gate is unchanged): the three directions share one "user + core action" line, and can be differentiated along the product-value axis (minimal numeric / dense dashboard / motivational narrative)
-- **Critique gains a layer**: product-UI critiques check user value and usability inside the "Functionality" dimension, and every issue must be concrete and actionable
-- **Boundary**: tasks that are only *viewed* (animation, slides, infographic, cover) **do not** trigger product analysis — the original visual flow runs unchanged; design never becomes PRD-writing
-
-Full method: `references/product-value.md`.
-
-### Fact Verification First (Principle #0)
-
-The highest-priority rule, added after a real failure mode: when the task mentions a specific product / technology / event (e.g., "DJI Pocket 4", "Nano Banana Pro", "Gemini 3 Pro"), the first action **must** be a `WebSearch` to confirm existence, release status, current version, and specs. No claims from training-corpus memory. Cost of a search: ~10 seconds. Cost of a wrong assumption: 1–2 hours of rework.
-
-### Anti AI-slop Rules
-
-Avoid the visual common denominator of AI output (purple gradients / emoji icons / rounded-corner + left border accent / SVG humans / Inter-as-display / **CSS silhouettes standing in for real product shots**). Use `text-wrap: pretty` + CSS Grid + carefully chosen serif display faces + oklch colors.
+Avoid the visual common denominator of AI output (purple gradients / emoji icons / rounded-corner + left-border accent / SVG humans / Inter as display). Use `text-wrap: pretty` + CSS Grid + carefully chosen serif display faces and oklch colors.
 
 ---
 
-## vs. Claude Design
+## Platforms & requirements
 
-I'll be upfront: the Core Asset Protocol's philosophy was lifted from system prompts Anthropic wrote for Claude Design. That prompt hammers home a single idea — **great hi-fi design doesn't start from a blank page, it grows from existing design context**. That one principle is the difference between a 65-point design and a 90-point design.
+**Agents**: Claude Code · Codex · Cursor · Trae · OpenClaw · Hermes Agent, or any agent supporting markdown-based skills. Weak runtimes (no subagents / non-Claude / limited context) enter a degradation mode and still produce three directions (serial and physically isolated).
 
-Positioning differences:
+**Local toolchain** (only needed when you use the matching export/verify capability):
 
-| | Claude Design | huashu-design |
-|---|---|---|
-| Form | Web product (used in browser) | Skill (used in Claude Code) |
-| Quota | Subscription quota | API usage · parallel agents unblocked |
-| Output | Canvas + Figma export | HTML / MP4 / GIF / editable PPTX / PDF |
-| Interaction | GUI (click, drag, edit) | Conversation (tell agent, wait) |
-| Complex animation | Limited | Stage + Sprite timeline · 60fps export |
-| Agent compatibility | Claude.ai only | Claude Code / Cursor / Trae / Hermes / OpenClaw |
+| Requirement | Used for |
+|---|---|
+| Node.js | `scripts/render-video.js` (HTML→MP4), `html2pptx.js`, `export_deck_*.mjs`, `gen_deck_thumbs.mjs`; `package.json` deps: `playwright` / `pptxgenjs` / `pdf-lib` / `sharp` |
+| ffmpeg | MP4 → 60fps / GIF, adding BGM, mixing narration (`convert-formats.sh`, `add-music.sh`, `mix-voiceover.sh`) |
+| Python 3 | `scripts/verify.py` (Playwright verification), `fetch_images.py`, `check-skill.py` (structure self-check) |
+| Playwright | Pre-delivery click tests and screenshot verification |
 
-Claude Design is a **better graphics tool**. Huashu-design makes **the graphics-tool layer disappear**. Two paths, different audiences.
-
----
-
-## Security & Data Flow
-
-The core pipeline (design → render → MP4/PDF/PPTX export) runs **100% locally — zero network calls, zero API keys**. Cloud features (Doubao TTS narration, AI video review) are isolated in `scripts/cloud/`, fully optional: your own keys, official vendor APIs only, and an explicit `--yes` consent gate before anything leaves your machine. No telemetry; nothing is ever sent to any author-controlled server. Every outbound host, credential touchpoint, and deletion boundary is exhaustively declared in [SECURITY.md](SECURITY.md) — point your agent at it and verify against the code.
+**Cloud features (fully optional)**: Doubao TTS narration and AI video review live in `scripts/cloud/`, need your own API key, and require an explicit `--yes` on first call. Off by default. The core pipeline (design → render → MP4 / PDF / PPTX export) runs **100% locally, zero network calls, zero keys**, with no telemetry. Every outbound host, credential touchpoint and deletion boundary is declared in [SECURITY.md](SECURITY.md).
 
 ---
 
 ## Limitations
 
-- **No layer-editable PPTX-to-Figma round-trip.** The output is HTML — screenshottable, recordable, image-exportable, but not draggable into Keynote for text-position tweaks.
-- **Framer-Motion-tier complex animations are out of scope.** 3D, physics simulation, particle systems exceed the skill's boundaries.
-- **Brand-from-zero design quality drops to 60–65 points.** Drawing hi-fi from nothing was always a last resort.
+- **No layer-editable PPTX-to-Figma round trip.** The output is HTML — screenshottable, recordable, image-exportable, but not draggable into Keynote for text-position tweaks.
+- **Framer-Motion-tier complex animation is out of scope.** 3D, physics simulation, particle systems exceed the skill's boundaries.
+- **Brand-from-zero design drops to 60–65 points.** Drawing hi-fi from nothing was always a last resort.
+- The skill targets "visual output built with HTML" — **it does not build production web apps, SEO sites, or backend-driven dynamic systems**.
 
 This is an 80-point skill, not a 100-point product. For people unwilling to open a graphical UI, an 80-point skill beats a 100-point product.
 
 ---
 
-## Repository Structure
+## Repository structure
 
 ```
-huashu-design/
-├── SKILL.md                 # Main doc (read by agent, Chinese)
+ai-product-design-skill/
+├── SKILL.md                 # Main doc (read by the agent; Chinese)
 ├── README.md                # Chinese README (default)
 ├── README.en.md             # English README (this file)
-├── assets/                  # Starter Components
+├── SECURITY.md              # Security & data-flow statement
+├── LICENSE                  # MIT
+├── assets/                  # Starter components + prebuilt samples
 │   ├── animations.jsx       # Stage + Sprite + Easing + interpolate
 │   ├── ios_frame.jsx        # iPhone 15 Pro bezel
-│   ├── android_frame.jsx
-│   ├── macos_window.jsx
-│   ├── browser_window.jsx
+│   ├── android_frame.jsx · macos_window.jsx · browser_window.jsx
 │   ├── deck_stage.js        # HTML deck engine
 │   ├── deck_index.html      # Multi-file deck assembler
 │   ├── design_canvas.jsx    # Side-by-side variation display
+│   ├── cursor.jsx           # Cursor narrative for product-UI demos
 │   ├── showcases/           # 24 prebuilt samples (8 scenes × 3 styles)
-│   └── bgm-*.mp3            # 6 scene-specific background tracks
-├── references/              # Drill-down docs by task (Chinese)
-│   ├── animation-pitfalls.md
-│   ├── design-styles.md     # 20 design philosophies in detail
-│   ├── slide-decks.md
-│   ├── editable-pptx.md
-│   ├── critique-guide.md
-│   ├── video-export.md
+│   └── bgm-*.mp3 · sfx/     # Scene-specific tracks and SFX library
+├── references/              # Drill-down docs by task (35 files; Chinese)
+│   ├── product-value.md     # Product value judgment (useful→understandable→comfortable→meaningful)
+│   ├── critique-guide.md    # 5-dimension critique + usability + spec conformance
+│   ├── runtime-adapters.md  # Capability → carrier map (cross-agent)
+│   ├── design-styles.md     # 60-style HTML-native library
+│   ├── app-prototype.md · slide-decks.md · editable-pptx.md
+│   ├── animation-*.md · camera-language.md · storyboard-basics.md
 │   └── ...
-├── scripts/                 # Export toolchain
+├── scripts/                 # Export & verification toolchain
 │   ├── render-video.js      # HTML → MP4
 │   ├── convert-formats.sh   # MP4 → 60fps + GIF
 │   ├── add-music.sh         # MP4 + BGM
-│   ├── export_deck_pdf.mjs
-│   ├── export_deck_pptx.mjs
-│   ├── html2pptx.js
-│   └── verify.py
-└── demos/                   # Capability demos referenced by this README
+│   ├── export_deck_pdf.mjs · export_deck_pptx.mjs · html2pptx.js
+│   ├── verify.py · check-skill.py
+│   └── cloud/               # Optional cloud features (own key + --yes)
+└── demos/                   # Capability demos (Chinese + English HTML) + hero animation
+```
+
+Structure self-check:
+
+```bash
+python3 scripts/check-skill.py
 ```
 
 ---
 
-## Origin Story
+## Upstream & credits
 
-The day Anthropic launched Claude Design I played with it until 4 a.m. A few days later I realized I hadn't opened it once since — not because it's bad (it's the most polished product in the category) but because I'd rather have an agent work in my terminal than open any graphical UI.
+The visual capabilities, methodology lineage and the following materials come from upstream:
 
-So I had an agent deconstruct Claude Design itself (including the system prompts circulating in the community, the brand asset protocol, the component mechanics), distill it into a structured spec, then write it as a skill installed in my own Claude Code.
+**[Huashu Design · huashu-design](https://github.com/alchaincyf/huashu-design)** — by [@alchaincyf](https://github.com/alchaincyf), MIT License.
 
-Thanks to Anthropic for writing the Claude Design prompts so clearly. This kind of derivative work inspired by other products is the new form of open-source culture in the AI era.
+- Upstream repo and install command (**use this fork's command to install this fork**): `npx skills add alchaincyf/huashu-design`
+- Upstream author's beginner tutorial: <https://www.youtube.com/watch?v=m-_BlUdcIvw>
+- Upstream star history: <https://star-history.com/#alchaincyf/huashu-design&Date>
+- Upstream author's case studies: parrot-evolution site · the "talking about skills" deck · [FanBox · a cockpit for coding agents](https://github.com/alchaincyf/fanbox)
+- The origin story as told by the upstream author: after Anthropic shipped Claude Design, the author had an agent deconstruct its publicly circulating system prompts, brand-asset protocol and component mechanics into a structured spec, then wrote it as a skill.
 
----
+<table>
+<tr><td>
 
-## Available Languages
+**<b>The upstream author's bio (the original author's own, not a contribution of this fork)</b>**: Huasheng is an AI-native coder, independent developer and AI media creator. Notable work: Cat Fill Light (App Store top paid), *A Book on DeepSeek*, Nüwa.skill. Find him on X, WeChat, Bilibili, YouTube, Xiaohongshu, [huasheng.ai](https://www.huasheng.ai/) or [bookai.top](https://bookai.top).
 
-Community-maintained translations of this skill. Translation quality and license terms are the responsibility of each maintainer — please check the linked repo before relying on it.
+</td></tr>
+</table>
 
-| Language | Maintainer | Repository |
-|---|---|---|
-| English | [@namandhakad712](https://github.com/namandhakad712) | [namandhakad712/huashu-design-en](https://github.com/namandhakad712/huashu-design-en) |
-| 한국어 (Korean) | [@ktkarchive](https://github.com/ktkarchive) | [ktkarchive/ktk-design](https://github.com/ktkarchive/ktk-design) |
-| Tiếng Việt (Vietnamese) | [@letrquan](https://github.com/letrquan) | [letrquan/huashu-design](https://github.com/letrquan/huashu-design) |
+> Upstream also maintains community translations (English / Korean / Vietnamese); their translation quality and license terms are each maintainer's responsibility — see the upstream repo.
 
-Want to add your language? Fork the repo, translate `SKILL.md` + `README.md`, and open an issue here so we can link it.
+**What this fork changes** (no conflation of authorship): this branch is maintained by this repository's maintainer and, while preserving the full upstream visual capability, adds and iterates on **product value judgment, UX & usability review, spec conformance checking and cross-agent capability mapping**. Demos, tutorials, case studies and bios labelled "upstream" / "original author" in this README belong to the upstream author.
+
+On upstream's own IP handling: upstream built on the ideas in Anthropic's publicly circulated Claude Design prompts and community material; this fork further clean-room rewrote the parts that depended on proprietary code (e.g. HTML-slides-to-PPTX) as its own implementation. See the commit history and [LICENSE](LICENSE).
+
+### Contributing here
+
+Found an install problem, a broken reference, or want to add a language? Open an issue. For translations, please include matching changes to both `SKILL.md` and `README.md`.
 
 ---
 
 ## License
 
-**Relicensed to MIT on 2026-05-14.** This skill was previously released under a Personal Use License that restricted commercial use. That restriction is now removed.
+[MIT License](LICENSE). You are free to **use, modify and distribute** this skill for any purpose, **including commercial use** — inside companies, in client deliverables, as part of a paid product. No prior authorization, no fee. Attribution is appreciated but not required.
 
-Under the [MIT License](LICENSE) you are free to **use, modify, and distribute** this skill for any purpose, **including commercial use** — inside companies, in client deliverables, as part of a paid product, anywhere. No prior authorization, no licensing fee, no notification required. Attribution is appreciated but not required.
-
----
-
-## Connect · Huasheng (Huashu)
-
-Huasheng is an AI-native coder, independent developer, and AI content creator. Notable work: Cat Fill Light (App Store Top 1 in Paid category), *A Book on DeepSeek*, Nüwa.skill (GitHub 21k+ stars). Combined 300k+ followers across platforms.
-
-| Platform | Handle | Link |
-|---|---|---|
-| X / Twitter | @AlchainHust | https://x.com/AlchainHust |
-| WeChat Official Account | 花叔 | Search "花叔" in WeChat |
-| Bilibili | 花叔 | https://space.bilibili.com/14097567 |
-| YouTube | 花叔 | https://www.youtube.com/@Alchain |
-| Xiaohongshu | 花叔 | https://www.xiaohongshu.com/user/profile/5abc6f17e8ac2b109179dfdf |
-| Official Site | huasheng.ai | https://www.huasheng.ai/ |
-| Developer Hub | bookai.top | https://bookai.top |
-
-For collaborations or sponsored content, DM on any of the above.
+Upstream huashu-design has also been MIT-licensed since 2026-05-14 (previously a commercial-restricting Personal Use License, now removed). This fork inherits that license and preserves the original author's attribution.
