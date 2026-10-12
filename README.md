@@ -2,7 +2,12 @@
 
 <div align="center">
 
-# Huashu Design
+# ai-product-design-skill
+
+> **本仓库是 [花叔Design · huashu-design](https://github.com/alchaincyf/huashu-design)（作者 [@alchaincyf](https://github.com/alchaincyf)，MIT License）的二次开发 fork。**
+> 定位：把原项目优秀的视觉设计能力，发展为自己长期维护、独立于具体 AI Agent 平台的 AI 产品设计 Skill。
+> 原项目的视觉设计能力、60 种 HTML 原生风格库、资产协议与交付链**完整保留**；本分支在此之上逐步增强**产品价值判断、交互体验与设计交付质量**，原则是「有用 → 好懂 → 舒服 → 有意义」。
+> 下文中的效果演示图（GIF/MP4）由**上游 Releases** 分发；「花叔」相关表述为原作者经验出处。致谢与许可见 [LICENSE](LICENSE) 与文末。
 
 > *「打字。回车。一份能交付的设计。」*
 > *"Type. Hit enter. A finished design lands in your lap."*

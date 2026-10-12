@@ -2,7 +2,12 @@
 
 <div align="center">
 
-# Huashu Design
+# ai-product-design-skill
+
+> **This repository is a fork of [Huashu Design · huashu-design](https://github.com/alchaincyf/huashu-design) (by [@alchaincyf](https://github.com/alchaincyf), MIT License).**
+> Goal: to grow the original project's strong visual-design capabilities into an independent, long-maintained AI product-design skill that is not tied to any single AI agent platform.
+> All of the original's visual capabilities, 60-style library, brand-asset protocol and delivery pipeline are **preserved in full**; this fork progressively strengthens **product value judgement, interaction experience and delivery quality** — useful → clear → comfortable → meaningful.
+> The demo GIFs/MP4s below are distributed by the **upstream Releases**; references to "花叔 (Huashu)" are the original author's experience notes. See [LICENSE](LICENSE) and the acknowledgement at the end.
 
 > *"Type. Hit enter. A finished design lands in your lap."*
 > *「打字。回车。一份能交付的设计。」*

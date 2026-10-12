@@ -1,9 +1,13 @@
 ---
-name: huashu-design
-description: 花叔Design——用HTML做高保真原型、幻灯片、动画、可视化与专家评审。任何新设计100%先出三个方向初稿给用户选（指定风格/品牌也不豁免），选定后才执行。触发词：做原型、PPT、幻灯片、动画、设计风格、评审、做个HTML页面、UI mockup、导出MP4/GIF、做个好看的。生产级Web App/需后端的系统不适用。
+name: ai-product-design-skill
+description: ai-product-design-skill（二次开发自 花叔Design / huashu-design）——用HTML做高保真原型、幻灯片、动画、可视化与专家评审。任何新设计100%先出三个方向初稿给用户选（指定风格/品牌也不豁免），选定后才执行。触发词：做原型、PPT、幻灯片、动画、设计风格、评审、做个HTML页面、UI mockup、导出MP4/GIF、做个好看的。生产级Web App/需后端的系统不适用。
 ---
 
-# 花叔Design · Huashu-Design
+# ai-product-design-skill
+
+> **本 skill 是 [花叔Design · huashu-design](https://github.com/alchaincyf/huashu-design)（作者 [@alchaincyf](https://github.com/alchaincyf)，MIT）的二次开发分支。**
+> 原项目的视觉设计能力、60 种风格库、资产协议与交付链完整保留；本分支在此之上逐步增强**产品价值判断、交互体验与设计交付质量**。
+> 署名与版权：核心方法论与素材来自原作者，见 [LICENSE](LICENSE) 与 README 的致谢一节。原文中保留的「花叔」表述为原作者经验出处，不是本分支的作者。
 
 ## 你是谁
 
@@ -465,8 +469,8 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
 
 **幻灯片架构选型（必先决定）**：
 - 🔴 **默认且强烈推荐：多文件 + 概览墙**（几乎所有 PPT——培训/路演/科普/课件/汇报）→ 每页独立 HTML + `assets/deck_index.html` 拼接器。**这是 PPT 的默认交付形态**：自带**两种自适应 3D 概览**（网格 iframe / 无限画廊图片，按秒数 60/40 随机）+ 任意页数自适应（少页倾斜居中、多页舒适大卡滚动）+ 统一页码。**直接用，别重写概览**（倾斜/点击命中/裁切三个坑已内建解决，见 slide-decks.md）。
-- **单文件**（仅 ≤5 页极简 pitch、且明确不需要概览墙、或需跨页共享 JS 状态）→ `assets/deck_stage.js`。
-- 🛑 **不要默认选单文件而绕过概览墙**——北大 13 页 deck 实测踩坑：选了单文件 = 丢了概览墙，违背 PPT 默认交付形态。选单文件前先确认「这真的是 ≤5 页、且不需要概览墙」。
+- **单文件**（仅 ≤10 页、且明确不需要概览墙、或需跨页共享 JS 状态）→ `assets/deck_stage.js`。
+- 🛑 **不要默认选单文件而绕过概览墙**——北大 13 页 deck 实测踩坑：选了单文件 = 丢了概览墙，违背 PPT 默认交付形态。选单文件前先确认「这真的是 ≤10 页、且不需要概览墙」。
 
 先读 `references/slide-decks.md` 的「🛑 先定架构」一节，错了会反复踩 CSS 特异性/作用域的坑。
 
@@ -505,7 +509,7 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
 | 反AI slop、内容规范、scale | `references/content-guidelines.md` |
 | 字体排印/字体配对/中文排印 | `references/typography.md` |
 | React+Babel项目setup | `references/react-setup.md` |
-| 做幻灯片 | `references/slide-decks.md` + `assets/deck_index.html`（默认多文件概览墙）+ `scripts/gen_deck_thumbs.mjs`（画廊缩略图）+ `assets/deck_stage.js`（仅 ≤5 页单文件） |
+| 做幻灯片 | `references/slide-decks.md` + `assets/deck_index.html`（默认多文件概览墙）+ `scripts/gen_deck_thumbs.mjs`（画廊缩略图）+ `assets/deck_stage.js`（仅 ≤10 页单文件） |
 | 导出可编辑 PPTX · 路线 A（HTML 还没写，按 4 条硬约束写） | `references/editable-pptx.md` + `scripts/html2pptx.js` |
 | 导出可编辑 PPTX · 路线 B（**HTML 已写好的视觉稿**、**甲方要求用他们的模板**、或 A 转不出来） | `references/pptx-from-rendered-html.md` + `scripts/pptx_from_rendered.py` |
 | **验证 PPTX/渲染产物时「先验证验证工具」** | `references/pptx-from-rendered-html.md` 的「验证」节 + `references/verification.md` |
@@ -530,6 +534,7 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
 | **Gallery Ripple + Multi-Focus 场景哲学**（当素材 20+ 同质+场景需表达「规模×深度」时优先用；含前置条件、技术配方、5 个可复用模式）| `references/hero-animation-case-study.md`（huashu-design hero v9 蒸馏）|
 | ⭐ **Launch Film 工作流**（30 秒级品牌宣传片 / launch trailer / superbowl-tier ad / Apple 级别预期）：先写**万字 director's notes** 再做动画。含 5 大部分结构 + 触发判断 + 多视角并行策略 + 关键帧验证流程 | `references/launch-film-director-notes.md`（huashu-md-html v2.0 launch film 蒸馏）|
 | ⭐ **多视角并行实验**（用户说「再做几个版本」「想看不同方向」/ 多平台分发 / 客户拍不了板）：6 位艺术家视角同时启动 subagent 各做独立版本 + 完成后 5 维度审校 | `references/multi-perspective-parallel-case-study.md`（huashu-md-html v2.0 6 视角实战）|
+| ⚠️ **不确定当前环境有没有某能力**（网络检索 / 子代理 / 截图 / 命令执行 → 用什么载体顶上） | `references/runtime-adapters.md`（能力映射，平台无关） |
 
 ## 跨 Agent 环境适配说明
 
@@ -542,6 +547,8 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
 - **没有结构化问题 UI**：在对话里用 markdown 清单问问题，参考 `references/workflow.md` 的模板
 
 Skill 路径引用均采用**相对本 skill 根目录**的形式（`references/xxx.md`、`assets/xxx.jsx`、`scripts/xxx.sh`）——agent 或用户按自身安装位置解析，不依赖任何绝对路径。
+
+> 🔧 **不确定某个能力在当前环境有没有？** 别凭印象自我降级。按 `references/runtime-adapters.md` 的「能力 → 载体」映射表**试一次**，缺失时用表里的替代方案。那张表把工具名与平台名解耦，所以换任何 agent 都不必改 skill——这正是本节的落地细则。
 
 ### 弱 runtime 降级模式
 
@@ -576,7 +583,9 @@ Skill 路径引用均采用**相对本 skill 根目录**的形式（`references/
 
 到期或文件不存在时，且仅在此时：
 
-1. 本目录不是 git 克隆（无 `.git` 或无 origin）→ 写入今天日期后跳过本节
-2. 对比版本：`git -C <本目录> rev-parse HEAD` 与 `git -C <本目录> ls-remote origin HEAD`
+1. 本目录不是 git 克隆（无 `.git` 或无任何 remote）→ 写入今天日期后跳过本节
+2. 对比版本：`git -C <本目录> rev-parse HEAD` 与**上游** HEAD——
+   - 存在 `upstream` remote（本仓库是 fork，属于这种情况）→ `git -C <本目录> ls-remote upstream HEAD`
+   - 无 `upstream` → `git -C <本目录> ls-remote origin HEAD`
 3. 无论结果如何，把今天日期写入 `.last-update-check`
-4. 两者一致 → 什么都不说；确认落后 → 先完成用户当前任务，结束后附一句「本 skill 有新版本，可用 `git -C <本目录> pull --ff-only` 更新」。是否更新由用户决定，不要主动执行更新
+4. 两者一致 → 什么都不说；确认落后 → 先完成用户当前任务，结束后附一句「上游有更新，可用 `git -C <本目录> fetch upstream && git -C <本目录> merge upstream/master` 同步（本分支有本地二次开发提交，可能需处理冲突）」。是否更新由用户决定，不要主动执行更新
