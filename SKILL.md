@@ -71,7 +71,7 @@ description: ai-product-design-skill（二次开发自 花叔Design / huashu-des
 | launch film/品牌宣传片（「Apple级」「超级碗品质」） | **三方向硬门先行**（方向板级初稿，见 Fallback「三方向初稿形态」）→ 用户选定后再写万字 director's notes → `references/launch-film-director-notes.md` |
 | App/iOS 原型 | 「App / iOS 原型专属守则」（覆盖通用规则） |
 | 🖥️ **产品界面 / 交互原型**（用户要在上面**完成一件事**：App、Dashboard、后台工具、落地页、多步流程） | 三方向门 + 开工前**三问**（谁在用 / 要完成什么 / 谁承担复杂性）→ `references/product-value.md`。**动画/幻灯片/信息图/封面等「只是看/被展示」的任务不走这条** |
-| 评审/打分 | Step 10 → `references/critique-guide.md`（产品界面类评审加查一层用户价值，见 `references/product-value.md` §8） |
+| 评审/打分 | Step 10 → `references/critique-guide.md`（产品界面类评审加查一层用户价值，见 `references/product-value.md` §8；**有 spec 时加跑一层 Spec 一致性核验**，见 `references/critique-guide.md`「Spec 一致性与范围核验」） |
 | 弱 runtime（无 subagent/非 Claude） | 上述任一条 + 「弱 runtime 降级模式」 |
 
 例：「做个咖啡主题的 PPT」= 第 2 行 + 第 3 行——Fallback 出三版（咖啡是主题不是品牌，不找 logo），deck 骨架统一用概览墙模板。
@@ -372,6 +372,8 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
 
 **四条底线**：① 用户已给的信息直接用，非关键缺失用明确假设；② 只有关键不确定性会实质影响方案才问；③ 不把设计变成写 PRD，不新增 rationale 文件；④ 不为体现方法论而牺牲效率、审美与视觉质量——**产品价值判断是帮原有流程做更好的选择，不是替代原有设计能力**。
 
+**范围冻结**：**不为「展示完整性 / 点击演示 / 看起来更完整」自行增加用户未要求的页面、功能或规格**——规格只要求入口就不补 destination；「真实产品通常会有」不是理由。有需求或已确认假设的正常做，不确定就问或标成假设，**不默认做上**。详见 `references/product-value.md` §2.5。
+
 
 ## 工作流程
 
@@ -428,7 +430,7 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
    - **写动画 HTML**：用 `assets/narration_stage.jsx`（NarrationStage + Scene + Cue + useNarration + useSceneFade + **Subtitles**）→ hero 直接放 `<NarrationStage>` 子级，不进 Scene；`<Subtitles />` 默认带（B 站风·深墨字+白光晕，按 timeline.chunks 自动切 ≤12 字短行不跨句号）
    - **录最终 MP4**：`bash scripts/render-narration.sh demo.html --timeline=_narration/timeline.json [--bgm-mood=educational]` → 自动录无声 MP4 + 混入人声 + 可选 BGM
    - **失败模式 #1（必须避免）**：每个 Scene 各自独立 layout + cue 用 fade-up + scene 切换整页 opacity 切换 = **带配音的 PowerPoint** = 质感归零。完整规则见 `references/voiceover-pipeline.md` 头部「铁律」章节。
-10. **（可选）专家评审**：用户若提「评审」「好不好看」「review」「打分」，或你对产出有疑问想主动质检，按 `references/critique-guide.md` 走 5 维度评审——哲学一致性 / 视觉层级 / 细节执行 / 功能性 / 创新性各 0-10 分，输出总评 + Keep（做得好的）+ Fix（严重程度 ⚠️致命 / ⚡重要 / 💡优化）+ Quick Wins（5 分钟能做的前 3 件事）。评审设计不评设计师。**产品界面/交互原型类评审，在「功能性」维度里加查一层用户价值与易用性**（理解成本 / 操作成本 / 容错，见 `references/critique-guide.md`「用户价值与易用性」+ `references/product-value.md` §4/§8）——问题必须具体可操作，不做空泛概念化评价。
+10. **（可选）专家评审**：用户若提「评审」「好不好看」「review」「打分」，或你对产出有疑问想主动质检，按 `references/critique-guide.md` 走 5 维度评审——哲学一致性 / 视觉层级 / 细节执行 / 功能性 / 创新性各 0-10 分，输出总评 + Keep（做得好的）+ Fix（严重程度 ⚠️致命 / ⚡重要 / 💡优化）+ Quick Wins（5 分钟能做的前 3 件事）。评审设计不评设计师。**产品界面/交互原型类评审，在「功能性」维度里加查一层用户价值与易用性**（理解成本 / 操作成本 / 容错，见 `references/critique-guide.md`「用户价值与易用性」+ `references/product-value.md` §4/§8）——问题必须具体可操作，不做空泛概念化评价。**有设计 spec / 明确需求 / `direction-approved.md` 时，额外跑一层「Spec 一致性与范围核验」**（Scope 是否越界 / Non-goals 是否被突破 / AC 是否遗漏，见 `references/critique-guide.md`）——命中即标 `BLOCKING_SPEC_DEVIATION`，无 spec 时记 N/A；这是附加核验，不替代 5 维度、不新增审批环节。
 
 **检查点原则**：碰到🛑就停下，明确告诉用户"我做了X，下一步打算Y，你确认吗？"然后真的**等**。不要说完自己就开始做。
 
@@ -552,7 +554,7 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
 | **需求模糊要推荐风格方向** | `references/design-styles.md`（60 种 HTML 原生风格库，含还原度/温度/开源字体）+ `assets/showcases/INDEX.md`（预制截图画廊） |
 | **按输出类型查场景模板**（封面/PPT/信息图） | `references/scene-templates.md` |
 | 输出完后验证 | `references/verification.md` + `scripts/verify.py` |
-| **设计评审/打分**（设计完成后可选） | `references/critique-guide.md`（5 维度评分+常见问题清单） |
+| **设计评审/打分**（设计完成后可选） | `references/critique-guide.md`（5 维度评分+常见问题清单；+产品界面类「用户价值与易用性」、+有 spec 时「Spec 一致性与范围核验」两层附加检查） |
 | **动画导出MP4/GIF/加BGM** | `references/video-export.md` + `scripts/render-video.js`（默认25fps）/ `scripts/render-video-seek.js`（真60fps·确定性·无黑帧，走Stage时钟时用）+ `scripts/convert-formats.sh` + `scripts/add-music.sh` |
 | **动画加音效SFX**（苹果发布会级，37个预制） | `references/sfx-library.md` + `assets/sfx/<category>/*.mp3` |
 | **动画音频配置规则**（SFX+BGM双轨制、黄金配比、ffmpeg模板、场景配方） | `references/audio-design-rules.md` |
@@ -598,9 +600,13 @@ Skill 路径引用均采用**相对本 skill 根目录**的形式（`references/
 - HTML放项目目录，不要散落到`~/Downloads`
 - 最终产出用浏览器打开检查或用Playwright截图
 
-## Skill 推广水印（仅动画产出）
+## 水印（动画产出）
 
-**只在动画产出**（HTML 动画 → MP4 / GIF）默认带「**Created by Huashu-Design**」水印；**幻灯片 / 信息图 / 原型 / 网页一律不加**——加了干扰使用。第三方品牌的非官方致敬动画前缀「非官方出品 · 」防 IP 争议；用户说不要就移除。JSX 水印模板见 `references/video-export.md` 末节。
+**默认不加任何第三方 Skill 水印。** 动画（HTML 动画 → MP4 / GIF）、幻灯片、信息图、原型、网页的产出，默认都是**干净的成品**，不附加「Created by Huashu-Design」或任何技能 / 工具署名——那是交付污染。
+
+- 仅在用户**明确要求署名**时才加（加用户自己的品牌 / 作者名，或要求标注来源）；模板见 `references/video-export.md` 末节。
+- 第三方品牌的非官方致敬作品，加「非官方出品 · 」前缀防 IP 争议——这同样属用户决策，不默认加。
+- **版权与许可信息不受影响**：本 skill 自身的署名与 MIT 许可见 `LICENSE` 与 README 致谢一节；产出物版权归用户，不因本条改变。
 
 
 ## 版本自检（静默）

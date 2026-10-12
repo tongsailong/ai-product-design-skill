@@ -198,7 +198,7 @@ GIF 只能 256 色。一次 pass 的 GIF 会把全动画色彩压到 256 色通�
 - [ ] Duration 参数与 HTML 里的实际动画时长匹配
 - [ ] HTML 中 Stage 检测 `window.__recording` 强制 loop=false（手写 Stage 必查；用 `assets/animations.jsx` 自带）
 - [ ] 结尾 Sprite 的 `fadeOut={0}`（视频末帧不淡出）
-- [ ] 含「Created by Huashu-Design」水印（仅动画场景必加；第三方品牌作品加「非官方出品 · 」前缀。详见 SKILL.md §「Skill 推广水印」）
+- [ ] 水印：默认**不加**任何第三方 Skill 水印；仅用户明确要求署名时才加（详见 SKILL.md §「水印」与本章末节）
 
 ## 交付时附带的说明
 
@@ -231,9 +231,9 @@ GIF 只能 256 色。一次 pass 的 GIF 会把全动画色彩压到 256 色通�
 | 「要透明背景」 | MP4 不支持 alpha；用 WebM VP9 + alpha 或 APNG |
 | 「要无损」 | CRF 改 0 + preset veryslow（文件会大 10 倍） |
 
-## Skill 推广水印模板（仅动画导出用）
+## 水印模板（仅用户明确要求署名时用）
 
-SKILL.md 规定动画 MP4/GIF 默认带水印，模板如下（深底改用 `rgba(255,255,255,0.35)`；第三方品牌动画前缀「非官方出品 · 」）：
+**默认不加。** 只有用户明确要求署名时才加，模板如下（深底改用 `rgba(255,255,255,0.35)`；第三方品牌动画若用户要求标注，前缀「非官方出品 · 」）：
 
 ```jsx
 <div style={{
@@ -242,6 +242,6 @@ SKILL.md 规定动画 MP4/GIF 默认带水印，模板如下（深底改用 `rgb
   letterSpacing: '0.15em', fontFamily: 'monospace',
   pointerEvents: 'none', zIndex: 100,
 }}>
-  Created by Huashu-Design
+  <署名文字：用户品牌 / 作者名，如「© 2026 某某」>
 </div>
 ```
