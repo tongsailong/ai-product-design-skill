@@ -248,6 +248,18 @@ A/B 测试（v1 vs v2，各跑 6 agent）：**v2 的稳定性方差比 v1 低 5 
 - 填充实际内容 → variations → Tweaks 这三步分别再 show 一次
 - 交付前用 Playwright 肉眼过一遍浏览器
 
+### 产品价值判断
+
+产品界面 / 交互原型类任务（App、Dashboard、落地页、后台工具、多步流程）上，默认加一层轻量判断——判断顺序 **有用 → 好懂 → 舒服 → 有意义**（前一层不成立，后一层补不上）：
+
+- **开工前三问**：谁在用·什么场景 / 此刻要完成什么 / 设计哪一处替他承担了复杂性——写进 HTML 头部 assumptions，**不新增检查点、不单独等用户点头**
+- **三条可检验的价值判断**：理解成本 / 操作成本 / 容错——自检与评审共用，任一条亮灯就是该修的点
+- **融入三方向门**（硬门不动）：三方向 spec 共用「用户 + 核心行为」一行，差异化可落在产品价值维度（极简数字型 / 高密度仪表盘型 / 激励叙事型）
+- **评审加一层**：产品界面类评审在「功能性」维度里加查用户价值与易用性，问题必须具体可操作
+- **边界**：动画 / 幻灯片 / 信息图 / 封面等「只是看」的任务**不套用**，原有视觉流程照跑；不把设计变成写 PRD，不为方法论牺牲效率
+
+完整方法：`references/product-value.md`。
+
 ### 反 AI slop 规则
 
 避免一眼 AI 的视觉最大公约数（紫渐变 / emoji 图标 / 圆角+左 border accent / SVG 画人脸 / Inter 做 display）。用 `text-wrap: pretty` + CSS Grid + 精心选择的 serif display 和 oklch 色彩。
@@ -309,6 +321,7 @@ huashu-design/
 │   └── bgm-*.mp3            # 6 首场景化背景音乐
 ├── references/              # 按任务深入读的子文档
 │   ├── animation-pitfalls.md
+│   ├── product-value.md     # 产品价值判断（有用→好懂→舒服→有意义）
 │   ├── design-styles.md     # 60 种 HTML 原生风格库（网页 20 + PPT 20 + 信息图 20）
 │   ├── slide-decks.md
 │   ├── editable-pptx.md

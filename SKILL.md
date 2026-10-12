@@ -70,7 +70,8 @@ description: ai-product-design-skill（二次开发自 花叔Design / huashu-des
 | 带解说长视频（≥1分钟） | Step 9.5 → `references/voiceover-pipeline.md` |
 | launch film/品牌宣传片（「Apple级」「超级碗品质」） | **三方向硬门先行**（方向板级初稿，见 Fallback「三方向初稿形态」）→ 用户选定后再写万字 director's notes → `references/launch-film-director-notes.md` |
 | App/iOS 原型 | 「App / iOS 原型专属守则」（覆盖通用规则） |
-| 评审/打分 | Step 10 → `references/critique-guide.md` |
+| 🖥️ **产品界面 / 交互原型**（用户要在上面**完成一件事**：App、Dashboard、后台工具、落地页、多步流程） | 三方向门 + 开工前**三问**（谁在用 / 要完成什么 / 谁承担复杂性）→ `references/product-value.md`。**动画/幻灯片/信息图/封面等「只是看/被展示」的任务不走这条** |
+| 评审/打分 | Step 10 → `references/critique-guide.md`（产品界面类评审加查一层用户价值，见 `references/product-value.md` §8） |
 | 弱 runtime（无 subagent/非 Claude） | 上述任一条 + 「弱 runtime 降级模式」 |
 
 例：「做个咖啡主题的 PPT」= 第 2 行 + 第 3 行——Fallback 出三版（咖啡是主题不是品牌，不找 logo），deck 骨架统一用概览墙模板。
@@ -260,6 +261,8 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
 
 把 Phase 1-2 澄清到的东西写成一份 **≥500 字的详尽设计 spec**——这是三个 subagent 的**唯一共同输入**，写薄了三版都会飘。必须覆盖：产品/项目是什么、目标受众与使用场景、核心信息与内容要点(分点列出主要板块)、情感基调与气质关键词、**输出格式与尺寸（必填——网页还是 PPT？具体像素？三个 subagent 必须统一用这个尺寸，否则三版尺寸不一无法横向对比）**、已知约束（品牌色/禁忌/必含元素）、图片需求（Phase 3.5 判断的结果）、视觉母题假设（这个内容独有的视觉元素/结构/隐喻，见工作流 Step 3 form推导五问）。它们各自独立工作、只看 spec、互不参考——所以 spec 越具体，三版越不会跑偏。
 
+🎯 **产品界面/交互任务，spec 再加一行**（三版**共用**，见 `references/product-value.md`）：**用户 + 核心行为**（谁在用、要完成什么、谁替他承担复杂性）。作用是让三版都服务同一件真实的事，而差异化可以落在**产品价值维度**上（极简数字型 / 高密度仪表盘型 / 激励叙事型…），不只落在视觉上。纯视觉/动画/幻灯片任务**不加这一行**。
+
 **Phase 3.5 · 🔴 CHECKPOINT 图片素材前置（spawn 三套逻辑前必做，硬要求）**
 
 开工前先答一个问题：**这个设计，图片是不是内容必需的？**
@@ -351,6 +354,25 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
 7. **品位锚点**：衬线 display（Newsreader/Source Serif/EB Garamond）+ `-apple-system` body；一个有温度的底色 + 单 accent 贯穿；留一处「值得截图」的 120% 细节签名
 
 
+## 产品价值判断（速查版）
+
+做**产品界面 / 交互原型**时看这一节（完整方法 → `references/product-value.md`）。判断顺序：**有用 → 好懂 → 舒服 → 有意义**——前一层不成立，后一层补不上。
+
+**先定要不要用**：用户会在这个东西上**做一件事**吗？会（App / Dashboard / 落地页 / 后台 / 多步流程）→ 用下方三问；只是看/被展示（动画 / 幻灯片 / 信息图 / 封面）→ **不套用产品分析，原有视觉流程照跑**。
+
+**开工前三问**（**接在 form 推导五问之后**，各一行写进 HTML 头部 assumptions；**不新增检查点、不单独等用户点头**）：
+
+1. **谁在用、什么场景**——一个具体人物 + 一个具体时刻（不是人口统计群体）
+2. **他此刻要完成什么**——一个动词短语级别的**核心行为**（不是一串功能）
+3. **设计哪一处替他承担了复杂性**——系统接住了什么，而不是把决策丢回用户
+
+**三条可检验的价值判断**（自检与评审共用，可判定、不含糊）：**理解成本**（几秒内能否说出这页干嘛）/ **操作成本**（完成核心行为几步、有几步本该系统做）/ **容错**（点错填错会怎样、能否回退）。任一条亮灯 = 该修的点。
+
+**融入三方向门**（硬门本身不动）：Phase 3 spec 里三方向**共用**「用户 + 核心行为」一行；三方向的差异化维度**可以**落在产品价值上（如 极简数字型 / 高密度仪表盘型 / 激励叙事型）；选定后把关键取舍写成一句 rationale 进 HTML 头部 / summary。
+
+**四条底线**：① 用户已给的信息直接用，非关键缺失用明确假设；② 只有关键不确定性会实质影响方案才问；③ 不把设计变成写 PRD，不新增 rationale 文件；④ 不为体现方法论而牺牲效率、审美与视觉质量——**产品价值判断是帮原有流程做更好的选择，不是替代原有设计能力**。
+
+
 ## 工作流程
 
 ### 标准流程（用TaskCreate追踪）
@@ -375,6 +397,9 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
 
    五问答完再 vocalize 设计系统（色彩/字型/layout 节奏/component pattern）——**系统要服务于答案，不是先选系统再塞内容**。
    **交付要求**：每版设计交付时写一句「form 来自内容的哪里」，写不出来 = 在套模板，回去重答第五问。
+
+   🎯 **产品界面/交互任务加三问**（适用时，见「产品价值判断（速查版）」）：**谁在用·什么场景 / 此刻要完成什么 / 哪一处替他承担了复杂性**。
+   **接在五问之后、写进 HTML 头部 assumptions，不新增检查点、不单独等用户点头**；动画/幻灯片/信息图/封面等「只是看」的任务跳过这三问。
 
    🛑 **检查点3：五问答案 + 系统口头说出来等用户点头，再动手写代码**。方向错了晚改比早改贵 100 倍。
 4. **构建文件夹结构**：`项目名/` 下放主HTML、需要的assets拷贝（不要bulk copy >20个文件）。
@@ -403,7 +428,7 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
    - **写动画 HTML**：用 `assets/narration_stage.jsx`（NarrationStage + Scene + Cue + useNarration + useSceneFade + **Subtitles**）→ hero 直接放 `<NarrationStage>` 子级，不进 Scene；`<Subtitles />` 默认带（B 站风·深墨字+白光晕，按 timeline.chunks 自动切 ≤12 字短行不跨句号）
    - **录最终 MP4**：`bash scripts/render-narration.sh demo.html --timeline=_narration/timeline.json [--bgm-mood=educational]` → 自动录无声 MP4 + 混入人声 + 可选 BGM
    - **失败模式 #1（必须避免）**：每个 Scene 各自独立 layout + cue 用 fade-up + scene 切换整页 opacity 切换 = **带配音的 PowerPoint** = 质感归零。完整规则见 `references/voiceover-pipeline.md` 头部「铁律」章节。
-10. **（可选）专家评审**：用户若提「评审」「好不好看」「review」「打分」，或你对产出有疑问想主动质检，按 `references/critique-guide.md` 走 5 维度评审——哲学一致性 / 视觉层级 / 细节执行 / 功能性 / 创新性各 0-10 分，输出总评 + Keep（做得好的）+ Fix（严重程度 ⚠️致命 / ⚡重要 / 💡优化）+ Quick Wins（5 分钟能做的前 3 件事）。评审设计不评设计师。
+10. **（可选）专家评审**：用户若提「评审」「好不好看」「review」「打分」，或你对产出有疑问想主动质检，按 `references/critique-guide.md` 走 5 维度评审——哲学一致性 / 视觉层级 / 细节执行 / 功能性 / 创新性各 0-10 分，输出总评 + Keep（做得好的）+ Fix（严重程度 ⚠️致命 / ⚡重要 / 💡优化）+ Quick Wins（5 分钟能做的前 3 件事）。评审设计不评设计师。**产品界面/交互原型类评审，在「功能性」维度里加查一层用户价值与易用性**（理解成本 / 操作成本 / 容错，见 `references/critique-guide.md`「用户价值与易用性」+ `references/product-value.md` §4/§8）——问题必须具体可操作，不做空泛概念化评价。
 
 **检查点原则**：碰到🛑就停下，明确告诉用户"我做了X，下一步打算Y，你确认吗？"然后真的**等**。不要说完自己就开始做。
 
@@ -505,6 +530,7 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
 | 任务 | 读 |
 |------|-----|
 | 开工前问问题、定方向 | `references/workflow.md` |
+| ⭐ **产品价值判断**（产品界面/交互原型：谁在用·核心行为·关键取舍·易用性；含「要不要用」的适用边界判定） | `references/product-value.md` |
 | **App/iOS 原型完整守则**（架构表/取图代码/AppPhone骨架/ios_frame用法） | `references/app-prototype.md` |
 | 反AI slop、内容规范、scale | `references/content-guidelines.md` |
 | 字体排印/字体配对/中文排印 | `references/typography.md` |

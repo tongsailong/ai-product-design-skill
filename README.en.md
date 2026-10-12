@@ -213,6 +213,18 @@ The default working mode across every task:
 - Fill in real content → variations → Tweaks — show at each of these three steps
 - Manually eyeball the browser with Playwright before delivery
 
+### Product Value Judgment
+
+On product UI / interactive-prototype tasks (App, dashboard, landing page, internal tool, multi-step flow), a lightweight layer of judgment is applied by default — ordered **useful → understandable → comfortable → meaningful** (a later layer can't fix a missing earlier one):
+
+- **Three questions before you start**: who's using it · what they're here to do · which part of the design absorbs the complexity for them — written into the HTML header assumptions, **no new checkpoint, no extra confirmation round**
+- **Three testable checks**: comprehension cost / operation cost / error tolerance — shared by self-check and critique; any red flag is a spot to fix
+- **Folded into the three-direction gate** (the hard gate is unchanged): the three directions share one "user + core action" line, and can be differentiated along the product-value axis (minimal numeric / dense dashboard / motivational narrative)
+- **Critique gains a layer**: product-UI critiques check user value and usability inside the "Functionality" dimension, and every issue must be concrete and actionable
+- **Boundary**: tasks that are only *viewed* (animation, slides, infographic, cover) **do not** trigger product analysis — the original visual flow runs unchanged; design never becomes PRD-writing
+
+Full method: `references/product-value.md`.
+
 ### Fact Verification First (Principle #0)
 
 The highest-priority rule, added after a real failure mode: when the task mentions a specific product / technology / event (e.g., "DJI Pocket 4", "Nano Banana Pro", "Gemini 3 Pro"), the first action **must** be a `WebSearch` to confirm existence, release status, current version, and specs. No claims from training-corpus memory. Cost of a search: ~10 seconds. Cost of a wrong assumption: 1–2 hours of rework.
