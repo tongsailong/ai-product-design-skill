@@ -233,7 +233,7 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
 - **非设计的机械操作**（HTML 转 PDF、导出、截图、修 bug、纯文字改动）
 
 **三方向初稿形态（按产出类型定义，必须是看得见的真实视觉，不是文字描述）**：
-- 网页 / 信息图 / 原型 → 每方向 1 个完整 HTML + 截图
+- 网页 / 信息图 / 原型 → 每方向 1 个完整 HTML + 截图（**GPT-first 通路下改为每方向 1 张概念效果图**，见 Phase 3.6）
 - 多页 deck → 每方向 2 页代表页（兼作 showcase）
 - **动画 / 宣传片 → 每方向 1 张「方向板」**：hero 关键帧的真实 HTML 静帧截图 ×1-2 + 色板条 + 一句气质定位 + 参照作品名。❌ 不是三支成片（成本失控），✅ 但必须是渲出来的画面不是嘴说
 - 封面 / 单图 → 每方向 1 张真实出图
@@ -299,7 +299,7 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
 
 > ⚙️ **不支持 spawn subagent 的 runtime（Codex / Cursor / 纯对话）**：改**串行**跑三套——每套开跑前只读 spec、清空对上一套的记忆、不许参考已生成的版本，并用三个不同 anchor（轮盘号 / 参照案例 / 设计师名）物理隔离趋同。串行也**必须出三版**，不许偷懒并成一版。spawn prompt 里只喂 spec，别把另两套的逻辑一起写进去。
 
-每个 subagent 拿同一份 spec + 同一份用户真实内容，各按一套逻辑产出一版**纯 HTML/CSS**（default 无生图）真实视觉：
+每个 subagent 拿同一份 spec + 同一份用户真实内容，各按一套逻辑产出一版真实视觉——**default 是纯 HTML/CSS（无生图）；GPT-first 通路生效时改为 GPT 概念效果图**（见 Phase 3.6）：
 
 **逻辑一 · 🎲 秒数轮盘（随机 · 20 选 1）**
 跑 `date +%S` 取秒数，算 `秒数 % 20 + 1` 得 1-20，从 `design-styles.md` **对应分区**取那一号风格，subagent 严格按其视觉 DNA + HTML 实现做。分区三选一，按**产出形态**判不按题材判：
@@ -325,8 +325,10 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
 - 🎞️ **PPT / deck 场景必走 deck 模板（绝不写竖向平铺长页！）**：每页独立 `<section>`（1920×1080）套 `assets/deck_index.html` 外壳，三版只换视觉风格、deck 骨架统一（架构规则与概览墙细节见「技术红线」+ `references/slide-decks.md`）。截图按**单页** 1920×1080 截；**单页内容绝不自带页码/进度标记**——页码由 deck 外壳统一承载（实测出过「02/03」+「6/16」双页码打架）。**多页deck走Fallback时，三版各出2页代表页**（兼作deck链的showcase），选定方向后再批量其余页
 - 存当前**项目目录**（`项目名/design-demos/[逻辑名].html`）——❌ 禁 `_temp/`（花叔铁律）
 - 截图：`npx playwright screenshot file:///path.html out.png --viewport-size=1440,900`（PPT 用 1920,1080）
-- ✅ **产出自检（防偷懒，进 Phase 5 前必查）**：确认 `design-demos/` 下真有 **3 个 .html**——少于 3 个 = 没走完三套逻辑，补齐再往下，不许只做一版交差
-- 三版全部完成后**一起展示三张截图**，每版标明：用了哪套逻辑、具体哪个风格/参照案例/设计师，一句话说为什么
+- ✅ **产出自检（防偷懒，进 Phase 5 前必查）**：确认 `design-demos/` 下真有 **3 份真实初稿**——少于 3 份 = 没走完三套逻辑，补齐再往下，不许只做一版交差。**「初稿」按通路判定，两条流程都有效**：
+  - **HTML fallback 通路**（default）：3 个 `.html` + 各自截图
+  - **GPT-first 通路**（Phase 3.6 生效时）：3 张概念效果图（`design-demos/*.png`）——**不得因缺少 3 个 `.html` 判「没走完」，也不得因此回补 HTML**
+- 三版全部完成后**一起展示三份初稿**（HTML fallback = 三张渲染截图；GPT-first = 三套概念效果图），每版标明：用了哪套逻辑、具体哪个风格/参照案例/设计师，一句话说为什么
 
 > 仅当用户**已确认有生图能力**时，AI 生成型风格才走 `huashu-gpt-image`（见 `design-styles.md` 尾部「AI 生图专用风格」）；否则一律 HTML。
 > 完整 60 种风格库（网页 20+PPT 20+信息图 20，含还原度/温度/HTML 实现/开源字体）→ `references/design-styles.md`。
@@ -338,12 +340,13 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
 - **三方向要求不变**：共用同一份 spec（含「用户 + 核心行为」一行），差异在**布局骨架 / 信息组织 / 视觉母题**，**不只是换配色**；不虚构功能；效果图明确标注为**概念参考**
 - **不适用则强制回落**：幻灯片 / 信息图 / 动画 / 纯排版 / 只需微调既有界面 / 用户明说「不要效果图」→ **走 HTML/CSS，不调 GPT**（不适合生图的任务不得为「流程完整」强行生图）
 - **GPT 不可用（FAIL）→ 原样保留 HTML/CSS 三方向**，能力一条不减
+- **初稿形态按通路判定**：本通路下三方向的真实初稿是 **3 张概念效果图**（`design-demos/*.png`），**不是 3 个 HTML**——产出自检以「3 份真实初稿」为准，缺 HTML 不构成「没走完三套逻辑」，不得因此回补 HTML；HTML fallback 通路仍按原有「3 个 `.html` + 截图」自检。
 - **Phase 5 用户确认后**：把效果图路径 + 用户选择原话写入 `direction-approved.md`；**确认前不进入正式 UI 实现**
 - **确认后**：GPT 出**正式产品图片素材**（原创插画/背景/场景图；真实产品图/Logo/图标/文字另走真实素材与 SVG/CSS）→ DesignWise 依据「已批准效果图 + Spec + 功能需求 + 正式素材」实现真实 UI → 轻量视觉还原检查（对比效果图与真实渲染截图）
 
 > **完整细则（能力探测 / 效果图 prompt / 确认 Gate / 素材分流与管理 / 视觉还原验收 / 费用治理 / 降级）→ `references/gpt-visual-workflow.md`**。本半步与 `product-value.md` 同构：**只加一层判断与通路，不替换原有 HTML/CSS 能力**。
 
-**Phase 5 · 用户基于「看到的真实视觉」选择**（第一次有效选择）：看完三版真实截图，选一版深化 / 混合（"轮盘版的配色 + 设计师版的布局"）/ 微调 / 全部重来 → 重跑三套逻辑。**用户选定后，立刻把「展示了哪几版、截图路径、用户选择原话」写入项目目录 `direction-approved.md`**（Gate文件协议）。
+**Phase 5 · 用户基于「看到的真实视觉」选择**（第一次有效选择）：看完三份真实初稿（HTML fallback = 三张渲染截图；GPT-first = 三套概念效果图），选一版深化 / 混合（"轮盘版的配色 + 设计师版的布局"）/ 微调 / 全部重来 → 重跑三套逻辑。**用户选定后，立刻把「展示了哪几版、初稿路径（截图或效果图）、用户选择原话」写入项目目录 `direction-approved.md`**（Gate文件协议）。
 
 **Phase 6 · 进入主干执行**
 用户选定（或混合）后 → 回到「核心哲学」+「工作流程」的对齐pass，把那一版做扎实。这时已有明确 design context，不再凭空。
@@ -398,7 +401,7 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
    - 🛑 **检查点1：问题清单一次性发给用户，等用户批量答完再往下走**。不要边问边做。
    - 🛑 **幻灯片/PPT 任务走固定交付链，开工不问格式**：HTML deck（每页独立 HTML + `assets/deck_index.html` 概览墙）→ 完成后**自动**出 PDF（`scripts/export_deck_pdf.mjs`，不问直接给）→ **询问**才出可编辑 PPTX。**出 PPTX 有两条路，先按 HTML 的状态选**：HTML 还没写 → 按 4 条硬约束写再走 `html2pptx.js`（`references/editable-pptx.md`）；**HTML 已经写好且是视觉驱动的、或甲方要求继承他们的模板 → 走 `scripts/pptx_from_rendered.py`（`references/pptx-from-rendered-html.md`），读渲染后坐标，零改造**。两条路不要混用。**绝不**为迁就 html2pptx 约束而降级已有的 HTML 设计——那正是第二条路存在的意义。**≥5 页必须先做 2 页 showcase 定 grammar 再批量**——跳过 = 方向错返工 N 次而非 2 次。完整规则 + 交付格式决策树见 `references/slide-decks.md`。
    - 🔴 **三方向硬门（100%，无关风格参考有无）**：任何新视觉设计，先走「设计方向顾问（Fallback 模式）」大节完成 Phase 1-5——三版真实初稿摆给用户、**用户选定后**才回到这里 Step 2。用户给了风格词/品牌名只改变三方向的取材方式（见 Fallback 节），不豁免这道门。唯一例外见 Fallback「唯一豁免」清单，豁免必须落档 `direction-approved.md`。
-   - 🎨 **GPT-first 升级（App / Web / 交互原型）**：本步先做**能力探测**（真实出图才算 PASS，见 `references/gpt-visual-workflow.md` §1）。PASS → Phase 4 默认优先出**三套 GPT 概念效果图**（而非 HTML），用户选定后再实现真实 UI；**不适合生图的任务（幻灯片/信息图/动画/纯排版）强制回落 HTML/CSS**；FAIL → 原样保留 HTML/CSS 三方向通路，能力一条不减。
+   - 🎨 **GPT-first 升级（App / Web / 交互原型）**：本步先做**能力探测**（真实出图才算 PASS，见 `references/gpt-visual-workflow.md` §1）。PASS → Phase 4 默认优先出**三套 GPT 概念效果图**（而非 HTML），用户选定后再实现真实 UI；**不适合生图的任务（幻灯片/信息图/动画/纯排版）强制回落 HTML/CSS**；FAIL → 原样保留 HTML/CSS 三方向通路，能力一条不减。🔴 **探测的第 1、2 步（`--health` 等）零成本可直接跑；第 3 步「真实出图」属付费/额度消耗步骤，须先取得用户明确授权**，未授权时按 FAIL 回退或停下询问，**不得以「探测需要」为由擅自出图**。
 2. **探索资源 + 抽核心资产**（不只是抽色值）：读 design system、linked files、上传的截图/代码。**涉及具体品牌时必走 §1.a「核心资产协议」五步**，产出 `brand-spec.md`。
    - 🛑 **检查点2·资产自检**：开工前确认核心资产到位——实体产品要有产品图（不是 CSS 剪影）、数字产品要有 logo+UI 截图、色值从真实 HTML/SVG 抽取。缺了就停下补，不硬做。
    - 如果用户没给 context 且挖不出资产，先走设计方向顾问 Fallback，再按 `references/design-context.md` 的品位锚点兜底。

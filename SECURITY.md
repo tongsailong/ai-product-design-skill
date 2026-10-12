@@ -13,6 +13,7 @@ This document exhaustively declares every network destination, credential touchp
 | `commons.wikimedia.org` (official Wikimedia API) | `scripts/fetch_images.py` | Image search keywords; downloads CC/public-domain images with license info printed for review | Only when the agent fetches stock imagery for a content design |
 | Brand official websites, `simpleicons.org`, Google favicon service | `references/brand-asset-protocol.md` (instructions, no script) | Plain GET requests to download publicly served logos/brand assets | Only when you ask for a brand-specific design |
 | `fonts.googleapis.com`, `unpkg.com` and similar CDNs | Static `<link>`/`<script>` tags inside demo/output HTML | Standard browser font/library fetches when *you* open a generated HTML file | Browser-side only; render scripts work offline-first |
+| **OpenAI image generation** — *via the separate `huashu-gpt-image` skill; this repo ships no image script* | `references/gpt-visual-workflow.md` (instructions only, no script) | Your image prompts, sent by that external skill to an OpenAI-compatible images endpoint (locally brokered at `127.0.0.1` in the tested setup) | Only in the optional GPT-first path, and only after you explicitly authorize the paid call (see *Paid image generation* below) |
 
 That is the entire list. `grep -rn "https://" --include="*.py" --include="*.mjs" --include="*.js" --include="*.sh" scripts/` to verify.
 
@@ -26,6 +27,14 @@ That is the entire list. `grep -rn "https://" --include="*.py" --include="*.mjs"
 ## Explicit consent gate
 
 Both cloud scripts print exactly what will be sent to which host and exit before any network call unless you pass `--yes` or set `HUASHU_CLOUD_OK=1`. Everything else in this skill never needs the gate because it never leaves your machine.
+
+## Paid image generation (GPT-first visual workflow)
+
+`references/gpt-visual-workflow.md` adds an **optional** GPT-first path that generates concept images and production image assets with an OpenAI image model. **This repo ships no image-generation script** — the actual call is performed by the separate `huashu-gpt-image` skill; this skill only defines *when* it may be used. Three boundaries apply:
+
+- **Authorization.** Image generation costs money or consumes paid subscription quota — it is a **paid call**. Before the first real generation you must state which model, how many images, which route, and whether it is billed, and obtain the user's **explicit consent in that turn**. The zero-cost probe (`--health`) may run freely; **real generation may not**. Without consent: fall back to the HTML/CSS three-direction exploration, or stop and ask — **never generate "just to probe"**.
+- **Credentials.** This skill never stores, reads, writes, echoes, or commits image-generation keys. They are supplied to the external skill through its own environment / local proxy configuration, are never printed in reports, and are never embedded in generated HTML, images, or deliverables.
+- **Cost boundaries.** One image per direction by default; no unconditional retries (read the failure reason first); iterative tweaks reuse reference-image editing (`--ref`) instead of regenerating; already-generated assets are reused rather than re-generated for verification. Multi-image or batch calls require an explicit count or cap from the user. Paid per-call APIs and subscription-quota routes are gated by the same consent rule above.
 
 ## Subprocesses
 
