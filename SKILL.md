@@ -64,6 +64,7 @@ description: designwise（DesignWise，二次开发自 花叔Design / huashu-des
 |---------|------|
 | 提到具体品牌/产品名 | 核心原则#0 事实验证 → §1.a 资产协议 → 标准流程 |
 | 🔴 任何会产出新视觉设计的任务（**无论有没有风格参考、有没有品牌名，100% 必走**） | 三方向硬门：Fallback Phase 1-5 出三版真实初稿等用户选 → 回标准流程 Step 2 |
+| 🎨 **GPT 生图能力已实测可用**（PASS）时的 **App / Web / 交互原型** | 三方向门升级为 **GPT-first 视觉探索**：GPT 出三套概念效果图 → 用户确认 → GPT 出正式图片素材 → 再实现真实 UI → 视觉还原验收（`references/gpt-visual-workflow.md`）。**幻灯片/信息图/动画/纯排版等结构性任务不适用，仍走 HTML/CSS** |
 | 幻灯片/PPT | 标准流程 + Step 1 deck 交付链 + 「技术红线」架构选型 |
 | 动画/导出 MP4/GIF | 标准流程 + Step 9；**任何动画开工前先按 `references/storyboard-basics.md` 出轻量分镜卡**（每一镜先是一张会动的封面）；镜头级运动（zoom/pan/转场）必读 `references/camera-language.md`；**新动画项目默认走 HyperFrames 后端**（选型边界+契约 → `references/hyperframes-backend.md`，GSAP 实现配方 → `references/gsap-recipes.md`）；动手前必读 `references/animation-pitfalls.md` |
 | 🖥️ **宣传的产品有 UI 界面**（产品动画/功能演示/商单，画面主角是一个界面） | 上一行动画链 + **单一入口 `references/ui-demo-animation.md`**（截图运镜 vs HTML 重建决策树 + UI 展示八式 + `assets/cursor.jsx` 光标组件）；UI 截图取材走 §1.a 资产协议 |
@@ -330,6 +331,18 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
 > 仅当用户**已确认有生图能力**时，AI 生成型风格才走 `huashu-gpt-image`（见 `design-styles.md` 尾部「AI 生图专用风格」）；否则一律 HTML。
 > 完整 60 种风格库（网页 20+PPT 20+信息图 20，含还原度/温度/HTML 实现/开源字体）→ `references/design-styles.md`。
 
+**Phase 3.6 · 🎨 GPT-first 视觉探索（App / Web / 交互原型，且 GPT 生图已实测 PASS 时）**
+
+**触发**：任务属 App / Web / 交互原型，**且**第 1 步能力探测确认 GPT 生图真实可用（PASS）。此时 Phase 4 的三套逻辑**默认优先产出 GPT 概念效果图**（而非 HTML），用户选定方向后再由 DesignWise 实现真实 UI。
+
+- **三方向要求不变**：共用同一份 spec（含「用户 + 核心行为」一行），差异在**布局骨架 / 信息组织 / 视觉母题**，**不只是换配色**；不虚构功能；效果图明确标注为**概念参考**
+- **不适用则强制回落**：幻灯片 / 信息图 / 动画 / 纯排版 / 只需微调既有界面 / 用户明说「不要效果图」→ **走 HTML/CSS，不调 GPT**（不适合生图的任务不得为「流程完整」强行生图）
+- **GPT 不可用（FAIL）→ 原样保留 HTML/CSS 三方向**，能力一条不减
+- **Phase 5 用户确认后**：把效果图路径 + 用户选择原话写入 `direction-approved.md`；**确认前不进入正式 UI 实现**
+- **确认后**：GPT 出**正式产品图片素材**（原创插画/背景/场景图；真实产品图/Logo/图标/文字另走真实素材与 SVG/CSS）→ DesignWise 依据「已批准效果图 + Spec + 功能需求 + 正式素材」实现真实 UI → 轻量视觉还原检查（对比效果图与真实渲染截图）
+
+> **完整细则（能力探测 / 效果图 prompt / 确认 Gate / 素材分流与管理 / 视觉还原验收 / 费用治理 / 降级）→ `references/gpt-visual-workflow.md`**。本半步与 `product-value.md` 同构：**只加一层判断与通路，不替换原有 HTML/CSS 能力**。
+
 **Phase 5 · 用户基于「看到的真实视觉」选择**（第一次有效选择）：看完三版真实截图，选一版深化 / 混合（"轮盘版的配色 + 设计师版的布局"）/ 微调 / 全部重来 → 重跑三套逻辑。**用户选定后，立刻把「展示了哪几版、截图路径、用户选择原话」写入项目目录 `direction-approved.md`**（Gate文件协议）。
 
 **Phase 6 · 进入主干执行**
@@ -385,6 +398,7 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
    - 🛑 **检查点1：问题清单一次性发给用户，等用户批量答完再往下走**。不要边问边做。
    - 🛑 **幻灯片/PPT 任务走固定交付链，开工不问格式**：HTML deck（每页独立 HTML + `assets/deck_index.html` 概览墙）→ 完成后**自动**出 PDF（`scripts/export_deck_pdf.mjs`，不问直接给）→ **询问**才出可编辑 PPTX。**出 PPTX 有两条路，先按 HTML 的状态选**：HTML 还没写 → 按 4 条硬约束写再走 `html2pptx.js`（`references/editable-pptx.md`）；**HTML 已经写好且是视觉驱动的、或甲方要求继承他们的模板 → 走 `scripts/pptx_from_rendered.py`（`references/pptx-from-rendered-html.md`），读渲染后坐标，零改造**。两条路不要混用。**绝不**为迁就 html2pptx 约束而降级已有的 HTML 设计——那正是第二条路存在的意义。**≥5 页必须先做 2 页 showcase 定 grammar 再批量**——跳过 = 方向错返工 N 次而非 2 次。完整规则 + 交付格式决策树见 `references/slide-decks.md`。
    - 🔴 **三方向硬门（100%，无关风格参考有无）**：任何新视觉设计，先走「设计方向顾问（Fallback 模式）」大节完成 Phase 1-5——三版真实初稿摆给用户、**用户选定后**才回到这里 Step 2。用户给了风格词/品牌名只改变三方向的取材方式（见 Fallback 节），不豁免这道门。唯一例外见 Fallback「唯一豁免」清单，豁免必须落档 `direction-approved.md`。
+   - 🎨 **GPT-first 升级（App / Web / 交互原型）**：本步先做**能力探测**（真实出图才算 PASS，见 `references/gpt-visual-workflow.md` §1）。PASS → Phase 4 默认优先出**三套 GPT 概念效果图**（而非 HTML），用户选定后再实现真实 UI；**不适合生图的任务（幻灯片/信息图/动画/纯排版）强制回落 HTML/CSS**；FAIL → 原样保留 HTML/CSS 三方向通路，能力一条不减。
 2. **探索资源 + 抽核心资产**（不只是抽色值）：读 design system、linked files、上传的截图/代码。**涉及具体品牌时必走 §1.a「核心资产协议」五步**，产出 `brand-spec.md`。
    - 🛑 **检查点2·资产自检**：开工前确认核心资产到位——实体产品要有产品图（不是 CSS 剪影）、数字产品要有 logo+UI 截图、色值从真实 HTML/SVG 抽取。缺了就停下补，不硬做。
    - 如果用户没给 context 且挖不出资产，先走设计方向顾问 Fallback，再按 `references/design-context.md` 的品位锚点兜底。
@@ -430,7 +444,7 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
    - **写动画 HTML**：用 `assets/narration_stage.jsx`（NarrationStage + Scene + Cue + useNarration + useSceneFade + **Subtitles**）→ hero 直接放 `<NarrationStage>` 子级，不进 Scene；`<Subtitles />` 默认带（B 站风·深墨字+白光晕，按 timeline.chunks 自动切 ≤12 字短行不跨句号）
    - **录最终 MP4**：`bash scripts/render-narration.sh demo.html --timeline=_narration/timeline.json [--bgm-mood=educational]` → 自动录无声 MP4 + 混入人声 + 可选 BGM
    - **失败模式 #1（必须避免）**：每个 Scene 各自独立 layout + cue 用 fade-up + scene 切换整页 opacity 切换 = **带配音的 PowerPoint** = 质感归零。完整规则见 `references/voiceover-pipeline.md` 头部「铁律」章节。
-10. **（可选）专家评审**：用户若提「评审」「好不好看」「review」「打分」，或你对产出有疑问想主动质检，按 `references/critique-guide.md` 走 5 维度评审——哲学一致性 / 视觉层级 / 细节执行 / 功能性 / 创新性各 0-10 分，输出总评 + Keep（做得好的）+ Fix（严重程度 ⚠️致命 / ⚡重要 / 💡优化）+ Quick Wins（5 分钟能做的前 3 件事）。评审设计不评设计师。**产品界面/交互原型类评审，在「功能性」维度里加查一层用户价值与易用性**（理解成本 / 操作成本 / 容错，见 `references/critique-guide.md`「用户价值与易用性」+ `references/product-value.md` §4/§8）——问题必须具体可操作，不做空泛概念化评价。**有设计 spec / 明确需求 / `direction-approved.md` 时，额外跑一层「Spec 一致性与范围核验」**（Scope 是否越界 / Non-goals 是否被突破 / AC 是否遗漏，见 `references/critique-guide.md`）——命中即标 `BLOCKING_SPEC_DEVIATION`，无 spec 时记 N/A；这是附加核验，不替代 5 维度、不新增审批环节。
+10. **（可选）专家评审**：用户若提「评审」「好不好看」「review」「打分」，或你对产出有疑问想主动质检，按 `references/critique-guide.md` 走 5 维度评审——哲学一致性 / 视觉层级 / 细节执行 / 功能性 / 创新性各 0-10 分，输出总评 + Keep（做得好的）+ Fix（严重程度 ⚠️致命 / ⚡重要 / 💡优化）+ Quick Wins（5 分钟能做的前 3 件事）。评审设计不评设计师。**产品界面/交互原型类评审，在「功能性」维度里加查一层用户价值与易用性**（理解成本 / 操作成本 / 容错，见 `references/critique-guide.md`「用户价值与易用性」+ `references/product-value.md` §4/§8）——问题必须具体可操作，不做空泛概念化评价。**有设计 spec / 明确需求 / `direction-approved.md` 时，额外跑一层「Spec 一致性与范围核验」**（Scope 是否越界 / Non-goals 是否被突破 / AC 是否遗漏，见 `references/critique-guide.md`）——命中即标 `BLOCKING_SPEC_DEVIATION`，无 spec 时记 N/A；这是附加核验，不替代 5 维度、不新增审批环节。**走 GPT-first 通路时，另加一层轻量「视觉还原检查」**——对比已确认的 GPT 概念效果图与真实渲染截图，识别明显的布局偏差 / 字体层级差异 / 图片素材错误 / 配色气质偏差；**以用户确认的设计意图和真实可用性为准，不要求像素级一致**（见 `references/gpt-visual-workflow.md` §6）。
 
 **检查点原则**：碰到🛑就停下，明确告诉用户"我做了X，下一步打算Y，你确认吗？"然后真的**等**。不要说完自己就开始做。
 
@@ -441,7 +455,7 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
 | Gate文件 | 对应环节 | 什么时候必须有 |
 |---|---|---|
 | `brand-spec.md` | §1.a资产协议产物 | 涉及具体品牌/产品的任何设计 |
-| `direction-approved.md` | 三方向真实视觉展示+**用户选择原话**记录（含三版初稿截图路径）。🔴 **没有「已有明确design context」豁免通道**（该通道2026-07-18被实锤滥用后废止）——唯一合法豁免=Fallback「唯一豁免」三种情形，且必须记用户原话/迭代来源 | 实现开工前；**≥45s长片渲染前有hook硬检查**（scripts/design-gate-hook.sh，缺文件block渲染，用户明说跳过用SKIP_DESIGN_GATE=1显式放行） |
+| `direction-approved.md` | 三方向真实视觉展示+**用户选择原话**记录（含三版初稿截图路径；GPT-first 通路时记**三套概念效果图路径**）。🔴 **没有「已有明确design context」豁免通道**（该通道2026-07-18被实锤滥用后废止）——唯一合法豁免=Fallback「唯一豁免」三种情形，且必须记用户原话/迭代来源 | 实现开工前；**≥45s长片渲染前有hook硬检查**（scripts/design-gate-hook.sh，缺文件block渲染，用户明说跳过用SKIP_DESIGN_GATE=1显式放行） |
 | `导演稿.md`/director's notes | 长片/launch film的分镜与**视觉密度条款**（标准+参照标杆+氛围层清单，见animation-best-practices §6.5）。**最低要求=storyboard-basics.md §5的轻量分镜卡格式**（八字段/镜，含[CAMERA]列与验收帧号）| ≥20s动画开工前；<20s动画不强制导演稿但分镜卡照画（storyboard-basics §0）；launch film级（品牌宣传片/「Apple级」预期）在此基线上按launch-film-director-notes.md升级为万字notes——分镜卡是底线，万字notes是launch film的加强版，不是两套并行要求 |
 
 **「用户说继续」授权的是进入下一步，不是跳过该步内部的gate**。跳过必须用户明说，且把「用户明示跳过」写进对应gate文件。**弱runtime降级模式不豁免gate文件**——降级第5条允许把检查点问答换成assumption清单，但三个gate文件本身照写（写文件不耗上下文），assumption清单就写进对应gate文件里。
@@ -532,6 +546,7 @@ HTML文件的开头先写下你的assumptions + reasoning + placeholders，**尽
 | 任务 | 读 |
 |------|-----|
 | 开工前问问题、定方向 | `references/workflow.md` |
+| 🎨 **GPT-first 视觉探索**（App / Web / 交互原型，GPT 生图已 PASS：能力探测 / 三套概念效果图 / 确认 Gate / 正式图片素材 / 视觉还原验收 / 费用治理 / 降级） | `references/gpt-visual-workflow.md` |
 | ⭐ **产品价值判断**（产品界面/交互原型：谁在用·核心行为·关键取舍·易用性；含「要不要用」的适用边界判定） | `references/product-value.md` |
 | **App/iOS 原型完整守则**（架构表/取图代码/AppPhone骨架/ios_frame用法） | `references/app-prototype.md` |
 | 反AI slop、内容规范、scale | `references/content-guidelines.md` |
