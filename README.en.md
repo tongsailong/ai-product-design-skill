@@ -2,7 +2,7 @@
 
 <div align="center">
 
-# AI Product Design Skill
+# DesignWise
 
 ### An open-source product design capability for AI agents
 
@@ -15,7 +15,7 @@ Say one sentence to a skills-capable AI agent and get back a **design deliverabl
 3–30 minutes. Not "decent for AI" work: it ships a 60-style HTML-native library, a brand-asset protocol and an anti-AI-slop floor. More importantly, it adds the layer ordinary design skills skip — **judge product value first, then make the screen look good.**
 
 ```bash
-npx skills add tongsailong/ai-product-design-skill
+npx skills add tongsailong/designwise
 ```
 
 [Install](#install) · [What it does](#what-it-does) · [Demos & case studies](#demos--case-studies) · [Why it's different](#why-its-different-from-a-plain-design-skill) · [How it works](#how-it-works) · [Platforms & requirements](#platforms--requirements) · [Upstream & credits](#upstream--credits)
@@ -25,7 +25,7 @@ npx skills add tongsailong/ai-product-design-skill
 > **TL;DR**
 > **What it is** — a **product design** skill for AI agents: it does visuals (prototypes, decks, motion, infographics) *and* product judgment (value trade-offs, UX review, spec conformance).
 > **What it solves** — turns a one-sentence brief into a deliverable that can be reviewed and that doesn't drift in scope, instead of a pile of screens that merely look fine.
-> **How to install** — `npx skills add tongsailong/ai-product-design-skill`, agent-agnostic, not tied to one tool ([Install](#install)).
+> **How to install** — `npx skills add tongsailong/designwise`, agent-agnostic, not tied to one tool ([Install](#install)).
 > **Does it actually work** — every demo and sample below was produced by this skill.
 
 <p align="center">
@@ -113,10 +113,10 @@ The four items above are an **added judgment layer**, not a replacement. Upstrea
 ## Install
 
 ```bash
-npx skills add tongsailong/ai-product-design-skill
+npx skills add tongsailong/designwise
 ```
 
-> ✅ **Verified**: installing this repository with `npx skills add tongsailong/ai-product-design-skill` in a clean directory succeeded, and `references/` (35 files), `assets/`, `scripts/` and `demos/` all matched the repository — no missing files. If your install comes out incomplete, see the troubleshooting below.
+> ℹ️ This repository was formerly `ai-product-design-skill` and has been **renamed in place** to `designwise` (repository ID, Git history and all commits preserved; the old URL is redirected by GitHub). Install content and process are unchanged: earlier versions were verified to install completely with `npx skills` — `references/` (35 files), `assets/`, `scripts/` and `demos/` all matched the repository, no missing files. If your install comes out incomplete, see the troubleshooting below.
 
 **Verify after install**: this skill is more than a single `SKILL.md` — `references/`, `assets/`, `scripts/` and `demos/` hold 65 referenced recipes, scripts and assets, and a missing one breaks a path. The repo ships a self-check that turns "is it complete?" into one command:
 
@@ -125,16 +125,16 @@ python3 scripts/check-skill.py            # structure + reference integrity
 python3 scripts/check-skill.py --strict   # also flag files nothing references
 ```
 
-Check the install directory (e.g. `~/.claude/skills/ai-product-design-skill/`). **If you only see SKILL.md and none of those subdirectories**, your `skills` CLI is too old (≤1.5.15 had a bug that synced only the single file, fixed in 1.5.19). Upgrade and reinstall:
+Check the install directory (e.g. `~/.claude/skills/designwise/`). **If you only see SKILL.md and none of those subdirectories**, your `skills` CLI is too old (≤1.5.15 had a bug that synced only the single file, fixed in 1.5.19). Upgrade and reinstall:
 
 ```bash
-npm i -g skills@latest        # or npx skills@latest add tongsailong/ai-product-design-skill
+npm i -g skills@latest        # or npx skills@latest add tongsailong/designwise
 ```
 
 If it's still wrong, fall back to a `git clone` install — clone the repo into any skills directory:
 
 ```bash
-git clone https://github.com/tongsailong/ai-product-design-skill.git ~/.claude/skills/ai-product-design-skill
+git clone https://github.com/tongsailong/designwise.git ~/.claude/skills/designwise
 ```
 
 Then just talk to Claude Code / Codex / Cursor or any skills-capable agent (see below).
@@ -278,7 +278,7 @@ This is an 80-point skill, not a 100-point product. For people unwilling to open
 ## Repository structure
 
 ```
-ai-product-design-skill/
+ai-product-design-skill/          # repo renamed to designwise (this is the historical name)
 ├── SKILL.md                 # Main doc (read by the agent; Chinese)
 ├── README.md                # Chinese README (default)
 ├── README.en.md             # English README (this file)

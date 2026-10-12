@@ -191,7 +191,7 @@ def check_orphans(root: str, referenced: set):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="ai-product-design-skill 自检：结构与引用完整性")
+    ap = argparse.ArgumentParser(description="designwise 自检：结构与引用完整性")
     ap.add_argument("--root", default=None, help="skill 根目录（默认：本脚本所在目录的上一级）")
     ap.add_argument("--strict", action="store_true", help="额外检查孤儿文档")
     args = ap.parse_args()

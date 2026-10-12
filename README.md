@@ -2,7 +2,7 @@
 
 <div align="center">
 
-# AI Product Design Skill
+# DesignWise
 
 ### 面向 AI Agent 的开源产品设计能力
 
@@ -15,7 +15,7 @@
 3–30 分钟。不是「AI 做的还行」那种水平——内置 60 种 HTML 原生风格库、品牌资产协议与反 AI slop 底线；更关键的是，它在设计前后各加了一层普通设计 Skill 没有的东西：**先判产品价值，再做好看的界面**。
 
 ```bash
-npx skills add tongsailong/ai-product-design-skill
+npx skills add tongsailong/designwise
 ```
 
 [安装](#安装) · [能做什么](#能做什么) · [效果演示与案例](#效果演示与案例) · [差异化](#核心价值它和普通设计-skill-有什么不同) · [工作原理](#工作原理) · [支持平台与依赖](#支持平台与依赖) · [上游项目与致谢](#上游项目与致谢)
@@ -25,7 +25,7 @@ npx skills add tongsailong/ai-product-design-skill
 > **TL;DR**
 > **这是什么** — 一个面向 AI Agent 的**产品设计** Skill：既做视觉（交互原型 / 幻灯片 / 动画 / 信息图），也做产品判断（价值取舍 / UX 评审 / Spec 一致性）。
 > **解决什么** — 让「一句话需求」变成能交付、能评审、范围不漂移的设计产出，而不是看起来还行的一堆页面。
-> **怎么装** — `npx skills add tongsailong/ai-product-design-skill`，跨 agent，不绑定某个具体工具（见 [安装](#安装)）。
+> **怎么装** — `npx skills add tongsailong/designwise`，跨 agent，不绑定某个具体工具（见 [安装](#安装)）。
 > **真的有用吗** — 下面所有演示与样例，都是这个 Skill 自己产出的。
 
 <p align="center">
@@ -113,10 +113,10 @@ Skill 是 **agent-agnostic** 的：Claude Code、Codex、Cursor、Trae、OpenCla
 ## 安装
 
 ```bash
-npx skills add tongsailong/ai-product-design-skill
+npx skills add tongsailong/designwise
 ```
 
-> ✅ **安装命令已实测可用**：在干净目录用 `npx skills add tongsailong/ai-product-design-skill` 安装成功，`references/`（35 个）、`assets/`、`scripts/`、`demos/` 与仓库逐一对应，无缺文件。若你的环境装出来不完整，见下方故障排查。
+> ℹ️ 本仓库原名 `ai-product-design-skill`，已**原地更名**为 `designwise`（仓库 ID、Git 历史与全部提交保留；旧 URL 由 GitHub 重定向）。安装内容与流程不变：此前版本已实测 `npx skills` 安装完整，`references/`（35 个）、`assets/`、`scripts/`、`demos/` 与仓库逐一对应，无缺文件。若你的环境装出来不完整，见下方故障排查。
 
 **装完先自检**：这个 Skill 不只是 `SKILL.md` 一个文件，`references/`、`assets/`、`scripts/`、`demos/` 四个子目录里有 65 个被文档引用的配方、脚本与素材，缺一条路径就走不通。仓库自带自检脚本，可以直接把「装得完不完整」变成一条命令：
 
@@ -125,16 +125,16 @@ python3 scripts/check-skill.py            # 结构 + 引用完整性
 python3 scripts/check-skill.py --strict   # 额外检查未被引用的孤儿文件
 ```
 
-装完看一眼安装目录（如 `~/.claude/skills/ai-product-design-skill/`）。**若只有 SKILL.md、没有那几个子目录**，说明 `skills` CLI 版本太旧（≤1.5.15 有一个只同步单文件的 bug，已在 1.5.19 修复）。升级后再装一次：
+装完看一眼安装目录（如 `~/.claude/skills/designwise/`）。**若只有 SKILL.md、没有那几个子目录**，说明 `skills` CLI 版本太旧（≤1.5.15 有一个只同步单文件的 bug，已在 1.5.19 修复）。升级后再装一次：
 
 ```bash
-npm i -g skills@latest        # 或 npx skills@latest add tongsailong/ai-product-design-skill
+npm i -g skills@latest        # 或 npx skills@latest add tongsailong/designwise
 ```
 
 仍异常就用 `git clone` 兜底——把仓库克隆到任意 skills 目录即可：
 
 ```bash
-git clone https://github.com/tongsailong/ai-product-design-skill.git ~/.claude/skills/ai-product-design-skill
+git clone https://github.com/tongsailong/designwise.git ~/.claude/skills/designwise
 ```
 
 安装后在 Claude Code / Codex / Cursor 等任意支持 skills 的 agent 里直接说话（见下一节）。
@@ -278,7 +278,7 @@ git clone https://github.com/tongsailong/ai-product-design-skill.git ~/.claude/s
 ## 仓库结构
 
 ```
-ai-product-design-skill/
+ai-product-design-skill/          # 仓库更名 designwise（本目录为历史名）
 ├── SKILL.md                 # 主文档（给 agent 读，中文）
 ├── README.md                # 中文 README（默认，本文件）
 ├── README.en.md             # 英文 README

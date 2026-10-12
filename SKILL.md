@@ -1,9 +1,9 @@
 ---
-name: ai-product-design-skill
-description: ai-product-design-skill（二次开发自 花叔Design / huashu-design）——用HTML做高保真原型、幻灯片、动画、可视化与专家评审。任何新设计100%先出三个方向初稿给用户选（指定风格/品牌也不豁免），选定后才执行。触发词：做原型、PPT、幻灯片、动画、设计风格、评审、做个HTML页面、UI mockup、导出MP4/GIF、做个好看的。生产级Web App/需后端的系统不适用。
+name: designwise
+description: designwise（DesignWise，二次开发自 花叔Design / huashu-design）——用HTML做高保真原型、幻灯片、动画、可视化与专家评审。任何新设计100%先出三个方向初稿给用户选（指定风格/品牌也不豁免），选定后才执行。触发词：做原型、PPT、幻灯片、动画、设计风格、评审、做个HTML页面、UI mockup、导出MP4/GIF、做个好看的。生产级Web App/需后端的系统不适用。
 ---
 
-# ai-product-design-skill
+# DesignWise
 
 > **本 skill 是 [花叔Design · huashu-design](https://github.com/alchaincyf/huashu-design)（作者 [@alchaincyf](https://github.com/alchaincyf)，MIT）的二次开发分支。**
 > 原项目的视觉设计能力、60 种风格库、资产协议与交付链完整保留；本分支在此之上逐步增强**产品价值判断、交互体验与设计交付质量**。
