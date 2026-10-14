@@ -20,7 +20,7 @@
 | **本地命令执行** | 跑 `scripts/*`（导出 PDF/PPTX/MP4）、`gen_deck_thumbs.mjs` | bash / shell 工具 | 无 shell 时交付 HTML 源 + 导出命令说明，让用户在本地跑；不要假装已导出 |
 | **文件读写** | 写 HTML/JSX/CSS、写 gate 文件（`brand-spec.md` 等） | Write / Edit | 纯对话 runtime 无文件系统时，把文件内容贴进回复，并说明「请自行保存为 X.html」 |
 | **云能力**（可选） | 豆包 TTS 配音、AI 看片评审 | `scripts/cloud/*`，需自备 key + `--yes` 显式确认 | 默认不用。无声/无 AI 评审时走 `scripts/verify-video.sh` 截帧人工核；见 SECURITY.md |
-| **GPT 图像生成**（概念效果图 / 正式图片素材） | GPT-first 视觉探索的三方向效果图与正式素材（App/Web/交互原型） | `huashu-gpt-image` 技能自带的 `gen_via_cpa.py`（本机 CPA，OpenAI 兼容 `/v1/images/generations`、`/v1/images/edits`） | OpenAI Images API（自备 key）；再不行 → **回落原有 HTML/CSS 三方向探索**，能力一条不减（探测与判定见 `references/gpt-visual-workflow.md`） |
+| **GPT 图像生成**（概念效果图 / 正式图片素材） | GPT 视觉概念生图通路的概念效果图与正式素材（需探索新视觉方向的 App/Web/交互原型任务） | `huashu-gpt-image` 技能自带的 `gen_via_cpa.py`（本机 CPA，OpenAI 兼容 `/v1/images/generations`、`/v1/images/edits`） | OpenAI Images API（自备 key）；再不行 → **明确报告技术限制、暂停生图环节**（可交付完整英文 prompt 供用户在 ChatGPT 出图后交回继续），**不得静默改用 SVG/程序绘图冒充概念图**；判定为「不适用」的任务仍走 HTML/CSS 原生链路，能力一条不减（探测与判定见 `references/gpt-visual-workflow.md` §1 / §2.2.1） |
 
 ## 怎么判断「我有没有这个能力」
 

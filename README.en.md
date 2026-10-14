@@ -83,7 +83,7 @@ The skill is **agent-agnostic**: Claude Code, Codex, Cursor, Trae, OpenClaw, Her
 
 The four items above are an **added judgment layer**, not a replacement. Upstream's visual output pipeline is intact:
 
-- **Three-direction visual exploration**: every new design task produces three real drafts first (style or brand named — still no exemption), so you choose by **looking**, not by reading style names
+- **Direction exploration — choose a direction first, then build HTML**: every new design task renders **multiple real draft directions** first (style or brand named — still no exemption), so you choose by **looking**, not by reading style names
 - **60-style HTML-native library** (20 web + 20 deck + 20 infographic, pure CSS, no image generation)
 - **Interactive prototypes** (real iPhone bezel, clickable, Playwright-verified) / **motion** (Stage + Sprite timeline, MP4/GIF export) / **editable PPTX** (real text frames) / **infographics** (print-grade, PDF/PNG/SVG)
 - **Brand-asset protocol** (5 hard steps — never guess brand colors from memory) and an **anti-AI-slop floor**
@@ -99,7 +99,8 @@ The four items above are an **added judgment layer**, not a replacement. Upstrea
 | Motion design | MP4 (25fps / 60fps interpolation) + GIF (palette-optimized) + BGM | 8–12 min |
 | Design variations | 3+ side-by-side · Tweaks live params · cross-dimension exploration | 10 min |
 | Infographic / data viz | Print-grade typography · exports PDF / PNG / SVG | 10 min |
-| Design direction advisor | **Three logics in parallel** (second-hand roulette + award-winning references + best-designer philosophy) · three real visuals | 5 min |
+| Design direction advisor | **Three logics in parallel** (second-hand roulette + award-winning references + best-designer philosophy) · 2–3 genuinely different real directions | 5 min |
+| Visual concept exploration (GPT) | 2–3 concept images → pick a direction → **one** on-demand HTML prototype to validate the experience → targeted iteration (paid-authorization gate first) | 5–15 min |
 | Expert critique | 5-dimension radar + Keep / Fix / Quick Wins · actionable punch list · spec conformance when a spec exists | 3 min |
 
 > Times are upstream's measured ranges; they vary with model capability and task complexity.
@@ -215,9 +216,27 @@ No buttons, no panels, no Figma plugin — one sentence is enough:
 
 ## How it works
 
-### Three-direction gate (mandatory for any new design)
+### Direction exploration: choose a direction first, then build HTML (three-direction gate)
 
-Any task that produces new visual design starts by rendering **three real draft directions** for the user to choose from — a named style or brand narrows the interpretation but doesn't waive the choice. Users choose by looking, not by reading style names.
+Any task that produces new visual design starts by rendering **multiple real draft directions** for the user to choose from — a named style or brand narrows the interpretation but doesn't waive the choice. Users choose by looking, not by reading style names.
+
+**Tasks that explore a new visual direction** (app icon · splash redesign · app home or key-page redesign · multi-page visual system · brand exploration · illustration/key visual · interactive prototype) go down this full chain:
+
+```
+GPT visual concept generation → first review picks a direction → translate the concept into a visual spec
+  → build ONE on-demand HTML prototype for the chosen direction → second review and targeted iteration
+  → production implementation (GPT production assets on demand) → real-run acceptance
+```
+
+- **GPT owns creative exploration**: 2–3 genuinely different concept directions; a **paid-authorization gate** must be passed before any generation call
+- **The user owns the direction choice**: the turn ends once concept images are shown; nothing proceeds until a direction is picked, and afterwards **only that direction** gets HTML or engineering assets
+- **HTML validates the experience on demand**: build it only when interaction and multi-state behaviour need checking, and **only one prototype for the chosen direction**; app icons, simple static splash screens and single brand images skip it
+- **HTML must reproduce the visuals, not just the structure**: when a page's visual value depends on imagery (illustration / people / key visual / complex background / decorative art / product shots), generate **validation assets** with GPT to reproduce the concept — **no placeholder images, random stock or code stand-ins**, which would corrupt the visual review. Pure layout / lists / forms / geometry / existing real assets need no generation
+- **The second review iterates in a targeted way**: first ask "does the HTML truly reproduce the concept's visuals, not just its structure?"; visual dissatisfaction → regenerate that direction or its validation assets; interaction problems → edit the existing HTML first; both → do both — **never re-run the whole flow**
+- **Validation assets aren't wasted**: at production time they can be reused as-is / regenerated to engineering spec / replaced by vector or code — whichever is more reliable
+- **When generation is unavailable or unauthorized**: **state it and pause the generation step** (you can hand over the finished prompts to run in ChatGPT and bring the images back) — **never silently fall back to HTML/SVG code drawing passed off as concept art**, and never pass off placeholders as a faithful reproduction
+
+**Local edits, bug fixes, feature work, adaptation and simple copy/layout fixes skip this chain** and go straight to implementation and verification. Full rules: [`references/gpt-visual-workflow.md`](references/gpt-visual-workflow.md).
 
 ### Product value judgment & scope freeze
 

@@ -38,8 +38,8 @@
   {
     "id": 7,
     "prompt": "做一个记账 App 的首页原型",
-    "expected": "App/交互原型 → 默认触发 GPT Concept 判断：先自动生成 design-brief.md（六段：定位/画像/价值/情绪/关键词色彩/差异化维度，标注「性质=概念探索」+「数据以产品规范为准」）；再跑零成本 gen_via_cpa.py --health 探测能力（模型由检测确定，见 §1 默认模型口径），再检查付费资源授权 Gate——用户未授权时不得调用生图，回落 HTML/CSS 三方向（ios_frame.jsx + 3 个 html+截图）；用户授权后由 agent 自动生成英文生图 prompt（六槽位：subject / core action / layout & hierarchy / visual style / color+hex / medium+ratio，含 no device frame 等禁令），三条 prompt 至少母题/骨架/形式元素三处结构性不同（只换配色=无效）；落盘 assets/img-prompts/；授权四要素写入 direction-approved.md 的「GPT 出图授权」一节；幻灯片/信息图/动画任务不触发本通路",
-    "tests": "GPT Concept 默认判断 + Visual Brief 自动生成 + 未授权拦截 + 英文 prompt 自动生成 + 三方向真差异化 + 模型由检测确定 + 授权 Gate 物化 + HTML/CSS 回落"
+    "expected": "App 首页原型属「需探索新视觉方向」任务 → GPT 视觉概念生图（阶段 2）为强制前置：先自动生成 design-brief.md（六段：定位/画像/价值/情绪/关键词色彩/差异化维度，标注「性质=概念探索」+「数据以产品规范为准」）；再跑零成本 gen_via_cpa.py --health 探测能力（模型由检测确定，见 §1 默认模型口径），再检查付费资源授权 Gate——用户未授权时不得调用生图，且**明确报告并暂停生图环节**（可交付完整英文 prompt 供用户在 ChatGPT 出图后交回继续），**不得静默改用 HTML/SVG 代码绘图冒充概念图**（§2.2.1）；用户授权后由 agent 自动生成英文生图 prompt（六槽位：subject / core action / layout & hierarchy / visual style / color+hex / medium+ratio，含 no device frame 等禁令），出 2~3 个有实质差异的方向（各 prompt 至少母题/骨架/形式元素三处结构性不同，只换配色=无效）；落盘 assets/img-prompts/；授权四要素写入 direction-approved.md 的「GPT 出图授权」一节；幻灯片/信息图/动画/局部微调任务不进本通路",
+    "tests": "需探索新方向→阶段2强制前置 + Visual Brief 自动生成 + 未授权拦截 + **禁止静默回退为代码绘图** + 英文 prompt 自动生成 + 方向真差异化 + 模型由检测确定 + 授权 Gate 物化"
   },
   {
     "id": 8,
