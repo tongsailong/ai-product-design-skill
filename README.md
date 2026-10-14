@@ -116,9 +116,9 @@ Skill 是 **agent-agnostic** 的：Claude Code、Codex、Cursor、Trae、OpenCla
 npx skills add tongsailong/designwise
 ```
 
-> ℹ️ 本仓库原名 `ai-product-design-skill`，已**原地更名**为 `designwise`（仓库 ID、Git 历史与全部提交保留；旧 URL 由 GitHub 重定向）。安装内容与流程不变：此前版本已实测 `npx skills` 安装完整，`references/`（35 个）、`assets/`、`scripts/`、`demos/` 与仓库逐一对应，无缺文件。若你的环境装出来不完整，见下方故障排查。
+> ℹ️ 本仓库原名 `ai-product-design-skill`，已**原地更名**为 `designwise`（仓库 ID、Git 历史与全部提交保留；旧 URL 由 GitHub 重定向）。安装内容与流程不变：此前版本已实测 `npx skills` 安装完整，`references/`、`assets/`、`scripts/`、`demos/` 与仓库逐一对应，无缺文件。若你的环境装出来不完整，见下方故障排查。
 
-**装完先自检**：这个 Skill 不只是 `SKILL.md` 一个文件，`references/`、`assets/`、`scripts/`、`demos/` 四个子目录里有 65 个被文档引用的配方、脚本与素材，缺一条路径就走不通。仓库自带自检脚本，可以直接把「装得完不完整」变成一条命令：
+**装完先自检**：这个 Skill 不只是 `SKILL.md` 一个文件，`references/`、`assets/`、`scripts/`、`demos/` 四个子目录里有数十个被文档引用的配方、脚本与素材，缺一条路径就走不通。仓库自带自检脚本，可以直接把「装得完不完整」变成一条命令：
 
 ```bash
 python3 scripts/check-skill.py            # 结构 + 引用完整性
@@ -257,7 +257,7 @@ git clone https://github.com/tongsailong/designwise.git ~/.claude/skills/designw
 |------|------|
 | Node.js | `scripts/render-video.js`（HTML→MP4）、`html2pptx.js`、`export_deck_*.mjs`、`gen_deck_thumbs.mjs`；`package.json` 依赖 `playwright` / `pptxgenjs` / `pdf-lib` / `sharp` |
 | ffmpeg | MP4 转 60fps / GIF、拼接 BGM、音视频混流（`convert-formats.sh`、`add-music.sh`、`mix-voiceover.sh`） |
-| Python 3 | `scripts/verify.py`（Playwright 验证）、`fetch_images.py`、`check-skill.py`（结构自检） |
+| Python 3 | `scripts/verify.py`（Playwright 验证）、`fetch_images.py`、`check-skill.py`（结构自检）、`check-contrast.py`（对比度）、`check-assets.py`（素材清单） |
 | Playwright | 交付前的浏览器点击测试与截图验证 |
 
 **云能力（完全可选）**：豆包 TTS 配音与 AI 看片评审隔离在 `scripts/cloud/`，需要你自备 API key，首次调用要显式 `--yes` 确认。默认不使用。核心链路（设计 → 渲染 → MP4 / PDF / PPTX 导出）**100% 本地运行，零网络、零 key**，无 telemetry。全部出站域名、密钥处理与删除边界见 [SECURITY.md](SECURITY.md)。
@@ -294,7 +294,7 @@ ai-product-design-skill/          # 仓库更名 designwise（本目录为历史
 │   ├── cursor.jsx           # 产品 UI 演示光标叙事
 │   ├── showcases/           # 24 个预制样例（8 场景 × 3 风格）
 │   └── bgm-*.mp3 · sfx/     # 场景化背景音乐与音效库
-├── references/              # 按任务深入读的子文档（35 个）
+├── references/              # 按任务深入读的子文档
 │   ├── product-value.md     # 产品价值判断（有用→好懂→舒服→有意义）
 │   ├── critique-guide.md    # 5 维度评审 + 易用性 + Spec 一致性核验
 │   ├── runtime-adapters.md  # 能力 → 载体映射（跨 Agent）
@@ -307,16 +307,32 @@ ai-product-design-skill/          # 仓库更名 designwise（本目录为历史
 │   ├── convert-formats.sh   # MP4 → 60fps + GIF
 │   ├── add-music.sh         # MP4 + BGM
 │   ├── export_deck_pdf.mjs · export_deck_pptx.mjs · html2pptx.js
-│   ├── verify.py · check-skill.py
+│   ├── verify.py · check-contrast.py · check-assets.py · check-skill.py
 │   └── cloud/               # 可选云能力（自备 key + --yes）
 └── demos/                   # 能力演示（中英双版 HTML）+ hero 动画
 ```
 
+> `test-prompts.json` 是**验收提示集**（人工或会话内逐条执行的断言清单），不是自动测试框架——运行方式是在真实会话里按 `prompt` 走一遍、核对 `expected`。`scripts/check-skill.py` 只校验它存在，不执行它。
+
 结构自检：
 
 ```bash
-python3 scripts/check-skill.py
+python3 scripts/check-skill.py            # 结构 + 引用完整性
+python3 scripts/check-skill.py --strict   # 额外检查孤儿文档
 ```
+
+### 维护者：源码基线与运行时副本
+
+本仓库（git 工作区）是**唯一源码基线**；agent 的 skills 目录（如 `~/.reasonix/skills/designwise`）是**只读运行时副本**。改动只在基线做，然后**单向**同步出去：
+
+```bash
+rsync -a --delete --exclude '.git' --exclude 'node_modules' --exclude '.reasonix' --exclude 'design-demos' \
+  ./ ~/.reasonix/skills/designwise/
+diff -rq . ~/.reasonix/skills/designwise --exclude=node_modules --exclude=.git --exclude=.reasonix --exclude=design-demos
+# diff 无输出 = 一致；有输出 = 副本被直接改过，先搬回基线再重同步（不做双向合并）
+```
+
+详见 `SKILL.md`「源码基线 vs 运行时副本」。
 
 ---
 

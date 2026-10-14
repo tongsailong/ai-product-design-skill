@@ -34,5 +34,47 @@
     "prompt": "做一个跑步记录 App 原型",
     "expected": "overview 平铺；ios_frame.jsx；跑步 App 属高密度型（地图、配速曲线、心率区间、每公里分段数据），每屏 ≥ 3 处产品差异化信息；至少 5 屏（今日总览/跑步中实时数据/路线地图/历史记录/月度统计）；避免撞 AI slop（不用紫渐变、不堆装饰 icon，但数据可视化 icon 允许保留）",
     "tests": "overview + ios_frame + 高密度型数据可视化 + 地图/图表混排 + slop 边界条件"
+  },
+  {
+    "id": 7,
+    "prompt": "做一个记账 App 的首页原型",
+    "expected": "App/交互原型 → 默认触发 GPT Concept 判断：先自动生成 design-brief.md（六段：定位/画像/价值/情绪/关键词色彩/差异化维度，标注「性质=概念探索」+「数据以产品规范为准」）；再跑零成本 gen_via_cpa.py --health 探测能力（模型由检测确定，见 §1 默认模型口径），再检查付费资源授权 Gate——用户未授权时不得调用生图，回落 HTML/CSS 三方向（ios_frame.jsx + 3 个 html+截图）；用户授权后由 agent 自动生成英文生图 prompt（六槽位：subject / core action / layout & hierarchy / visual style / color+hex / medium+ratio，含 no device frame 等禁令），三条 prompt 至少母题/骨架/形式元素三处结构性不同（只换配色=无效）；落盘 assets/img-prompts/；授权四要素写入 direction-approved.md 的「GPT 出图授权」一节；幻灯片/信息图/动画任务不触发本通路",
+    "tests": "GPT Concept 默认判断 + Visual Brief 自动生成 + 未授权拦截 + 英文 prompt 自动生成 + 三方向真差异化 + 模型由检测确定 + 授权 Gate 物化 + HTML/CSS 回落"
+  },
+  {
+    "id": 8,
+    "prompt": "（承接上题）用户选了 B 方向，接着写高保真 HTML 并交付 Android 开发",
+    "expected": "用户选定后不直接开写 HTML——先产出 visual-translation.md（§3.5 四类：可提取[色彩关系/材质光影/图标奖章/插画/情绪/可实现表现] / 不得照搬[虚构数据/错中文/假交互/超规范布局/不可实现效果] / 概念图vs正式素材边界 / 断链自检勾选）；实现完产出 handoff/ 七件套（README+structure+design-tokens+states-interactions+copy-data+assets+adaptation-a11y+baselines/）；design-tokens 给值不给「看图」；copy-data 数值逐项=spec 真实值（GPT 幻觉数据 0 条）；明确标注「HTML 原型是基准，非 Android 实现代码」，不把原型 HTML 塞进 App",
+    "tests": "概念图→视觉规范转译（§3.5）+ 交付包七件套 + 幻觉数据排除 + HTML≠Android 最终代码 + visual-translation.md Gate"
+  },
+  {
+    "id": 9,
+    "prompt": "（负向）把这 3 张 GPT 概念图直接做成 Android App 的界面代码交给我",
+    "expected": "拒绝：① 概念图是探索态，含幻觉数据与不可实现效果，不得当界面交付（§4.2/§3.5.3 红线）；② HTML/原型不是 Android 实现代码，正确做法是产出设计交付包（design-handoff.md）交 Android 原生实现；③ 若尚未授权生图，连出图都不该发生。应指出正确路径而非照做",
+    "tests": "反模式拦截（概念图当界面 / 原型当产品代码）+ 用户违规请求的正确拒绝路径"
+  },
+  {
+    "id": 10,
+    "prompt": "这个 App 原型做完了，帮我验收后交付给 Android 开发",
+    "expected": "交付前跑对比度三档机械校验：python3 scripts/check-contrast.py pairs.json——档 ①（正文文字，正常字 ≥4.5:1 / 大字 ≥3:1）与档 ②（承载信息的图标/图形，≥3:1）低于门槛即 exit 1、交付包不合格、须先改色值；档 ③ 纯装饰无门槛但须在适配表显式标注「装饰·不承载信息」。交付包 adaptation-a11y.md 必须附逐对实测表（前景/背景/实测比/档位/判定），不得只给「看着还行」；随后 design-handoff.md §4 自检全绿、baselines/ 基准图齐、明确标注 HTML 原型是基准非实现代码",
+    "tests": "对比度三档拦截（scripts/check-contrast.py）+ 档位区分（文字/图形/装饰）+ 交付包自检 + 不合格阻断交付"
+  },
+  {
+    "id": 11,
+    "prompt": "（承接上题）Android 开发到一半说今日页空状态缺一张背景插画，让我补一个",
+    "expected": "走 gpt-visual-workflow.md §4.7 十步规程：①识别需求（用途/尺寸/为何位图）②先查 handoff/assets.md 与项目现有素材能否复用③判能否原生（几何/图标优先 SVG/CSS）④读 design-brief.md+design-tokens.md+visual-translation.md 继承已选风格⑤agent 自动生成英文 prompt（六槽位，不要求用户写）⑥用 §1 默认模型（不硬编码）⑦🔴查授权范围——概念图授权(concept)不自动扩展为开发素材授权(dev-asset)，超范围/无 dev-asset 则拦截⑧未授权不调用、不静默扣费⑨授权后过 §4.6 六项+风格一致性⑩登记 handoff/assets.md + assets/img-prompts/。未授权时给非付费路线（复用/原生/诚实 placeholder/申请授权）",
+    "tests": "开发期按需生成 §4.7 十步 + 授权分离（concept≠dev-asset）+ 风格继承 + 未授权不扣费 + 素材登记"
+  },
+  {
+    "id": 12,
+    "prompt": "这套设计要同时交给 Web 前端、Android 和做 PPT 的同事，交付包要准备几套？",
+    "expected": "一套。design-handoff.md §3：七件套是平台无关契约，三平台共用，只在之上加「平台适配层」——Web 补 CSS 变量/断点/静态路径；Android 补 colors.xml/dimens.xml 映射、drawable 规格、dp/sp；PPT 走现有 deck 链路（slide-decks/editable-pptx/pptx-from-rendered），要求文字图表版式尽量保持可编辑、不整页拍图。不强制 Android 用 HTML 原型实现、保留各平台原生方式、不建三套重复系统",
+    "tests": "三平台交付（Web/Android/PPT）+ 一套七件套复用 + 平台适配层 + PPT 可编辑性 + 不强制实现技术"
+  },
+  {
+    "id": 13,
+    "prompt": "Android 那边按交付包做完了，怎么验？",
+    "expected": "design-handoff.md §8 反馈闭环：实现端真实运行取截图→与 baselines/ 逐页比对（布局/色彩/字体/素材/关键状态 + 真实业务数据=copy-data 真实值 + 可读性与无障碍 check-contrast 档①②）→偏差定向修复（只改被点名项，不推倒重来）→复验范围按影响面。修在哪：普通页面问题在项目内修，只有通用设计规则有缺陷才改 skill。DesignWise 给设计判断与验收规范，不代替执行 agent 跑开发细节。实现端未真实运行则标 PARTIAL",
+    "tests": "真实实现反馈闭环 §8 + 五项比对+真实数据+无障碍 + 定向修复 + 修在哪侧分流 + PARTIAL 标注"
   }
 ]

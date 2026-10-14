@@ -31,6 +31,9 @@ REQUIRED_FILES = [
     "SECURITY.md",
     "package.json",
     "test-prompts.json",
+    # GPT-first 通路的核心载体：缺了「概念图→实现」的转译就断链，故列为必需
+    "references/gpt-visual-workflow.md",
+    "references/design-handoff.md",
 ]
 
 REQUIRED_DIRS = ["references", "assets", "scripts", "demos"]
@@ -62,6 +65,8 @@ REQUIRED_SCRIPTS = [
     "scripts/pptx_from_rendered.py",
     "scripts/gen_deck_thumbs.mjs",
     "scripts/verify.py",
+    "scripts/check-contrast.py",
+    "scripts/check-assets.py",
     "scripts/fetch_images.py",
     "scripts/narrate-pipeline.mjs",
     "scripts/render-narration.sh",

@@ -116,7 +116,7 @@ The four items above are an **added judgment layer**, not a replacement. Upstrea
 npx skills add tongsailong/designwise
 ```
 
-> ℹ️ This repository was formerly `ai-product-design-skill` and has been **renamed in place** to `designwise` (repository ID, Git history and all commits preserved; the old URL is redirected by GitHub). Install content and process are unchanged: earlier versions were verified to install completely with `npx skills` — `references/` (35 files), `assets/`, `scripts/` and `demos/` all matched the repository, no missing files. If your install comes out incomplete, see the troubleshooting below.
+> ℹ️ This repository was formerly `ai-product-design-skill` and has been **renamed in place** to `designwise` (repository ID, Git history and all commits preserved; the old URL is redirected by GitHub). Install content and process are unchanged: earlier versions were verified to install completely with `npx skills` — `references/`, `assets/`, `scripts/` and `demos/` all matched the repository, no missing files. If your install comes out incomplete, see the troubleshooting below.
 
 **Verify after install**: this skill is more than a single `SKILL.md` — `references/`, `assets/`, `scripts/` and `demos/` hold 65 referenced recipes, scripts and assets, and a missing one breaks a path. The repo ships a self-check that turns "is it complete?" into one command:
 
@@ -257,7 +257,7 @@ Avoid the visual common denominator of AI output (purple gradients / emoji icons
 |---|---|
 | Node.js | `scripts/render-video.js` (HTML→MP4), `html2pptx.js`, `export_deck_*.mjs`, `gen_deck_thumbs.mjs`; `package.json` deps: `playwright` / `pptxgenjs` / `pdf-lib` / `sharp` |
 | ffmpeg | MP4 → 60fps / GIF, adding BGM, mixing narration (`convert-formats.sh`, `add-music.sh`, `mix-voiceover.sh`) |
-| Python 3 | `scripts/verify.py` (Playwright verification), `fetch_images.py`, `check-skill.py` (structure self-check) |
+| Python 3 | `scripts/verify.py` (Playwright verification), `fetch_images.py`, `check-skill.py` (structure), `check-contrast.py` (contrast), `check-assets.py` (asset manifest) |
 | Playwright | Pre-delivery click tests and screenshot verification |
 
 **Cloud features (fully optional)**: Doubao TTS narration and AI video review live in `scripts/cloud/`, need your own API key, and require an explicit `--yes` on first call. Off by default. The core pipeline (design → render → MP4 / PDF / PPTX export) runs **100% locally, zero network calls, zero keys**, with no telemetry. Every outbound host, credential touchpoint and deletion boundary is declared in [SECURITY.md](SECURITY.md).
@@ -294,7 +294,7 @@ ai-product-design-skill/          # repo renamed to designwise (this is the hist
 │   ├── cursor.jsx           # Cursor narrative for product-UI demos
 │   ├── showcases/           # 24 prebuilt samples (8 scenes × 3 styles)
 │   └── bgm-*.mp3 · sfx/     # Scene-specific tracks and SFX library
-├── references/              # Drill-down docs by task (35 files; Chinese)
+├── references/              # Drill-down docs by task (Chinese)
 │   ├── product-value.md     # Product value judgment (useful→understandable→comfortable→meaningful)
 │   ├── critique-guide.md    # 5-dimension critique + usability + spec conformance
 │   ├── runtime-adapters.md  # Capability → carrier map (cross-agent)
@@ -307,7 +307,7 @@ ai-product-design-skill/          # repo renamed to designwise (this is the hist
 │   ├── convert-formats.sh   # MP4 → 60fps + GIF
 │   ├── add-music.sh         # MP4 + BGM
 │   ├── export_deck_pdf.mjs · export_deck_pptx.mjs · html2pptx.js
-│   ├── verify.py · check-skill.py
+│   ├── verify.py · check-contrast.py · check-assets.py · check-skill.py
 │   └── cloud/               # Optional cloud features (own key + --yes)
 └── demos/                   # Capability demos (Chinese + English HTML) + hero animation
 ```
