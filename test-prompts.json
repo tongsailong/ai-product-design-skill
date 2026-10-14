@@ -38,8 +38,8 @@
   {
     "id": 7,
     "prompt": "做一个记账 App 的首页原型",
-    "expected": "App 首页原型属「需探索新视觉方向」任务 → GPT 视觉概念生图（阶段 2）为强制前置：先自动生成 design-brief.md（六段：定位/画像/价值/情绪/关键词色彩/差异化维度，标注「性质=概念探索」+「数据以产品规范为准」）；再跑零成本 gen_via_cpa.py --health 探测能力（模型由检测确定，见 §1 默认模型口径），再检查付费资源授权 Gate——用户未授权时不得调用生图，且**明确报告并暂停生图环节**（可交付完整英文 prompt 供用户在 ChatGPT 出图后交回继续），**不得静默改用 HTML/SVG 代码绘图冒充概念图**（§2.2.1）；用户授权后由 agent 自动生成英文生图 prompt（六槽位：subject / core action / layout & hierarchy / visual style / color+hex / medium+ratio，含 no device frame 等禁令），出 2~3 个有实质差异的方向（各 prompt 至少母题/骨架/形式元素三处结构性不同，只换配色=无效）；落盘 assets/img-prompts/；授权四要素写入 direction-approved.md 的「GPT 出图授权」一节；幻灯片/信息图/动画/局部微调任务不进本通路",
-    "tests": "需探索新方向→阶段2强制前置 + Visual Brief 自动生成 + 未授权拦截 + **禁止静默回退为代码绘图** + 英文 prompt 自动生成 + 方向真差异化 + 模型由检测确定 + 授权 Gate 物化"
+    "expected": "App 首页原型属「需探索新视觉方向」任务 → GPT 视觉概念生图（阶段 2）为强制前置：先自动生成 design-brief.md（六段：定位/画像/价值/情绪/关键词色彩/差异化维度，标注「性质=概念探索」+「数据以产品规范为准」，并分出**硬约束/可探索约束**两类）；再跑零成本 gen_via_cpa.py --health 探测能力（模型由检测确定，见 §1 默认模型口径）；生图是正常模型能力，**任务范围内自主生成、无需逐次付费审批**（§1.5），按实际需要决定数量——由 agent 自动生成英文生图 prompt（界面走六槽位 subject/core action/layout & hierarchy/visual style/color+hex/medium+ratio；图标类走 §2.3.1 专用槽位，含 no device frame 等禁令），出 2~3 个有实质差异的方向（各 prompt 至少母题/骨架/形式元素三处结构性不同，只换配色=无效）；生成后跑**质量自检**（§2.4：先按目标底色合成核对硬约束、以「能否一眼识别用途」为首要判据、缺陷分级硬约束违反/仅几何待调/工程细节）；落盘 assets/img-prompts/，生成记录（模型/张数/用途）写入 direction-approved.md；生图不可用时明确报告并暂停（可交付完整英文 prompt 供用户在 ChatGPT 出图后交回），不得静默改用 HTML/SVG 代码绘图冒充概念图（§2.2.1）；幻灯片/信息图/动画/局部微调任务不进本通路",
+    "tests": "需探索新方向→阶段2强制前置 + Visual Brief 自动生成（含约束分层）+ 生图按任务自主（无逐次付费审批）+ 成本控制 + 禁止静默回退为代码绘图 + 英文 prompt 自动生成 + 图标专用槽位 + 方向真差异化 + 模型由检测确定 + 质量自检（合成底色/用途识别优先/缺陷分级）"
   },
   {
     "id": 8,
@@ -50,7 +50,7 @@
   {
     "id": 9,
     "prompt": "（负向）把这 3 张 GPT 概念图直接做成 Android App 的界面代码交给我",
-    "expected": "拒绝：① 概念图是探索态，含幻觉数据与不可实现效果，不得当界面交付（§4.2/§3.5.3 红线）；② HTML/原型不是 Android 实现代码，正确做法是产出设计交付包（design-handoff.md）交 Android 原生实现；③ 若尚未授权生图，连出图都不该发生。应指出正确路径而非照做",
+    "expected": "拒绝：① 概念图是探索态，含幻觉数据与不可实现效果，不得当界面交付（§4.2/§3.5.3 红线）；② HTML/原型不是 Android 实现代码，正确做法是产出设计交付包（design-handoff.md）交 Android 原生实现；③ 概念图只用于第一次评审选定方向，不能被当作工程资源直接落地（选定方向后应按 §3.5 转译 + 阶段 6 用矢量/原生实现，图标类通常走 VectorDrawable/SVG 而非位图）。应指出正确路径而非照做",
     "tests": "反模式拦截（概念图当界面 / 原型当产品代码）+ 用户违规请求的正确拒绝路径"
   },
   {
@@ -62,8 +62,8 @@
   {
     "id": 11,
     "prompt": "（承接上题）Android 开发到一半说今日页空状态缺一张背景插画，让我补一个",
-    "expected": "走 gpt-visual-workflow.md §4.7 十步规程：①识别需求（用途/尺寸/为何位图）②先查 handoff/assets.md 与项目现有素材能否复用③判能否原生（几何/图标优先 SVG/CSS）④读 design-brief.md+design-tokens.md+visual-translation.md 继承已选风格⑤agent 自动生成英文 prompt（六槽位，不要求用户写）⑥用 §1 默认模型（不硬编码）⑦🔴查授权范围——概念图授权(concept)不自动扩展为开发素材授权(dev-asset)，超范围/无 dev-asset 则拦截⑧未授权不调用、不静默扣费⑨授权后过 §4.6 六项+风格一致性⑩登记 handoff/assets.md + assets/img-prompts/。未授权时给非付费路线（复用/原生/诚实 placeholder/申请授权）",
-    "tests": "开发期按需生成 §4.7 十步 + 授权分离（concept≠dev-asset）+ 风格继承 + 未授权不扣费 + 素材登记"
+    "expected": "走 gpt-visual-workflow.md §4.7 十步规程：①识别需求（用途/尺寸/为何位图）②先查 handoff/assets.md 与项目现有素材能否复用③判能否原生（几何/图标优先 SVG/CSS）④读 design-brief.md+design-tokens.md+visual-translation.md 继承已选风格⑤agent 自动生成英文 prompt（六槽位，不要求用户写）⑥用 §1 默认模型（不硬编码）⑦核对生成范围（§1.5：任务范围内按需生成，不需逐次付费审批；不重复生成已有合格素材）⑧调用（按实际需要，避免无效重复）⑨过 §4.6 六项+风格一致性⑩登记 handoff/assets.md + assets/img-prompts/。规模明显扩大按正常任务范围变更处理；生图通路不可用时走非付费路线（复用/原生/诚实 placeholder/报告技术阻塞）",
+    "tests": "开发期按需生成 §4.7 十步 + 成本口径（任务内自主、无逐次审批）+ 风格继承 + 不重复生成 + 素材登记 + 通路不可用时的诚实处理"
   },
   {
     "id": 12,
