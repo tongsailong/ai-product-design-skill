@@ -48,7 +48,7 @@ Most "design skills" answer one question: **how do I make this look good?** This
 | Before designing | Starts immediately, filling in "what a page usually has" | **Judges product value first**: who is using it / what they're here to do / which part of the design absorbs the complexity for them |
 | Design judgment | Mostly visual (color, type, hierarchy) | Visual **plus three testable checks**: comprehension cost / operation cost / error tolerance |
 | Scope control | Habitually "fills it out a bit more" | **Scope freeze**: no pages or features the user didn't ask for; "a real product would have this" is not a requirement |
-| Review | Looks good or not | 5-dimension critique **plus a UX/usability layer** (product UIs) **plus spec conformance when a spec exists** |
+| Review | Looks good or not | **Concept (highest weight) + 5-dimension critique** **plus a UX/usability layer** (product UIs) **plus spec conformance when a spec exists** **plus a pre-generation prompt-level review** |
 | Platform | Bound to one AI coding tool | **Agent-agnostic**: a capability→carrier map, with automatic degradation on weak runtimes |
 | Visual power | Varies | Upstream's 60-style HTML-native library, three-direction gate, brand-asset protocol and anti-slop floor (**all preserved**) |
 
@@ -69,7 +69,9 @@ Full method in [`references/product-value.md`](references/product-value.md) (Chi
 
 ### 2. UX & usability review
 
-When a review is requested (or the agent self-checks), product-UI work gets **an extra layer of user-value and usability checking inside the "Functionality" dimension** of the existing 5-dimension critique (philosophical coherence / visual hierarchy / execution craft / functionality / innovation): is the core action served by the first screen, which of the three value checks lights up. Findings must be **concrete and actionable** — which element, changed to what — not "the interaction could be smoother."
+When a review is requested (or the agent self-checks), product-UI work gets **an extra layer of user-value and usability checking inside the "Functionality" dimension** of the existing critique — **concept (highest weight)** plus 5 dimensions (philosophical coherence / visual hierarchy / execution craft / functionality / innovation): is the core action served by the first screen, which of the three value checks lights up. Findings must be **concrete and actionable** — which element, changed to what — not "the interaction could be smoother."
+
+> **On the GPT concept path there is also a pre-generation "prompt-level review"**: the candidate prompts have no image yet, so the review decides only **what text can decide** (concept origin / brand system / differentiation / feasibility / self-contradiction / merge candidates) and **never claims "48px legibility passed" or "opaque full-bleed confirmed" from a prompt** — those conclusions come only from the real image.
 
 ### 3. Spec conformance (Scope / Non-goals / AC)
 
@@ -83,7 +85,7 @@ The skill is **agent-agnostic**: Claude Code, Codex, Cursor, Trae, OpenClaw, Her
 
 The four items above are an **added judgment layer**, not a replacement. Upstream's visual output pipeline is intact:
 
-- **Direction exploration — choose a direction first, then build HTML**: every new design task renders **multiple real draft directions** first (style or brand named — still no exemption), so you choose by **looking**, not by reading style names
+- **Direction exploration — expert review picks the direction, you confirm the final visual**: every new design task produces **multiple candidate directions** first (style or brand named — still no exemption); **before any image is generated** the candidate prompts are reviewed and either narrowed to one direction or merged, all by the **existing Huashu expert-critique mechanism**, and only then do you confirm the final direction
 - **60-style HTML-native library** (20 web + 20 deck + 20 infographic, pure CSS, no image generation)
 - **Interactive prototypes** (real iPhone bezel, clickable, Playwright-verified) / **motion** (Stage + Sprite timeline, MP4/GIF export) / **editable PPTX** (real text frames) / **infographics** (print-grade, PDF/PNG/SVG)
 - **Brand-asset protocol** (5 hard steps — never guess brand colors from memory) and an **anti-AI-slop floor**
@@ -100,8 +102,8 @@ The four items above are an **added judgment layer**, not a replacement. Upstrea
 | Design variations | 3+ side-by-side · Tweaks live params · cross-dimension exploration | 10 min |
 | Infographic / data viz | Print-grade typography · exports PDF / PNG / SVG | 10 min |
 | Design direction advisor | **Three logics in parallel** (second-hand roulette + award-winning references + best-designer philosophy) · 2–3 genuinely different real directions | 5 min |
-| Visual concept exploration (GPT) | 2–3 concept images → pick a direction → **one** on-demand HTML prototype to validate the experience → targeted iteration (generation is a normal capability, no per-call paid approval) | 5–15 min |
-| Expert critique | 5-dimension radar + Keep / Fix / Quick Wins · actionable punch list · spec conformance when a spec exists | 3 min |
+| Visual concept exploration (GPT) | 2–3 candidate prompts → automatic expert review → a single direction or a merge chosen automatically → **one** concept image → **you confirm the direction** → **one** on-demand HTML prototype to validate the experience → targeted iteration (generation is a normal capability, no per-call paid approval) | 5–15 min |
+| Expert critique | **Concept (highest weight) + 5 dimensions** · Keep / Fix / Quick Wins · actionable punch list · **includes a pre-generation prompt-level review** (what text can and cannot decide) | 3 min |
 
 > Times are upstream's measured ranges; they vary with model capability and task complexity.
 
@@ -195,7 +197,7 @@ No buttons, no panels, no Figma plugin — one sentence is enough:
 
 <p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c5-infographic-en.gif" alt="Infographic demo: a long, data-driven magazine-grade layout" width="100%"></p>
 
-**Expert critique** — five dimensions scored 0–10 · radar visualization · Keep / Fix / Quick Wins punch list.
+**Expert critique** — concept (highest weight) + five dimensions scored 0–10 · radar visualization · Keep / Fix / Quick Wins punch list.
 
 <p align="center"><img src="https://github.com/alchaincyf/huashu-design/releases/download/v2.0/c6-expert-review-en.gif" alt="Design critique demo: five-dimension radar chart with a Keep/Fix/Quick Wins list" width="100%"></p>
 
@@ -216,20 +218,23 @@ No buttons, no panels, no Figma plugin — one sentence is enough:
 
 ## How it works
 
-### Direction exploration: choose a direction first, then build HTML (three-direction gate)
+### Direction exploration: expert review picks the direction, you confirm the final visual (three-direction gate)
 
-Any task that produces new visual design starts by rendering **multiple real draft directions** for the user to choose from — a named style or brand narrows the interpretation but doesn't waive the choice. Users choose by looking, not by reading style names.
+Any task that produces new visual design starts by producing **multiple candidate directions** — a named style or brand narrows the interpretation but doesn't waive the choice. **Before any image is generated**, the candidate prompts are reviewed, compared and either narrowed to one direction or merged, all by the **existing Huashu expert-critique mechanism** — you don't review or pick prompts. Once the real concept image exists, **you confirm the final direction**.
 
 **Tasks that explore a new visual direction** (app icon · splash redesign · app home or key-page redesign · multi-page visual system · brand exploration · illustration/key visual · interactive prototype) go down this full chain:
 
 ```
-GPT visual concept generation → first review picks a direction → translate the concept into a visual spec
-  → build ONE on-demand HTML prototype for the chosen direction → second review and targeted iteration
+2–3 candidate prompts generated → automatic expert review → a single direction or a merge chosen automatically
+  → one final prompt optimised (decision record kept) → ONE real concept image → expert review of the real image + your confirmation
+  → translate the concept into a visual spec → build ONE on-demand HTML prototype → second review and targeted iteration
   → production implementation (GPT production assets on demand) → real-run acceptance
 ```
 
-- **GPT owns creative exploration**: 2–3 genuinely different concept directions; image generation is a **normal model capability** — generated within the agreed task, with **no per-call paid approval**
-- **The user owns the direction choice**: the turn ends once concept images are shown; nothing proceeds until a direction is picked, and afterwards **only that direction** gets HTML or engineering assets
+- **GPT owns creative exploration**: 2–3 genuinely different **candidate solutions** (each with a complete generation prompt); image generation is a **normal model capability** — generated within the agreed task, with **no per-call paid approval**
+- **The expert mechanism owns review and direction**: candidate prompts go through the **existing Huashu expert critique** (Keep / Fix / Quick Wins), then the choice between **one winning direction or a merge of several** is made automatically — a merge must pass five checks (still one clear concept / no needless elements / brand consistency intact / no extra small-size risk / no clashing visual language) and **is dropped if it isn't better than the single direction**. **None of this pre-generation prompt review, selection or merging involves you**, and no manual approval gate is added
+- **Review knows its limits**: the pre-generation review only decides what text can decide (concept origin / brand system / differentiation / feasibility / self-contradiction / merge candidates) — it **never claims "48px legibility passed" or "opaque full-bleed confirmed" from a prompt**; those conclusions come only from the real image
+- **You own the final visual confirmation**: the turn ends once the real concept image is shown; nothing proceeds until you confirm, and afterwards **only that direction** gets HTML or engineering assets
 - **HTML validates the experience on demand**: build it only when interaction and multi-state behaviour need checking, and **only one prototype for the chosen direction**; app icons, simple static splash screens and single brand images skip it
 - **HTML must reproduce the visuals, not just the structure**: when a page's visual value depends on imagery (illustration / people / key visual / complex background / decorative art / product shots), generate **validation assets** with GPT to reproduce the concept — **no placeholder images, random stock or code stand-ins**, which would corrupt the visual review. Pure layout / lists / forms / geometry / existing real assets need no generation
 - **Constraint layering + quality self-check**: before generating, split requirements into **hard constraints** (purpose recognition / brand colours / size & safe area / small-size legibility) and **explorable constraints** (composition / elements / metaphor — left to GPT); after generating, composite onto the target background to verify hard constraints and judge first by "can the user recognise it at a glance", **not by pixel-ratio, connected-component or similar mechanical metrics alone**
@@ -317,7 +322,7 @@ ai-product-design-skill/          # repo renamed to designwise (this is the hist
 │   └── bgm-*.mp3 · sfx/     # Scene-specific tracks and SFX library
 ├── references/              # Drill-down docs by task (Chinese)
 │   ├── product-value.md     # Product value judgment (useful→understandable→comfortable→meaningful)
-│   ├── critique-guide.md    # 5-dimension critique + usability + spec conformance
+│   ├── critique-guide.md    # concept + 5-dimension critique + usability + spec conformance + pre-generation prompt review
 │   ├── runtime-adapters.md  # Capability → carrier map (cross-agent)
 │   ├── design-styles.md     # 60-style HTML-native library
 │   ├── app-prototype.md · slide-decks.md · editable-pptx.md
